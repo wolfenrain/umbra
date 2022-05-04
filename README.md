@@ -159,7 +159,7 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 When a brick gets changed the templates in `umbra_core` need to be updated, you can use the following command for that:
 
 ```shell
-mason bundle -t dart ./bricks/<brick_name> -o packages/umbra_core/lib/src/templates/<brick_name>
+mason bundle -t dart ./bricks/<brick_name> -o packages/umbra_core/lib/src/<path_to_template>
 ```
 
 [coverage_badge]: coverage_badge.svg

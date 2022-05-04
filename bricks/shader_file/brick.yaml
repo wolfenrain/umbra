@@ -1,5 +1,5 @@
-name: create_umbra_shader
-description: Generate a Flutter shader.
+name: shader_file
+description: Generate a GLSL shader for Flutter.
 version: 0.1.0+1
 
 environment:

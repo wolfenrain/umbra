@@ -7,8 +7,8 @@ final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+);');
 /// {@template shader}
 /// Represents a shader.
 /// {@endtemplate}
-class Shader {
-  const Shader._(
+class ShaderSpecification {
+  const ShaderSpecification._(
     this.name,
     this.version,
     this.precision,
@@ -19,8 +19,8 @@ class Shader {
   /// {@macro shader}
   ///
   /// Parsed directly from a file.
-  factory Shader.fromFile(File file) {
-    return Shader.parse(
+  factory ShaderSpecification.fromFile(File file) {
+    return ShaderSpecification.parse(
       file.path.split('/').last.split('.').first,
       file.readAsLinesSync(),
     );
@@ -29,7 +29,7 @@ class Shader {
   /// {@macro shader}
   ///
   /// Parsed directly from a string.
-  factory Shader.parse(String name, List<String> lines) {
+  factory ShaderSpecification.parse(String name, List<String> lines) {
     final uniforms = <Uniform>[];
     final remainders = <String>[];
     var version = const Version(320, 'es');
@@ -66,7 +66,7 @@ class Shader {
     }
     uniforms.add(const Uniform('resolution', UniformType.vec2));
 
-    return Shader._(
+    return ShaderSpecification._(
       name,
       version,
       precision,
