@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:umbra_core/umbra_core.dart';
 
 final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+);');
@@ -7,15 +9,27 @@ final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+);');
 /// {@endtemplate}
 class Shader {
   const Shader._(
+    this.name,
     this.version,
     this.precision,
     this.uniforms,
-    this._remainders,
+    this.userCode,
   );
 
   /// {@macro shader}
-  factory Shader.parse(String shaderCode) {
-    final lines = shaderCode.split('\n');
+  ///
+  /// Parsed directly from a file.
+  factory Shader.fromFile(File file) {
+    return Shader.parse(
+      file.path.split('/').last.split('.').first,
+      file.readAsLinesSync(),
+    );
+  }
+
+  /// {@macro shader}
+  ///
+  /// Parsed directly from a string.
+  factory Shader.parse(String name, List<String> lines) {
     final uniforms = <Uniform>[];
     final remainders = <String>[];
     var version = const Version(320, 'es');
@@ -23,7 +37,7 @@ class Shader {
 
     for (final line in lines) {
       if (line.startsWith('#version')) {
-        version = Version.parse(lines.first);
+        version = Version.parse(line);
       } else if (line.startsWith('precision')) {
         precision = Precision.parse(line);
       } else if (_uniformRegexp.hasMatch(line)) {
@@ -33,7 +47,9 @@ class Shader {
         remainders.add(line);
       }
     }
-    final trueRemainders = <String>[];
+    final userCode = <String>[];
+
+    // Trim down the remainders to remove any blank lines at start and end.
     var trimmingStart = true;
     for (var i = 0; i < remainders.length; i++) {
       trimmingStart = remainders[i].isEmpty && trimmingStart;
@@ -46,16 +62,20 @@ class Shader {
         }
       }
 
-      trueRemainders.add(remainders[i]);
+      userCode.add(remainders[i]);
     }
+    uniforms.add(const Uniform('resolution', UniformType.vec2));
 
     return Shader._(
+      name,
       version,
       precision,
       List.unmodifiable(uniforms),
-      trueRemainders,
+      List.unmodifiable(userCode),
     );
   }
+
+  final String name;
 
   /// The precision of the shader.
   final Precision precision;
@@ -66,35 +86,6 @@ class Shader {
   /// The uniforms of the shader.
   final List<Uniform> uniforms;
 
-  final List<String> _remainders;
-
-  @override
-  String toString() {
-    final uniformLength = uniforms.length;
-
-    return [
-      '''
-$version
-
-$precision
-
-layout (location = 0) out vec4 COLOR;
-
-// User defined uniforms
-${uniforms.map((uniform) => 'layout (location = ${uniforms.indexOf(uniform)}) $uniform').join('\n')}
-
-// Flutter shader defined uniforms
-layout (location = $uniformLength) uniform vec2 resolution;
-
-void main()
-{
-    vec2 UV = gl_FragCoord.xy / resolution.xy;
-
-    fragment(TEXTURE, UV);
-}
-
-// User defined code''',
-      ..._remainders,
-    ].join('\n');
-  }
+  /// The user code of the shader.
+  final List<String> userCode;
 }

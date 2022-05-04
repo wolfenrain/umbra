@@ -12,7 +12,7 @@ void main() {
       );
     });
 
-    group('parsing', () {
+    test('parsing', () {
       final uniform = Uniform.parse('name', 'float');
 
       expect(uniform.name, equals('name'));

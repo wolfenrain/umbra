@@ -14,3 +14,4 @@ dev_dependencies:
   very_good_analysis: ^2.4.0
 dependencies: 
   equatable: ^2.0.3
+  mason: ^0.1.0-dev.19
