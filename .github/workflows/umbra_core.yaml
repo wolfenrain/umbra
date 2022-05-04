@@ -20,5 +20,3 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       working_directory: packages/umbra_core
-      flutter_channel: stable
-      flutter_version: 2.10.0

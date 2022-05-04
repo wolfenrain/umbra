@@ -11,8 +11,6 @@ import '../../helpers/helpers.dart';
 class MockFile extends Mock implements File {}
 
 void main() {
-  final cwd = Directory.current;
-
   group('ShaderSpecification', () {
     test('can parse a shader from file', () {
       final file = MockFile();

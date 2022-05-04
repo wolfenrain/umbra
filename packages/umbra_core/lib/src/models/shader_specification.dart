@@ -75,6 +75,7 @@ class ShaderSpecification {
     );
   }
 
+  /// The name of the shader file.
   final String name;
 
   /// The precision of the shader.
