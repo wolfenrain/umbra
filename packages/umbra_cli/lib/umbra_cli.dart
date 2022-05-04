@@ -1,3 +1,3 @@
 library umbra_cli;
 
-export 'src/umbra_cli.dart';
+export 'src/command_runner.dart';

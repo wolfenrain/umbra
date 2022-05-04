@@ -5,7 +5,7 @@
 
 ---
 
-CLI interface for Umbra.
+Command Line Interface for Umbra.
 
 ## Installing
 

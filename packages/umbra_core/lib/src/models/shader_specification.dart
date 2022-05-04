@@ -20,6 +20,9 @@ class ShaderSpecification {
   ///
   /// Parsed directly from a file.
   factory ShaderSpecification.fromFile(File file) {
+    if (!file.existsSync()) {
+      throw ArgumentError('The shader file "${file.path}" does not exist.');
+    }
     return ShaderSpecification.parse(
       file.path.split('/').last.split('.').first,
       file.readAsLinesSync(),

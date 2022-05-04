@@ -1,12 +1,15 @@
 name: umbra_cli
-description: CLI interface for Umbra
-version: 1.0.0+1
+description: Command Line Interface for Umbra.
+version: 0.1.0
 publish_to: none
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
+  args: ^2.3.0
+  mason: ^0.1.0-dev.19
+  path: ^1.8.1
   umbra_core:
     path: ../umbra_core
 
