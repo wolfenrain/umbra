@@ -1,4 +1,5 @@
 import 'package:mason/mason.dart';
+// ignore: implementation_imports
 import 'package:mason/src/generator.dart';
 
 /// {@template in_memory_generator_target}
