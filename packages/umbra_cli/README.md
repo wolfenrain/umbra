@@ -15,7 +15,7 @@ dart pub global activate umbra_cli
 
 ## Commands
 
-#### `umbra-cli generate`
+#### `umbra generate`
 
 Generate files based on a given shader file:
 
@@ -25,13 +25,13 @@ TODO: gif here
 
 ```sh
 # Generate the raw GLSL shader based on the given shader file
-umbra-cli generate raw ./shaders/simple.glsl --output ./shaders/simple_raw.glsl
+umbra generate raw ./shaders/simple.glsl --output ./shaders/simple_raw.glsl
 
 # Generate a useable SPIRV file for Flutter based on the given shader file
-umbra-cli generate spirv ./shaders/simple.glsl --output ./assets/shaders
+umbra generate spirv ./shaders/simple.glsl --output ./assets/shaders
 
 # Generate a strongly typed Dart file based on the given shader file
-umbra-cli generate dart ./shaders/simple.glsl --output ./lib/shaders
+umbra generate dart ./shaders/simple.glsl --output ./lib/shaders
 ```
 
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg

@@ -10,6 +10,7 @@ dependencies:
   args: ^2.3.0
   mason: ^0.1.0-dev.19
   path: ^1.8.1
+  pub_updater: ^0.2.2
   umbra_core:
     path: ../umbra_core
 
@@ -20,4 +21,4 @@ dev_dependencies:
   very_good_analysis: ^2.4.0
 
 executables:
-  umbra-cli: umbra_cli
+  umbra: umbra

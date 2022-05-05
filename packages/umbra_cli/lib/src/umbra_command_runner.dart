@@ -1,14 +1,9 @@
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart' hide packageVersion;
+import 'package:pub_updater/pub_updater.dart';
 import 'package:umbra_cli/src/commands/commands.dart';
 import 'package:umbra_cli/src/version.dart';
-
-// The Google Analytics tracking ID.
-const _gaTrackingId = 'UA-117465969-4';
-
-// The Google Analytics Application Name.
-const _gaAppName = 'very-good-cli';
 
 /// The package name.
 const packageName = 'umbra_cli';
@@ -20,20 +15,24 @@ class UmbraCommandRunner extends CommandRunner<int> {
   /// {@macro umbra_command_runner}
   UmbraCommandRunner({
     Logger? logger,
+    PubUpdater? pubUpdater,
   })  : _logger = logger ?? Logger(),
-        super('umbra-cli', 'Command Line Interface for Umbra') {
+        _pubUpdater = pubUpdater ?? PubUpdater(),
+        super('umbra', 'Command Line Interface for Umbra') {
     argParser.addFlag(
       'version',
       negatable: false,
       help: 'Print the current version.',
     );
     addCommand(GenerateCommand(logger: _logger));
+    addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
   }
 
   /// Standard timeout duration for the CLI.
   static const timeout = Duration(milliseconds: 500);
 
   final Logger _logger;
+  final PubUpdater _pubUpdater;
 
   @override
   Future<int> run(Iterable<String> args) async {
@@ -65,6 +64,24 @@ class UmbraCommandRunner extends CommandRunner<int> {
     } else {
       exitCode = await super.runCommand(topLevelResults);
     }
+    if (topLevelResults.command?.name != 'update') await _checkForUpdates();
     return exitCode;
+  }
+
+  Future<void> _checkForUpdates() async {
+    try {
+      final latestVersion = await _pubUpdater.getLatestVersion(packageName);
+      final isUpToDate = packageVersion == latestVersion;
+      if (!isUpToDate) {
+        _logger
+          ..info('')
+          ..info(
+            '''
+${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
+${lightYellow.wrap('Changelog:')} ${lightCyan.wrap('https://github.com/wolfenrain/umbra/releases/tag/umbra_cli-v$latestVersion')}
+Run ${cyan.wrap('umbra update')} to update''',
+          );
+      }
+    } catch (_) {}
   }
 }

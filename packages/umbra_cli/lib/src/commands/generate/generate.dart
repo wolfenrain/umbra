@@ -1,26 +1,20 @@
-import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart' hide packageVersion;
 import 'package:umbra_cli/src/commands/generate/raw/raw.dart';
+import 'package:umbra_cli/src/umbra_command.dart';
 
 /// {@template generate_command}
-/// Generate command for wrapping all the different type of generation commands.
+/// `umbra generate` command which holds different generation sub commands.
 /// {@endtemplate}
-class GenerateCommand extends Command<int> {
+class GenerateCommand extends UmbraCommand {
   /// {@macro generate_command}
   GenerateCommand({
     Logger? logger,
-  }) : _logger = logger ?? Logger() {
-    addSubcommand(RawCommand(logger: _logger));
+  }) : super(logger: logger) {
+    addSubcommand(RawCommand(logger: logger));
   }
 
-  final Logger _logger;
-
   @override
-  String get description =>
-      'Generate a different type of files based on a given shader file';
-
-  @override
-  String get summary => '$invocation\n$description';
+  String get description => 'Generate different file types for a shader file.';
 
   @override
   String get name => 'generate';
