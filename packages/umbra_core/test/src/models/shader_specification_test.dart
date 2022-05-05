@@ -16,6 +16,7 @@ void main() {
       final file = MockFile();
       when(() => file.path).thenReturn('file/to/simple.glsl');
       when(file.readAsLinesSync).thenReturn(simpleShader.input);
+      when(file.existsSync).thenReturn(true);
 
       final specification = ShaderSpecification.fromFile(file);
 
@@ -29,6 +30,17 @@ void main() {
         specification.uniforms,
         equals([Uniform('resolution', UniformType.vec2)]),
       );
+      verify(file.readAsLinesSync).called(1);
+      verify(file.existsSync).called(1);
+    });
+
+    test('throws exception if file does not exist', () {
+      final file = MockFile();
+      when(file.existsSync).thenReturn(false);
+      when(() => file.path).thenReturn('file/to/simple.glsl');
+
+      expect(() => ShaderSpecification.fromFile(file), throwsArgumentError);
+      verify(file.existsSync).called(1);
     });
 
     test('can parse a shader', () {
