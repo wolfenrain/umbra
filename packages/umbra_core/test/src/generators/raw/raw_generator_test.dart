@@ -10,13 +10,13 @@ import '../../../helpers/helpers.dart';
 void main() {
   final cwd = Directory.current;
 
-  group('UmbraShaderGenerator', () {
-    test('generates a simple shader', () async {
+  group('RawGenerator', () {
+    test('generate a raw GLSL shader', () async {
       final specification = ShaderSpecification.parse(
         'simple',
         simpleShader.input,
       );
-      final generator = ShaderGenerator(specification);
+      final generator = RawGenerator(specification);
 
       expect(
         await generator.generate(),
@@ -24,12 +24,12 @@ void main() {
       );
     });
 
-    test('generates a shader with precision correctly', () async {
+    test('generate a raw GLSL shader with precision correctly', () async {
       final specification = ShaderSpecification.parse(
         'with_precision',
         withPrecisionShader.input,
       );
-      final generator = ShaderGenerator(specification);
+      final generator = RawGenerator(specification);
 
       expect(
         await generator.generate(),
@@ -37,12 +37,12 @@ void main() {
       );
     });
 
-    test('generates a shader with uniforms correctly', () async {
+    test('generate a raw GLSL shader with uniforms correctly', () async {
       final specification = ShaderSpecification.parse(
         'with_uniforms',
         withUniformsShader.input,
       );
-      final generator = ShaderGenerator(specification);
+      final generator = RawGenerator(specification);
 
       expect(
         await generator.generate(),
@@ -50,12 +50,12 @@ void main() {
       );
     });
 
-    test('generates a shader with version correctly', () async {
+    test('generate a raw GLSL shader with version correctly', () async {
       final specification = ShaderSpecification.parse(
         'with_version',
         withVersionShader.input,
       );
-      final generator = ShaderGenerator(specification);
+      final generator = RawGenerator(specification);
 
       expect(
         await generator.generate(),

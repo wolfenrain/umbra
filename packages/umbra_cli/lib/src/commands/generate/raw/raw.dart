@@ -51,7 +51,7 @@ class RawCommand extends UmbraCommand {
     }
     final generateDone = logger.progress('Generating "${outputFile.path}"');
 
-    final generator = ShaderGenerator(shaderSpecification);
+    final generator = RawGenerator(shaderSpecification);
     final result = await generator.generate();
     await outputFile.writeAsString(result);
 
