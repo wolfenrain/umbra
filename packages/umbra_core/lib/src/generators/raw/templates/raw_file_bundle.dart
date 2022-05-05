@@ -3,7 +3,7 @@
 
 import 'package:mason/mason.dart';
 
-final shaderFileBundle = MasonBundle.fromJson(<String, dynamic>{
+final rawFileBundle = MasonBundle.fromJson(<String, dynamic>{
   "files": [
     {
       "path": "{{name}}.glsl",
@@ -13,14 +13,14 @@ final shaderFileBundle = MasonBundle.fromJson(<String, dynamic>{
     }
   ],
   "hooks": [],
-  "name": "shader_file",
-  "description": "Generate a GLSL shader for Flutter.",
+  "name": "raw_file",
+  "description": "Generate a raw GLSL shader for Flutter.",
   "version": "0.1.0+1",
   "environment": {"mason": ">=0.1.0-dev <0.1.0"},
   "readme": {
     "path": "README.md",
     "data":
-        "IyBzaGFkZXJfZmlsZQoKR2VuZXJhdGUgYSBHTFNMIHNoYWRlciBmb3IgRmx1dHRlcgoKX0dlbmVyYXRlZCBieSBbbWFzb25dWzFdIPCfp7FfCgojIyBHZXR0aW5nIFN0YXJ0ZWQg8J+agAoKVGhpcyBpcyBhIHN0YXJ0aW5nIHBvaW50IGZvciBhIG5ldyBicmljay4KQSBmZXcgcmVzb3VyY2VzIHRvIGdldCB5b3Ugc3RhcnRlZCBpZiB0aGlzIGlzIHlvdXIgZmlyc3QgYnJpY2sgdGVtcGxhdGU6CgotIFtPZmZpY2lhbCBNYXNvbiBEb2N1bWVudGF0aW9uXVsyXQotIFtDb2RlIGdlbmVyYXRpb24gd2l0aCBNYXNvbiBCbG9nXVszXQotIFtWZXJ5IEdvb2QgTGl2ZXN0cmVhbTogRmVsaXggQW5nZWxvdiBEZW1vcyBNYXNvbl1bNF0KClsxXTogaHR0cHM6Ly9naXRodWIuY29tL2ZlbGFuZ2VsL21hc29uClsyXTogaHR0cHM6Ly9naXRodWIuY29tL2ZlbGFuZ2VsL21hc29uL3RyZWUvbWFzdGVyL3BhY2thZ2VzL21hc29uX2NsaSNyZWFkbWUKWzNdOiBodHRwczovL3Zlcnlnb29kLnZlbnR1cmVzL2Jsb2cvY29kZS1nZW5lcmF0aW9uLXdpdGgtbWFzb24KWzRdOiBodHRwczovL3lvdXR1LmJlL0c0UFRqQTZ0cFRVCg==",
+        "IyByYXdfZmlsZQoKR2VuZXJhdGUgYSByYXcgR0xTTCBzaGFkZXIgZm9yIEZsdXR0ZXIuCg==",
     "type": "text"
   },
   "changelog": {

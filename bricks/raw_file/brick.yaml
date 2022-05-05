@@ -1,5 +1,5 @@
-name: shader_file
-description: Generate a GLSL shader for Flutter.
+name: raw_file
+description: Generate a raw GLSL shader for Flutter.
 version: 0.1.0+1
 
 environment:
