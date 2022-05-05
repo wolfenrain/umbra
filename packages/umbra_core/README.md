@@ -11,7 +11,7 @@ The shader fixtures in `test/fixtures/shaders` are based on the shader files in 
 so to update a fixture you can use the following command:
 
 ```shell
-umbra-cli generate raw examples/shaders/simple.glsl --type shader --output test/fixtures/shaders/simple.glsl
+umbra generate raw examples/shaders/simple.glsl --type shader --output test/fixtures/shaders/simple.glsl
 ```
 
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg

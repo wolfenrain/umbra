@@ -1,4 +1,4 @@
-name: umbra_core
+name: umbra_cli
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -7,16 +7,16 @@ concurrency:
 on:
   push:
     paths:
-      - "packages/umbra_core/**"
-      - ".github/workflows/umbra_core.yaml"
+      - "packages/umbra_cli/**"
+      - ".github/workflows/umbra_cli.yaml"
 
   pull_request:
     paths:
-      - "packages/umbra_core/**"
-      - ".github/workflows/umbra_core.yaml"
+      - "packages/umbra_cli/**"
+      - ".github/workflows/umbra_cli.yaml"
 
 jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
-      working_directory: packages/umbra_core
+      working_directory: packages/umbra_cli
