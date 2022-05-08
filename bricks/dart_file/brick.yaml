@@ -6,8 +6,15 @@ environment:
   mason: ">=0.1.0-dev <0.1.0"
 
 vars:
-  name:
+  version:
     type: string
-    description: Your name
-    default: Dash
-    prompt: What is your name?
+    description: GLSL version.
+  precision:
+    type: string
+    description: GLSL precision.
+  uniforms:
+    type: string
+    description: GLSL user uniforms.
+  userCode:
+    type: string
+    description: GLSL user code.
