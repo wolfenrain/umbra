@@ -23,8 +23,9 @@ const expectedUsage = [
       '    --version    Print the current version.\n'
       '\n'
       'Available commands:\n'
-      '  generate   Generate different file types for a shader file.\n'
-      '  update     Update umbra.\n'
+      '  generate       Generate different file types for a shader file.\n'
+      '  install-deps   Install external dependencies for umbra.\n'
+      '  update         Update umbra.\n'
       '\n'
       'Run "umbra help <command>" for more information about a command.'
 ];

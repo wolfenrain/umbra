@@ -1,4 +1,7 @@
 include: package:very_good_analysis/analysis_options.2.4.0.yaml
+analyzer:
+  exclude:
+    - bricks/dart_file/__brick__/*.dart
 linter:
   rules:
     public_member_api_docs: false

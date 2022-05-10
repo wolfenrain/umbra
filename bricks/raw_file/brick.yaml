@@ -6,6 +6,9 @@ environment:
   mason: ">=0.1.0-dev <0.1.0"
 
 vars:
+  name:
+    type: string
+    description: GLSL shader name.
   version:
     type: string
     description: GLSL version.

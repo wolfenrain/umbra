@@ -26,6 +26,7 @@ class UmbraCommandRunner extends CommandRunner<int> {
     );
     addCommand(GenerateCommand(logger: _logger));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
+    addCommand(InstallDepsCommand(logger: logger));
   }
 
   /// Standard timeout duration for the CLI.

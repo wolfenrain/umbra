@@ -246,7 +246,7 @@ packages:
       name: mason
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0-dev.19"
+    version: "0.1.0-dev.21"
   mason_logger:
     dependency: transitive
     description:

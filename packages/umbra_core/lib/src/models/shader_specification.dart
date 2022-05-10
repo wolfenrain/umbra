@@ -67,7 +67,9 @@ class ShaderSpecification {
 
       userCode.add(remainders[i]);
     }
-    uniforms.add(const Uniform('resolution', UniformType.vec2));
+    uniforms
+      ..add(const Uniform('resolution', UniformType.vec2))
+      ..add(const Uniform('TEXTURE', UniformType.sampler2D));
 
     return ShaderSpecification._(
       name,
@@ -85,7 +87,7 @@ class ShaderSpecification {
   final Precision precision;
 
   /// The version of the shader.
-  final Version? version;
+  final Version version;
 
   /// The uniforms of the shader.
   final List<Uniform> uniforms;

@@ -1,20 +1,14 @@
 name: dart_file
-description: Generate a Dart file for a Flutter GLSL shader.
+description: Generate a Dart Shader file for a Flutter GLSL shader.
 version: 0.1.0+1
 
 environment:
   mason: ">=0.1.0-dev <0.1.0"
 
 vars:
-  version:
+  name:
     type: string
-    description: GLSL version.
-  precision:
-    type: string
-    description: GLSL precision.
+    description: GLSL shader name.
   uniforms:
     type: string
     description: GLSL user uniforms.
-  userCode:
-    type: string
-    description: GLSL user code.

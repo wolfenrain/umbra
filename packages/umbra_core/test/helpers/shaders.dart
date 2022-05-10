@@ -1,8 +1,6 @@
-import 'dart:io';
+import 'fixture.dart';
 
-import 'package:path/path.dart' as path;
-
-final simpleShader = ShaderFixture(
+final simpleShader = Fixture(
   '''
 void fragment(sample2D TEXTURE, vec2 UV) {
     COLOR = texture(TEXTURE, UV);
@@ -10,7 +8,7 @@ void fragment(sample2D TEXTURE, vec2 UV) {
   'simple',
 );
 
-final withPrecisionShader = ShaderFixture(
+final withPrecisionShader = Fixture(
   '''
 precision highp float
 
@@ -20,7 +18,7 @@ void fragment(sample2D TEXTURE, vec2 UV) {
   'with_precision',
 );
 
-final withUniformsShader = ShaderFixture(
+final withUniformsShader = Fixture(
   '''
 uniform vec4 color;
 uniform float mix_value;
@@ -32,7 +30,7 @@ void fragment(sample2D TEXTURE, vec2 UV) {
   'with_uniforms',
 );
 
-final withVersionShader = ShaderFixture(
+final withVersionShader = Fixture(
   '''
 #version 300 es
 
@@ -41,26 +39,3 @@ void fragment(sample2D TEXTURE, vec2 UV) {
 }''',
   'with_version',
 );
-
-class ShaderFixture {
-  ShaderFixture(String input, this._outputFile)
-      : input = List.unmodifiable(input.split('\n'));
-
-  final List<String> input;
-
-  final String _outputFile;
-
-  File outputFile(Directory cwd) {
-    return File.fromUri(
-      Uri.parse(
-        path.join(
-          cwd.path,
-          'test',
-          'fixtures',
-          'shaders',
-          '$_outputFile.glsl',
-        ),
-      ),
-    );
-  }
-}

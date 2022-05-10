@@ -28,7 +28,10 @@ void main() {
       );
       expect(
         specification.uniforms,
-        equals([Uniform('resolution', UniformType.vec2)]),
+        equals([
+          Uniform('resolution', UniformType.vec2),
+          Uniform('TEXTURE', UniformType.sampler2D),
+        ]),
       );
       verify(file.readAsLinesSync).called(1);
       verify(file.existsSync).called(1);
@@ -57,7 +60,10 @@ void main() {
       );
       expect(
         specification.uniforms,
-        equals([Uniform('resolution', UniformType.vec2)]),
+        equals([
+          Uniform('resolution', UniformType.vec2),
+          Uniform('TEXTURE', UniformType.sampler2D),
+        ]),
       );
     });
 
@@ -94,6 +100,7 @@ void main() {
           Uniform('color', UniformType.vec4),
           Uniform('mix_value', UniformType.float),
           Uniform('resolution', UniformType.vec2),
+          Uniform('TEXTURE', UniformType.sampler2D),
         ]),
       );
     });

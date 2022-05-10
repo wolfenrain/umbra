@@ -1,5 +1,5 @@
 import 'package:mason/mason.dart' hide packageVersion;
-import 'package:umbra_cli/src/commands/generate/raw/raw.dart';
+import 'package:umbra_cli/src/commands/generate/commands/commands.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
 
 /// {@template generate_command}
@@ -11,6 +11,7 @@ class GenerateCommand extends UmbraCommand {
     Logger? logger,
   }) : super(logger: logger) {
     addSubcommand(RawCommand(logger: logger));
+    addSubcommand(DartCommand(logger: logger));
   }
 
   @override

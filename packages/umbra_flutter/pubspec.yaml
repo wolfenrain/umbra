@@ -1,0 +1,18 @@
+name: umbra_flutter
+description: Flutter package for Umbra.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  umbra_core:
+    path: ../umbra_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^2.4.0

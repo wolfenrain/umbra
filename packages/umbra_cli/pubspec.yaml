@@ -7,8 +7,10 @@ environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
+  archive: ^3.3.0
   args: ^2.3.0
-  mason: ^0.1.0-dev.19
+  mason: ^0.1.0-dev.21
+  meta: ^1.7.0
   path: ^1.8.1
   pub_updater: ^0.2.2
   umbra_core:

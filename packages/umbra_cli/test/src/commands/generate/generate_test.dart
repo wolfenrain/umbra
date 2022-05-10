@@ -19,7 +19,8 @@ const expectedUsage = [
       '-h, --help    Print this usage information.\n'
       '\n'
       'Available subcommands:\n'
-      '  raw   Generate a raw GLSL shader file.\n'
+      '  dart   Generate a Dart Shader file.\n'
+      '  raw    Generate a raw GLSL shader file.\n'
       '\n'
       'Run "umbra help" to see global options.'
 ];
