@@ -16,12 +16,7 @@ class UmbraShader {
             sampler,
             TileMode.clamp,
             TileMode.clamp,
-            Float64List.fromList([
-              1.0, 0.0, 0.0, 0.0, //
-              0.0, 1.0, 0.0, 0.0, //
-              0.0, 0.0, 1.0, 0.0, //
-              0.0, 0.0, 0.0, 1.0, //
-            ]),
+            _identity,
           );
         }).toList();
 
@@ -44,3 +39,10 @@ class UmbraShader {
     );
   }
 }
+
+final _identity = Float64List.fromList([
+  1.0, 0.0, 0.0, 0.0, //
+  0.0, 1.0, 0.0, 0.0,
+  0.0, 0.0, 1.0, 0.0,
+  0.0, 0.0, 0.0, 1.0,
+]);

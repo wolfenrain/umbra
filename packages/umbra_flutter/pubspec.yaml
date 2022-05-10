@@ -11,8 +11,10 @@ dependencies:
     sdk: flutter
   umbra_core:
     path: ../umbra_core
+  vector_math: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mocktail: ^0.3.0
   very_good_analysis: ^2.4.0
