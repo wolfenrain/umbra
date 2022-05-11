@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:mason/mason.dart' hide packageVersion;
+import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
 import 'package:umbra_cli/src/workers/workers.dart';
 
@@ -15,10 +16,11 @@ class InstallDepsCommand extends UmbraCommand {
     Downloader? downloader,
     FileExtractor? extractor,
     FileWriter? writer,
+    Cmd? cmd,
   })  : _downloader = downloader ?? const Downloader(),
-        _extractor = extractor ?? const FileExtractor(),
+        _extractor = extractor ?? FileExtractor(),
         _writer = writer ?? const FileWriter(),
-        super(logger: logger);
+        super(logger: logger, cmd: cmd);
 
   @override
   final String description = 'Install external dependencies for umbra.';
@@ -41,22 +43,8 @@ class InstallDepsCommand extends UmbraCommand {
       return ExitCode.success.code;
     }
 
-    final String shaderCDownloadLink;
-    if (Platform.isMacOS) {
-      shaderCDownloadLink =
-          'https://storage.googleapis.com/shaderc/artifacts/prod/graphics_shader_compiler/shaderc/macos/continuous_clang_release/388/20220202-124410/install.tgz';
-    } else if (Platform.isLinux) {
-      shaderCDownloadLink =
-          'https://storage.googleapis.com/shaderc/badges/build_link_linux_clang_release.html';
-    } else if (Platform.isWindows) {
-      shaderCDownloadLink =
-          'https://storage.googleapis.com/shaderc/badges/build_link_windows_vs2017_release.html';
-    } else {
-      throw UnsupportedError('Unsupported platform.');
-    }
-
     final downloadingDone = logger.progress('Downloading dependencies');
-    final archive = await _downloader.download(shaderCDownloadLink);
+    final archive = await _downloadingShaderC();
     downloadingDone('Dependencies downloaded');
 
     final extractingDone = logger.progress('Extracting dependencies');
@@ -64,14 +52,30 @@ class InstallDepsCommand extends UmbraCommand {
     extractingDone('Dependencies extracted');
 
     final installingDone = logger.progress('Installing dependencies');
-    await _writer.write(glslc, fileBytes);
-    if (Platform.isMacOS || Platform.isLinux) {
-      await Process.run('chmod', ['+x', glslc.path]);
+    await _writer.write(glslc.path, fileBytes);
+    if (platform.isMacOS || platform.isLinux) {
+      await cmd.run('chmod', ['+x', glslc.path]);
     }
     installingDone('Dependencies installed');
 
-    // ~/.umbra/bin/glslc --target-env=opengl -fshader-stage=fragment ./test/fixtures/raw/output.glsl -o -
-
     return ExitCode.success.code;
+  }
+
+  /// We only check known platforms as this code can't be reached on
+  /// unsupported platforms because of [dataDirectory].
+  Future<List<int>> _downloadingShaderC() async {
+    var shaderCDownloadLink = '';
+    if (platform.isMacOS) {
+      shaderCDownloadLink =
+          'https://storage.googleapis.com/shaderc/artifacts/prod/graphics_shader_compiler/shaderc/macos/continuous_clang_release/388/20220202-124410/install.tgz';
+    } else if (platform.isLinux) {
+      shaderCDownloadLink =
+          'https://storage.googleapis.com/shaderc/artifacts/prod/graphics_shader_compiler/shaderc/linux/continuous_clang_release/380/20220202-124409/install.tgz';
+    } else if (platform.isWindows) {
+      shaderCDownloadLink =
+          'https://storage.googleapis.com/shaderc/artifacts/prod/graphics_shader_compiler/shaderc/windows/continuous_release_2017/384/20220202-124410/install.zip';
+    }
+
+    return _downloader.download(shaderCDownloadLink);
   }
 }

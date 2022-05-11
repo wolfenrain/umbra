@@ -5,8 +5,11 @@ import 'package:mason/mason.dart';
 /// {@endtemplate}
 class ExitWith implements Exception {
   /// {@macro exit_with}
-  ExitWith(this.exit);
+  ExitWith(this.exit, [this.message]);
 
   /// The exit code to use when exiting the CLI.
   final ExitCode exit;
+
+  /// Optional message to display when exiting the CLI.
+  final String? message;
 }

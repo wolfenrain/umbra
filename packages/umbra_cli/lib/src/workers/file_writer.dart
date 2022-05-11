@@ -9,17 +9,18 @@ class FileWriter {
   /// {@macro file_writer}
   const FileWriter();
 
-  /// Writes [bytes] to a [file].
-  Future<void> write(File file, List<int> bytes) async {
-    return spawnWorker(_write, data: [bytes, file]);
+  /// Writes [bytes] to a file with given [path].
+  Future<void> write(String path, List<int> bytes) async {
+    return spawnWorker(_write, data: [bytes, path]);
   }
 }
 
 void _write(SendPort sendPort) {
   setupWorker(sendPort, (List<dynamic> input) async {
     final bytes = input.first as List<int>;
-    final file = input.last as File;
+    final path = input.last as String;
 
+    final file = File(path);
     await file.create(recursive: true);
     await file.writeAsBytes(bytes, flush: true);
   });

@@ -18,8 +18,5 @@ class RawCommand extends BaseGenerateCommand {
   String get name => 'raw';
 
   @override
-  String get invocation => 'umbra generate raw <input shader file>';
-
-  @override
   String get extension => 'glsl';
 }

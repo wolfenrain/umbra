@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:archive/archive_io.dart';
+import 'package:umbra_cli/src/platform.dart';
 import 'package:umbra_cli/src/workers/worker.dart';
 
 /// {@template file_extractor}
@@ -10,26 +9,30 @@ import 'package:umbra_cli/src/workers/worker.dart';
 /// {@endtemplate}
 class FileExtractor {
   /// {@macro file_extractor}
-  const FileExtractor();
+  FileExtractor({Platform? platform}) : _platform = platform ?? Platform();
 
-  /// Extracts the file from the given [bytes].
-  Future<List<int>> extract(String file, List<int> bytes) async {
-    final archive = await spawnWorker<Archive, List<int>>(_decode, data: bytes);
+  final Platform _platform;
 
-    return archive.files.firstWhere((f) => f.name == file).content as List<int>;
-  }
-}
-
-void _decode(SendPort sendPort) {
-  setupWorker(sendPort, (List<int> bytes) {
+  /// Extracts the file [path] from the given [bytes].
+  Future<List<int>> extract(String path, List<int> bytes) async {
     final Archive archive;
-    if (Platform.isMacOS || Platform.isLinux) {
-      archive = TarDecoder().decodeBytes(GZipDecoder().decodeBytes(bytes));
-    } else if (Platform.isWindows) {
-      archive = ZipDecoder().decodeBytes(bytes);
+    if (_platform.isMacOS || _platform.isLinux) {
+      archive = await spawnWorker<Archive, List<int>>(_decodeTGZ, data: bytes);
+    } else if (_platform.isWindows) {
+      archive = await spawnWorker<Archive, List<int>>(_decodeZIP, data: bytes);
     } else {
       throw UnsupportedError('Unsupported platform.');
     }
-    return archive;
+    return archive.files.firstWhere((f) => f.name == path).content as List<int>;
+  }
+}
+
+void _decodeTGZ(SendPort sendPort) {
+  setupWorker(sendPort, (List<int> bytes) {
+    return TarDecoder().decodeBytes(GZipDecoder().decodeBytes(bytes));
   });
+}
+
+void _decodeZIP(SendPort sendPort) {
+  setupWorker(sendPort, ZipDecoder().decodeBytes);
 }

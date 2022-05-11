@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
@@ -34,6 +33,9 @@ abstract class BaseGenerateCommand extends UmbraCommand {
   String get extension;
 
   @override
+  String get invocation => 'umbra generate $name <input shader file>';
+
+  @override
   @mustCallSuper
   Future<int> run() async {
     final ShaderSpecification shaderSpecification;
@@ -44,10 +46,10 @@ abstract class BaseGenerateCommand extends UmbraCommand {
     } catch (err) {
       if (err is ExitWith) {
         if (err.exit == ExitCode.noInput) {
-          throw UsageException(
-            'Input shader file does not exist or is not specified',
-            usage,
-          );
+          if (err.message != null) {
+            logger.err(err.message);
+          }
+          return err.exit.code;
         }
       }
       rethrow;
@@ -76,7 +78,7 @@ abstract class BaseGenerateCommand extends UmbraCommand {
   /// Write the given [bytes] to the given [file].
   void writeToFile(List<int> bytes, File? file) {
     if (file == null) {
-      return stdout.write(String.fromCharCodes(bytes));
+      return logger.info(String.fromCharCodes(bytes));
     }
     if (file.existsSync()) {
       final answer = logger.confirm(
@@ -110,14 +112,14 @@ abstract class BaseGenerateCommand extends UmbraCommand {
   ShaderSpecification _parseShaderSpecification() {
     final rest = results.rest;
     if (rest.isEmpty) {
-      throw ExitWith(ExitCode.noInput);
+      throw ExitWith(ExitCode.noInput, 'No input shader file specified.');
     }
     try {
       final file = ShaderSpecification.fromFile(File(rest.first));
       return file;
     } catch (err) {
       if (err is ArgumentError) {
-        throw ExitWith(ExitCode.noInput);
+        throw ExitWith(ExitCode.noInput, err.message as String);
       }
       rethrow;
     }

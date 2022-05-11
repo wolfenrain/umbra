@@ -15,26 +15,40 @@ Future<T> spawnWorker<T, V>(
   required V data,
 }) async {
   final completer = Completer<T>();
+  final errorPort = ReceivePort();
   final receivePort = ReceivePort();
+  late final StreamSubscription<void> errorSubscription;
   late final StreamSubscription<void> subscription;
   late final Isolate isolate;
+
+  void cleanUp() {
+    isolate.kill();
+    receivePort.close();
+    subscription.cancel();
+    errorSubscription.cancel();
+  }
+
+  errorSubscription = errorPort.listen((dynamic error) {
+    cleanUp();
+    final errorMessage = (error as List).first as String;
+    completer.completeError(Exception(errorMessage));
+  });
 
   subscription = receivePort.listen((dynamic message) {
     if (message is SendPort) {
       message.send(data);
     } else if (message is T) {
-      isolate.kill();
-      receivePort.close();
-      subscription.cancel();
+      cleanUp();
       completer.complete(message);
     } else {
-      throw Exception(
-        'Expected type ${T.toString()} not ${message.runtimeType}',
+      completer.completeError(
+        Exception('Expected type ${T.toString()} not ${message.runtimeType}'),
       );
     }
   });
 
-  isolate = await Isolate.spawn(worker, receivePort.sendPort);
+  isolate = await Isolate.spawn(worker, receivePort.sendPort)
+    ..addErrorListener(errorPort.sendPort);
   return completer.future;
 }
 
@@ -47,9 +61,8 @@ void setupWorker<T, V>(
   final receivePort = ReceivePort()
     ..listen((dynamic message) async {
       if (message is! V) {
-        throw Exception(
-          'Expected type $V not ${message.runtimeType} for worker data',
-        );
+        // ignore: only_throw_errors
+        throw 'Expected type $V not ${message.runtimeType} for worker data';
       }
       sendPort.send(await worker(message));
     });

@@ -18,8 +18,9 @@ class DartCommand extends BaseGenerateCommand {
   String get name => 'dart';
 
   @override
-  String get invocation => 'umbra generate dart <input shader file>';
-
-  @override
   String get extension => 'dart';
 }
+
+// TODO(wolfen): Add SPIRV binary to dart file
+// TODO(wolfen): Add SPIRV command?
+// ~/.umbra/bin/glslc --target-env=opengl -fshader-stage=fragment ./test/fixtures/raw/output.glsl -o -

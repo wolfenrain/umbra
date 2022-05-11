@@ -17,7 +17,7 @@ class MockPubUpdater extends Mock implements PubUpdater {}
 void main() {
   final cwd = Directory.current;
 
-  group('umbra generate raw', () {
+  group('umbra generate dart', () {
     late Logger logger;
     late PubUpdater pubUpdater;
     late UmbraCommandRunner commandRunner;
@@ -41,11 +41,11 @@ void main() {
       Directory.current = cwd;
     });
 
-    group('generate a raw GLSL shader', () {
-      final fixturePath = path.join(testFixturesPath(cwd, suffix: 'raw'));
-      final generatedPath = path.join(testFixturesPath(cwd, suffix: '.raw'));
-      final actual = File(path.join(generatedPath, 'input.glsl'));
-      final expected = File(path.join(fixturePath, 'output.glsl'));
+    group('generate a Dart Shader file', () {
+      final fixturePath = path.join(testFixturesPath(cwd, suffix: 'dart'));
+      final generatedPath = path.join(testFixturesPath(cwd, suffix: '.dart'));
+      final actual = File(path.join(generatedPath, 'input.dart'));
+      final expected = File(path.join(fixturePath, 'output.dart'));
 
       tearDown(() {
         final directory = Directory(generatedPath);
@@ -55,12 +55,12 @@ void main() {
       });
 
       test('in the current directory', () async {
-        setUpTestingEnvironment(cwd, suffix: '.raw');
+        setUpTestingEnvironment(cwd, suffix: '.dart');
         Directory.current = generatedPath;
 
         final result = await commandRunner.run([
           'generate',
-          'raw',
+          'dart',
           path.join(fixturePath, 'input.glsl'),
         ]);
 
@@ -70,11 +70,11 @@ void main() {
       });
 
       test('in an existing output directory', () async {
-        setUpTestingEnvironment(cwd, suffix: '.raw');
+        setUpTestingEnvironment(cwd, suffix: '.dart');
 
         final result = await commandRunner.run([
           'generate',
-          'raw',
+          'dart',
           path.join(fixturePath, 'input.glsl'),
           '--output',
           generatedPath,
@@ -88,7 +88,7 @@ void main() {
       test('in an non-existing output directory', () async {
         final result = await commandRunner.run([
           'generate',
-          'raw',
+          'dart',
           path.join(fixturePath, 'input.glsl'),
           '--output',
           generatedPath,
@@ -101,7 +101,7 @@ void main() {
 
       group('with an existing file', () {
         setUp(() {
-          setUpTestingEnvironment(cwd, suffix: '.raw');
+          setUpTestingEnvironment(cwd, suffix: '.dart');
         });
 
         test('and overwrite it', () async {
@@ -111,7 +111,7 @@ void main() {
 
           final result = await commandRunner.run([
             'generate',
-            'raw',
+            'dart',
             path.join(fixturePath, 'input.glsl'),
             '--output',
             generatedPath,
@@ -129,7 +129,7 @@ void main() {
 
           final result = await commandRunner.run([
             'generate',
-            'raw',
+            'dart',
             path.join(fixturePath, 'input.glsl'),
             '--output',
             generatedPath,
