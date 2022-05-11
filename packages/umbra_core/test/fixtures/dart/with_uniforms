@@ -10,11 +10,19 @@ import 'package:umbra_flutter/umbra_flutter.dart';
 class WithUniforms extends UmbraShader {
   WithUniforms._(
     Image texture, { 
+    required Vector2 position,
+    required Vector3 coordinates,
     required Vector4 color,
     required double mixValue,
+    required Image image,
   }) : super(
           _cachedProgram!,
           floatUniforms: [
+            position.x,
+            position.y,
+            coordinates.x,
+            coordinates.y,
+            coordinates.z,
             color.x,
             color.y,
             color.z,
@@ -23,14 +31,18 @@ class WithUniforms extends UmbraShader {
           ],
           samplers: [
             texture,
+            image,
           ],
         );
 
   /// {@macro with_uniforms}
   static Future<WithUniforms> compile(
     Image texture, { 
+    required Vector2 position,
+    required Vector3 coordinates,
     required Vector4 color,
     required double mixValue,
+    required Image image,
   }) async {
     // Caching the program on the first compile call.
     _cachedProgram ??= await FragmentProgram.compile(
@@ -39,8 +51,11 @@ class WithUniforms extends UmbraShader {
 
     return WithUniforms._(
       texture,
+      position: position,
+      coordinates: coordinates,
       color: color,
       mixValue: mixValue,
+      image: image,
     );
   }
 

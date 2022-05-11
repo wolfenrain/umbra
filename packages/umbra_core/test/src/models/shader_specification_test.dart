@@ -97,8 +97,11 @@ void main() {
       expect(
         specification.uniforms,
         equals([
+          Uniform('position', UniformType.vec2),
+          Uniform('coordinates', UniformType.vec3),
           Uniform('color', UniformType.vec4),
           Uniform('mix_value', UniformType.float),
+          Uniform('image', UniformType.sampler2D),
           Uniform('resolution', UniformType.vec2),
           Uniform('TEXTURE', UniformType.sampler2D),
         ]),

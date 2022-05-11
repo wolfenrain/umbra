@@ -20,12 +20,14 @@ void fragment(sample2D TEXTURE, vec2 UV) {
 
 final withUniformsShader = Fixture(
   '''
+uniform vec2 position;
+uniform vec3 coordinates;
 uniform vec4 color;
 uniform float mix_value;
+uniform sampler2D image;
 
 void fragment(sample2D TEXTURE, vec2 UV) {
-    vec4 pixelColor = texture(TEXTURE, UV);
-    COLOR = mix(pixelColor, color, mix_value);
+    COLOR = texture(TEXTURE, UV);
 }''',
   'with_uniforms',
 );
