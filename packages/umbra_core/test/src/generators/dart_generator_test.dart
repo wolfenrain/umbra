@@ -18,8 +18,6 @@ void main() {
       );
       final generator = DartGenerator(specification, spirvBytes: [1, 2, 3]);
 
-      simpleShader.toDart(cwd).writeAsBytesSync(await generator.generate());
-
       expect(
         await generator.generate(),
         matchesFixture(simpleShader.toDart(cwd)),
@@ -32,10 +30,6 @@ void main() {
         withUniformsShader.input,
       );
       final generator = DartGenerator(specification, spirvBytes: [1, 2, 3]);
-
-      withUniformsShader
-          .toDart(cwd)
-          .writeAsBytesSync(await generator.generate());
 
       expect(
         await generator.generate(),

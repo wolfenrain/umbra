@@ -67,7 +67,7 @@ class DartGenerator extends Generator {
       'hasArguments': arguments.isNotEmpty,
       'samplers': samplers,
       'hasSamplers': samplers.isNotEmpty,
-      'spirvBytes': '<int>[${_spirvBytes.join(', ')}]',
+      'spirvBytes': '<int>[\n${_spirvBytes.map((b) => '  $b,').join('\n')}\n]',
     };
 
     final target = InMemoryGeneratorTarget();
