@@ -17,7 +17,7 @@ class MockPubUpdater extends Mock implements PubUpdater {}
 void main() {
   final cwd = Directory.current;
 
-  group('umbra generate dart', () {
+  group('umbra generate spirv', () {
     late Logger logger;
     late PubUpdater pubUpdater;
     late UmbraCommandRunner commandRunner;
@@ -41,11 +41,25 @@ void main() {
       Directory.current = cwd;
     });
 
-    group('generate a Dart Shader file', () {
-      final fixturePath = path.join(testFixturesPath(cwd, suffix: 'dart'));
-      final generatedPath = path.join(testFixturesPath(cwd, suffix: '.dart'));
-      final actual = File(path.join(generatedPath, 'input.dart'));
-      final expected = File(path.join(fixturePath, 'output.dart'));
+    test('exits with code 73 when the generator throws an exception', () async {
+      final rawPath = path.join(testFixturesPath(cwd, suffix: 'raw'));
+      Directory.current = rawPath;
+
+      final result = await commandRunner.run([
+        'generate',
+        'spirv',
+        path.join(rawPath, 'output.glsl'),
+      ]);
+
+      expect(result, equals(ExitCode.cantCreate.code));
+      verify(() => logger.progress(any())).called(2);
+    });
+
+    group('generate a SPIR-V binary file', () {
+      final fixturePath = path.join(testFixturesPath(cwd, suffix: 'spirv'));
+      final generatedPath = path.join(testFixturesPath(cwd, suffix: '.spirv'));
+      final actual = File(path.join(generatedPath, 'input.spirv'));
+      final expected = File(path.join(fixturePath, 'output.spirv'));
 
       tearDown(() {
         final directory = Directory(generatedPath);
@@ -55,28 +69,26 @@ void main() {
       });
 
       test('in the current directory', () async {
-        setUpTestingEnvironment(cwd, suffix: '.dart');
+        setUpTestingEnvironment(cwd, suffix: '.spirv');
         Directory.current = generatedPath;
 
         final result = await commandRunner.run([
           'generate',
-          'dart',
+          'spirv',
           path.join(fixturePath, 'input.glsl'),
         ]);
 
         expect(result, equals(ExitCode.success.code));
         expect(filesEqual(actual, expected), isTrue);
         verify(() => logger.progress(any())).called(2);
-
-        tearDownTestingEnvironment(cwd, suffix: '.dart');
       });
 
       test('in an existing output directory', () async {
-        setUpTestingEnvironment(cwd, suffix: '.dart');
+        setUpTestingEnvironment(cwd, suffix: '.spirv');
 
         final result = await commandRunner.run([
           'generate',
-          'dart',
+          'spirv',
           path.join(fixturePath, 'input.glsl'),
           '--output',
           generatedPath,
@@ -85,14 +97,12 @@ void main() {
         expect(result, equals(ExitCode.success.code));
         expect(filesEqual(actual, expected), isTrue);
         verify(() => logger.progress(any())).called(2);
-
-        tearDownTestingEnvironment(cwd, suffix: '.dart');
       });
 
       test('in an non-existing output directory', () async {
         final result = await commandRunner.run([
           'generate',
-          'dart',
+          'spirv',
           path.join(fixturePath, 'input.glsl'),
           '--output',
           generatedPath,
@@ -105,11 +115,11 @@ void main() {
 
       group('with an existing file', () {
         setUp(() {
-          setUpTestingEnvironment(cwd, suffix: '.dart');
+          setUpTestingEnvironment(cwd, suffix: '.spirv');
         });
 
         tearDown(() {
-          tearDownTestingEnvironment(cwd, suffix: '.dart');
+          tearDownTestingEnvironment(cwd, suffix: '.spirv');
         });
 
         test('and overwrite it', () async {
@@ -119,7 +129,7 @@ void main() {
 
           final result = await commandRunner.run([
             'generate',
-            'dart',
+            'spirv',
             path.join(fixturePath, 'input.glsl'),
             '--output',
             generatedPath,
@@ -137,7 +147,7 @@ void main() {
 
           final result = await commandRunner.run([
             'generate',
-            'dart',
+            'spirv',
             path.join(fixturePath, 'input.glsl'),
             '--output',
             generatedPath,

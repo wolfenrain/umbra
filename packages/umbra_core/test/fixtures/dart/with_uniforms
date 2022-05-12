@@ -62,4 +62,4 @@ class WithUniforms extends UmbraShader {
   static FragmentProgram? _cachedProgram;
 }
 
-const _binary = <int>[];
+const _binary = <int>[1, 2, 3];

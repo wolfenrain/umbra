@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
+import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/exit_with.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
 import 'package:umbra_core/umbra_core.dart';
-
-/// Builder for Generator commands.
-typedef GeneratorBuilder = Generator Function(ShaderSpecification);
 
 /// {@template base_generate_command}
 /// Base class for all generate commands.
@@ -17,9 +15,8 @@ abstract class BaseGenerateCommand extends UmbraCommand {
   /// {@macro base_generate_command}
   BaseGenerateCommand({
     Logger? logger,
-    required GeneratorBuilder generator,
-  })  : _generatorBuilder = generator,
-        super(logger: logger) {
+    Cmd? cmd,
+  }) : super(logger: logger, cmd: cmd) {
     argParser.addOption(
       'output',
       abbr: 'o',
@@ -27,13 +24,14 @@ abstract class BaseGenerateCommand extends UmbraCommand {
     );
   }
 
-  final GeneratorBuilder _generatorBuilder;
-
   /// The extension of the file to generate.
   String get extension;
 
   @override
   String get invocation => 'umbra generate $name <input shader file>';
+
+  /// Generate file based on the [specification].
+  Future<List<int>> generate(ShaderSpecification specification);
 
   @override
   @mustCallSuper
@@ -45,12 +43,10 @@ abstract class BaseGenerateCommand extends UmbraCommand {
       parsingShader('Shader file parsed');
     } catch (err) {
       if (err is ExitWith) {
-        if (err.exit == ExitCode.noInput) {
-          if (err.message != null) {
-            logger.err(err.message);
-          }
-          return err.exit.code;
+        if (err.message != null) {
+          logger.err(err.message);
         }
+        return err.exit.code;
       }
       rethrow;
     }
@@ -58,8 +54,19 @@ abstract class BaseGenerateCommand extends UmbraCommand {
     final fileName = '${shaderSpecification.name}.$extension';
 
     final generateDone = logger.progress('Generating "$fileName"');
-    final generator = _generatorBuilder(shaderSpecification);
-    final result = await generator.generate();
+    final List<int> result;
+    try {
+      result = await generate(shaderSpecification);
+    } catch (err) {
+      if (err is ExitWith) {
+        if (err.message != null) {
+          logger.err(err.message);
+        }
+        return err.exit.code;
+      }
+      rethrow;
+    }
+
     try {
       writeToFile(result, getFile(fileName));
       generateDone('Generated "$fileName"');

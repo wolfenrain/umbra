@@ -16,7 +16,7 @@ void main() {
         'simple',
         simpleShader.input,
       );
-      final generator = DartGenerator(specification);
+      final generator = DartGenerator(specification, spirvBytes: [1, 2, 3]);
 
       simpleShader.toDart(cwd).writeAsBytesSync(await generator.generate());
 
@@ -31,7 +31,7 @@ void main() {
         'with_uniforms',
         withUniformsShader.input,
       );
-      final generator = DartGenerator(specification);
+      final generator = DartGenerator(specification, spirvBytes: [1, 2, 3]);
 
       withUniformsShader
           .toDart(cwd)

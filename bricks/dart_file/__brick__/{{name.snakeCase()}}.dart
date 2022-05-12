@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
 
 import 'dart:ui';
@@ -43,4 +44,4 @@ class {{name.pascalCase()}} extends UmbraShader {
   static FragmentProgram? _cachedProgram;
 }
 
-const _binary = <int>[];
+const _binary = {{{spirvBytes}}};

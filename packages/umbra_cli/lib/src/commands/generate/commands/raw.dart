@@ -7,9 +7,7 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 class RawCommand extends BaseGenerateCommand {
   /// {@macro raw_command}
-  RawCommand({
-    Logger? logger,
-  }) : super(logger: logger, generator: RawGenerator.new);
+  RawCommand({Logger? logger}) : super(logger: logger);
 
   @override
   String get description => 'Generate a raw GLSL shader file.';
@@ -19,4 +17,9 @@ class RawCommand extends BaseGenerateCommand {
 
   @override
   String get extension => 'glsl';
+
+  @override
+  Future<List<int>> generate(ShaderSpecification specification) async {
+    return RawGenerator(specification).generate();
+  }
 }

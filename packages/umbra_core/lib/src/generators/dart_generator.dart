@@ -8,7 +8,13 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 class DartGenerator extends Generator {
   /// {@macro dart_generator}
-  DartGenerator(ShaderSpecification specification) : super(specification);
+  DartGenerator(
+    ShaderSpecification specification, {
+    required List<int> spirvBytes,
+  })  : _spirvBytes = spirvBytes,
+        super(specification);
+
+  final List<int> _spirvBytes;
 
   /// Generates the Dart Shader file.
   @override
@@ -61,6 +67,7 @@ class DartGenerator extends Generator {
       'hasArguments': arguments.isNotEmpty,
       'samplers': samplers,
       'hasSamplers': samplers.isNotEmpty,
+      'spirvBytes': '<int>[${_spirvBytes.join(', ')}]',
     };
 
     final target = InMemoryGeneratorTarget();

@@ -34,6 +34,7 @@ final rawFileBundle = MasonBundle.fromJson(<String, dynamic>{
     "type": "text"
   },
   "vars": {
+    "name": {"type": "string", "description": "GLSL shader name."},
     "version": {"type": "string", "description": "GLSL version."},
     "precision": {"type": "string", "description": "GLSL precision."},
     "uniforms": {"type": "string", "description": "GLSL user uniforms."},

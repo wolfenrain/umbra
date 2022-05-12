@@ -7,6 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 import 'package:umbra_cli/src/commands/generate/commands/base_generate_command.dart';
+import 'package:umbra_cli/src/exit_with.dart';
 import 'package:umbra_core/umbra_core.dart';
 
 import '../../../../helpers/helpers.dart';
@@ -16,8 +17,10 @@ class MockLogger extends Mock implements Logger {}
 class MockGenerator extends Mock implements Generator {}
 
 class TestCommand extends BaseGenerateCommand {
-  TestCommand({required GeneratorBuilder generator, Logger? logger})
-      : super(generator: generator, logger: logger);
+  TestCommand({required this.generator, Logger? logger})
+      : super(logger: logger);
+
+  Generator Function(ShaderSpecification) generator;
 
   @override
   String get description => 'test command';
@@ -27,6 +30,11 @@ class TestCommand extends BaseGenerateCommand {
 
   @override
   String get name => 'test';
+
+  @override
+  Future<List<int>> generate(ShaderSpecification specification) {
+    return generator(specification).generate();
+  }
 }
 
 const expectedUsage = [
@@ -93,6 +101,21 @@ void main() {
           'The shader file "fake-file" does not exist.',
         ),
       ).called(1);
+    });
+
+    test('exits with code 73 when the generator throws an exception', () async {
+      final fixturePath = path.join(testFixturesPath(cwd, suffix: 'raw'));
+      when(() => generator.generate()).thenThrow(
+        ExitWith(ExitCode.cantCreate, 'fail'),
+      );
+
+      final result = await commandRunner.run([
+        'test',
+        path.join(fixturePath, 'input.glsl'),
+      ]);
+
+      expect(result, equals(ExitCode.cantCreate.code));
+      verify(() => logger.err('fail')).called(1);
     });
 
     test('outputs to stdout when - is given', () async {

@@ -14,3 +14,11 @@ void setUpTestingEnvironment(Directory cwd, {String suffix = ''}) {
     Directory.current = testDir.path;
   } catch (_) {}
 }
+
+void tearDownTestingEnvironment(Directory cwd, {String suffix = ''}) {
+  try {
+    final testDir = Directory(testFixturesPath(cwd, suffix: suffix));
+    if (testDir.existsSync()) testDir.deleteSync(recursive: true);
+    Directory.current = cwd.path;
+  } catch (_) {}
+}

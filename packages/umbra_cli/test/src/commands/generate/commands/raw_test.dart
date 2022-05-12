@@ -67,6 +67,8 @@ void main() {
         expect(result, equals(ExitCode.success.code));
         expect(filesEqual(actual, expected), isTrue);
         verify(() => logger.progress(any())).called(2);
+
+        tearDownTestingEnvironment(cwd, suffix: '.raw');
       });
 
       test('in an existing output directory', () async {
@@ -83,6 +85,8 @@ void main() {
         expect(result, equals(ExitCode.success.code));
         expect(filesEqual(actual, expected), isTrue);
         verify(() => logger.progress(any())).called(2);
+
+        tearDownTestingEnvironment(cwd, suffix: '.raw');
       });
 
       test('in an non-existing output directory', () async {
@@ -102,6 +106,10 @@ void main() {
       group('with an existing file', () {
         setUp(() {
           setUpTestingEnvironment(cwd, suffix: '.raw');
+        });
+
+        tearDown(() {
+          tearDownTestingEnvironment(cwd, suffix: '.raw');
         });
 
         test('and overwrite it', () async {
