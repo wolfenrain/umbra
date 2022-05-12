@@ -8,12 +8,12 @@ import 'package:umbra_core/umbra_core.dart';
 
 import '../../helpers/helpers.dart';
 
-class MockFile extends Mock implements File {}
+class _MockFile extends Mock implements File {}
 
 void main() {
   group('ShaderSpecification', () {
     test('can parse a shader from file', () {
-      final file = MockFile();
+      final file = _MockFile();
       when(() => file.path).thenReturn('file/to/simple.glsl');
       when(file.readAsLinesSync).thenReturn(simpleShader.input);
       when(file.existsSync).thenReturn(true);
@@ -28,14 +28,17 @@ void main() {
       );
       expect(
         specification.uniforms,
-        equals([Uniform('resolution', UniformType.vec2)]),
+        equals([
+          Uniform('resolution', UniformType.vec2),
+          Uniform('TEXTURE', UniformType.sampler2D),
+        ]),
       );
       verify(file.readAsLinesSync).called(1);
       verify(file.existsSync).called(1);
     });
 
     test('throws exception if file does not exist', () {
-      final file = MockFile();
+      final file = _MockFile();
       when(file.existsSync).thenReturn(false);
       when(() => file.path).thenReturn('file/to/simple.glsl');
 
@@ -57,7 +60,10 @@ void main() {
       );
       expect(
         specification.uniforms,
-        equals([Uniform('resolution', UniformType.vec2)]),
+        equals([
+          Uniform('resolution', UniformType.vec2),
+          Uniform('TEXTURE', UniformType.sampler2D),
+        ]),
       );
     });
 
@@ -91,9 +97,13 @@ void main() {
       expect(
         specification.uniforms,
         equals([
+          Uniform('position', UniformType.vec2),
+          Uniform('coordinates', UniformType.vec3),
           Uniform('color', UniformType.vec4),
           Uniform('mix_value', UniformType.float),
+          Uniform('image', UniformType.sampler2D),
           Uniform('resolution', UniformType.vec2),
+          Uniform('TEXTURE', UniformType.sampler2D),
         ]),
       );
     });

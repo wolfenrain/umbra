@@ -11,9 +11,10 @@ class UpdateCommand extends UmbraCommand {
   /// {@macro update_command}
   UpdateCommand({
     required PubUpdater pubUpdater,
-    Logger? logger,
-  })  : _pubUpdater = pubUpdater,
-        super(logger: logger);
+    super.logger,
+    super.cmd,
+    super.platform,
+  }) : _pubUpdater = pubUpdater;
 
   final PubUpdater _pubUpdater;
 

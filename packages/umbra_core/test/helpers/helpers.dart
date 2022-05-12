@@ -1,2 +1,2 @@
-export 'matches_shader_file.dart';
+export 'matches_fixture.dart';
 export 'shaders.dart';

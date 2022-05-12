@@ -9,9 +9,9 @@ import 'package:umbra_cli/src/version.dart';
 
 import '../helpers/helpers.dart';
 
-class MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements Logger {}
 
-class MockPubUpdater extends Mock implements PubUpdater {}
+class _MockPubUpdater extends Mock implements PubUpdater {}
 
 const expectedUsage = [
   'Command Line Interface for Umbra\n'
@@ -23,8 +23,9 @@ const expectedUsage = [
       '    --version    Print the current version.\n'
       '\n'
       'Available commands:\n'
-      '  generate   Generate different file types for a shader file.\n'
-      '  update     Update umbra.\n'
+      '  generate       Generate different file types for a shader file.\n'
+      '  install-deps   Install external dependencies for umbra.\n'
+      '  update         Update umbra.\n'
       '\n'
       'Run "umbra help <command>" for more information about a command.'
 ];
@@ -44,8 +45,8 @@ void main() {
 
     setUp(() {
       printLogs = [];
-      logger = MockLogger();
-      pubUpdater = MockPubUpdater();
+      logger = _MockLogger();
+      pubUpdater = _MockPubUpdater();
 
       when(
         () => pubUpdater.getLatestVersion(any()),
