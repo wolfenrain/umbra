@@ -12,19 +12,19 @@ import 'package:umbra_cli/src/workers/workers.dart';
 import '../../helpers/set_up_testing_environment.dart';
 import '../../helpers/test_command_runner.dart';
 
-class MockPlatform extends Mock implements Platform {}
+class _MockPlatform extends Mock implements Platform {}
 
-class MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements Logger {}
 
-class MockDownloader extends Mock implements Downloader {}
+class _MockDownloader extends Mock implements Downloader {}
 
-class MockFileExtractor extends Mock implements FileExtractor {}
+class _MockFileExtractor extends Mock implements FileExtractor {}
 
-class MockFileWriter extends Mock implements FileWriter {}
+class _MockFileWriter extends Mock implements FileWriter {}
 
-class MockCmd extends Mock implements Cmd {}
+class _MockCmd extends Mock implements Cmd {}
 
-class MockProcessResult extends Mock implements ProcessResult {}
+class _MockProcessResult extends Mock implements ProcessResult {}
 
 void main() {
   final cwd = Directory.current;
@@ -39,18 +39,18 @@ void main() {
     late Platform platform;
 
     setUp(() {
-      platform = MockPlatform();
+      platform = _MockPlatform();
       when(() => platform.isMacOS).thenReturn(false);
       when(() => platform.isLinux).thenReturn(false);
       when(() => platform.isWindows).thenReturn(false);
       when(() => platform.environment).thenReturn({});
 
-      logger = MockLogger();
+      logger = _MockLogger();
       when(() => logger.progress(any())).thenReturn(([String? _]) {});
-      downloader = MockDownloader();
-      extractor = MockFileExtractor();
-      writer = MockFileWriter();
-      cmd = MockCmd();
+      downloader = _MockDownloader();
+      extractor = _MockFileExtractor();
+      writer = _MockFileWriter();
+      cmd = _MockCmd();
 
       commandRunner = TestCommandRunner([
         InstallDepsCommand(
@@ -97,7 +97,7 @@ void main() {
             .thenAnswer((_) async => expectedBytes);
         when(() => writer.write(any(), any())).thenAnswer((_) async {});
         when(() => cmd.run(any(), any()))
-            .thenAnswer((_) async => MockProcessResult());
+            .thenAnswer((_) async => _MockProcessResult());
       });
 
       test('on MacOS', () async {

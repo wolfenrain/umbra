@@ -11,11 +11,11 @@ import 'package:umbra_cli/src/version.dart';
 
 import '../../../../helpers/helpers.dart';
 
-class MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements Logger {}
 
-class MockPubUpdater extends Mock implements PubUpdater {}
+class _MockPubUpdater extends Mock implements PubUpdater {}
 
-class MockCmd extends Mock implements Cmd {}
+class _MockCmd extends Mock implements Cmd {}
 
 void main() {
   final cwd = Directory.current;
@@ -27,9 +27,9 @@ void main() {
     late UmbraCommandRunner commandRunner;
 
     setUp(() {
-      logger = MockLogger();
-      pubUpdater = MockPubUpdater();
-      cmd = MockCmd();
+      logger = _MockLogger();
+      pubUpdater = _MockPubUpdater();
+      cmd = _MockCmd();
 
       when(() => logger.progress(any())).thenReturn(([String? _]) {});
       when(

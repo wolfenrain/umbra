@@ -8,7 +8,7 @@ import 'package:umbra_cli/src/workers/workers.dart';
 
 import '../../helpers/set_up_testing_environment.dart';
 
-class MockPlatform extends Mock implements Platform {}
+class _MockPlatform extends Mock implements Platform {}
 
 void main() {
   final cwd = Directory.current;
@@ -19,7 +19,7 @@ void main() {
     late Platform platform;
 
     setUp(() {
-      platform = MockPlatform();
+      platform = _MockPlatform();
       when(() => platform.isMacOS).thenReturn(false);
       when(() => platform.isLinux).thenReturn(false);
       when(() => platform.isWindows).thenReturn(false);

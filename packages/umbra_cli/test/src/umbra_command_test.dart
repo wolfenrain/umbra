@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:umbra_cli/src/platform.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
 
-class MockPlatform extends Mock implements Platform {}
+class _MockPlatform extends Mock implements Platform {}
 
 class TestCommand extends UmbraCommand {
   TestCommand({super.platform});
@@ -20,7 +20,7 @@ void main() {
     late Platform platform;
 
     setUp(() {
-      platform = MockPlatform();
+      platform = _MockPlatform();
       when(() => platform.isMacOS).thenReturn(false);
       when(() => platform.isLinux).thenReturn(false);
       when(() => platform.isWindows).thenReturn(false);

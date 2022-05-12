@@ -8,12 +8,12 @@ import 'package:umbra_core/umbra_core.dart';
 
 import '../../helpers/helpers.dart';
 
-class MockFile extends Mock implements File {}
+class _MockFile extends Mock implements File {}
 
 void main() {
   group('ShaderSpecification', () {
     test('can parse a shader from file', () {
-      final file = MockFile();
+      final file = _MockFile();
       when(() => file.path).thenReturn('file/to/simple.glsl');
       when(file.readAsLinesSync).thenReturn(simpleShader.input);
       when(file.existsSync).thenReturn(true);
@@ -38,7 +38,7 @@ void main() {
     });
 
     test('throws exception if file does not exist', () {
-      final file = MockFile();
+      final file = _MockFile();
       when(file.existsSync).thenReturn(false);
       when(() => file.path).thenReturn('file/to/simple.glsl');
 

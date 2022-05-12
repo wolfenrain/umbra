@@ -12,9 +12,9 @@ import 'package:umbra_core/umbra_core.dart';
 
 import '../../../../helpers/helpers.dart';
 
-class MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements Logger {}
 
-class MockGenerator extends Mock implements Generator {}
+class _MockGenerator extends Mock implements Generator {}
 
 class TestCommand extends BaseGenerateCommand {
   TestCommand({required this.generator, Logger? logger})
@@ -56,8 +56,8 @@ void main() {
     late TestCommandRunner commandRunner;
 
     setUp(() {
-      logger = MockLogger();
-      generator = MockGenerator();
+      logger = _MockLogger();
+      generator = _MockGenerator();
 
       when(() => logger.progress(any())).thenReturn(([String? _]) {});
 

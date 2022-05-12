@@ -7,9 +7,9 @@ import 'package:umbra_flutter/umbra_flutter.dart';
 
 import '../helpers/image_data.dart';
 
-class MockFragmentProgram extends Mock implements FragmentProgram {}
+class _MockFragmentProgram extends Mock implements FragmentProgram {}
 
-class MockShader extends Mock implements Shader {}
+class _MockShader extends Mock implements Shader {}
 
 class TestShader extends UmbraShader {
   TestShader(
@@ -25,8 +25,8 @@ void main() {
     late Shader shader;
 
     setUp(() {
-      program = MockFragmentProgram();
-      shader = MockShader();
+      program = _MockFragmentProgram();
+      shader = _MockShader();
 
       when(
         () => program.shader(
