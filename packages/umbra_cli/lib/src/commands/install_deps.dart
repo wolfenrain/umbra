@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:mason/mason.dart' hide packageVersion;
-import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
 import 'package:umbra_cli/src/workers/workers.dart';
 
@@ -12,15 +11,15 @@ import 'package:umbra_cli/src/workers/workers.dart';
 class InstallDepsCommand extends UmbraCommand {
   /// {@macro install_deps_command}
   InstallDepsCommand({
-    Logger? logger,
+    super.logger,
+    super.cmd,
     Downloader? downloader,
     FileExtractor? extractor,
     FileWriter? writer,
-    Cmd? cmd,
+    super.platform,
   })  : _downloader = downloader ?? const Downloader(),
         _extractor = extractor ?? FileExtractor(),
-        _writer = writer ?? const FileWriter(),
-        super(logger: logger, cmd: cmd);
+        _writer = writer ?? const FileWriter();
 
   @override
   final String description = 'Install external dependencies for umbra.';

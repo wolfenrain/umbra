@@ -12,6 +12,8 @@ import 'package:umbra_cli/src/workers/workers.dart';
 import '../../helpers/set_up_testing_environment.dart';
 import '../../helpers/test_command_runner.dart';
 
+class MockPlatform extends Mock implements Platform {}
+
 class MockLogger extends Mock implements Logger {}
 
 class MockDownloader extends Mock implements Downloader {}
@@ -34,8 +36,15 @@ void main() {
     late FileExtractor extractor;
     late FileWriter writer;
     late Cmd cmd;
+    late Platform platform;
 
     setUp(() {
+      platform = MockPlatform();
+      when(() => platform.isMacOS).thenReturn(false);
+      when(() => platform.isLinux).thenReturn(false);
+      when(() => platform.isWindows).thenReturn(false);
+      when(() => platform.environment).thenReturn({});
+
       logger = MockLogger();
       when(() => logger.progress(any())).thenReturn(([String? _]) {});
       downloader = MockDownloader();
@@ -50,13 +59,15 @@ void main() {
           extractor: extractor,
           writer: writer,
           cmd: cmd,
+          platform: platform,
         ),
       ]);
     });
 
     test('skip downloading if already installed', () async {
-      PlatformValues.isLinux = true;
-      PlatformValues.environment = {'HOME': cwd.path};
+      when(() => platform.isMacOS).thenReturn(true);
+      when(() => platform.environment).thenReturn({'HOME': cwd.path});
+
       final dataDirectory = Directory.fromUri(cwd.uri.resolve('.umbra'));
       File.fromUri(dataDirectory.uri.resolve('bin/glslc'))
           .createSync(recursive: true);
@@ -77,8 +88,6 @@ void main() {
       late List<int> archiveBytes;
 
       setUp(() {
-        PlatformValues.test();
-
         archiveBytes =
             File(path.join(archiveFixturePath, 'test.tgz')).readAsBytesSync();
 
@@ -91,11 +100,9 @@ void main() {
             .thenAnswer((_) async => MockProcessResult());
       });
 
-      tearDown(PlatformValues.reset);
-
       test('on MacOS', () async {
-        PlatformValues.isMacOS = true;
-        PlatformValues.environment = {'HOME': '/Users/test'};
+        when(() => platform.isMacOS).thenReturn(true);
+        when(() => platform.environment).thenReturn({'HOME': '/Users/test'});
 
         archiveBytes =
             File(path.join(archiveFixturePath, 'test.tgz')).readAsBytesSync();
@@ -125,8 +132,8 @@ void main() {
       });
 
       test('on Linux', () async {
-        PlatformValues.isLinux = true;
-        PlatformValues.environment = {'HOME': '/home/test'};
+        when(() => platform.isLinux).thenReturn(true);
+        when(() => platform.environment).thenReturn({'HOME': '/home/test'});
 
         archiveBytes =
             File(path.join(archiveFixturePath, 'test.tgz')).readAsBytesSync();
@@ -155,8 +162,10 @@ void main() {
       });
 
       test('on Windows', () async {
-        PlatformValues.isWindows = true;
-        PlatformValues.environment = {'UserProfile': '/C/Users/test'};
+        when(() => platform.isWindows).thenReturn(true);
+        when(() => platform.environment).thenReturn(
+          {'UserProfile': '/C/Users/test'},
+        );
 
         archiveBytes =
             File(path.join(archiveFixturePath, 'test.zip')).readAsBytesSync();

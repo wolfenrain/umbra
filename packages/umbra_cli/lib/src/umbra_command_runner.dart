@@ -4,6 +4,7 @@ import 'package:mason/mason.dart' hide packageVersion;
 import 'package:pub_updater/pub_updater.dart';
 import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/commands/commands.dart';
+import 'package:umbra_cli/src/platform.dart';
 import 'package:umbra_cli/src/version.dart';
 
 /// The package name.
@@ -18,17 +19,31 @@ class UmbraCommandRunner extends CommandRunner<int> {
     Logger? logger,
     PubUpdater? pubUpdater,
     Cmd? cmd,
+    Platform? platform,
   })  : _logger = logger ?? Logger(),
         _pubUpdater = pubUpdater ?? PubUpdater(),
+        _cmd = cmd ?? Cmd(),
+        _platform = platform ?? Platform(),
         super('umbra', 'Command Line Interface for Umbra') {
     argParser.addFlag(
       'version',
       negatable: false,
       help: 'Print the current version.',
     );
-    addCommand(GenerateCommand(logger: _logger, cmd: cmd));
-    addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
-    addCommand(InstallDepsCommand(logger: logger));
+    addCommand(
+      GenerateCommand(logger: _logger, cmd: _cmd, platform: _platform),
+    );
+    addCommand(
+      UpdateCommand(
+        logger: _logger,
+        cmd: _cmd,
+        platform: _platform,
+        pubUpdater: _pubUpdater,
+      ),
+    );
+    addCommand(
+      InstallDepsCommand(logger: logger, cmd: cmd, platform: _platform),
+    );
   }
 
   /// Standard timeout duration for the CLI.
@@ -36,6 +51,8 @@ class UmbraCommandRunner extends CommandRunner<int> {
 
   final Logger _logger;
   final PubUpdater _pubUpdater;
+  final Cmd _cmd;
+  final Platform _platform;
 
   @override
   Future<int> run(Iterable<String> args) async {

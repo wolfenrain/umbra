@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
-import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/exit_with.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
 import 'package:umbra_core/umbra_core.dart';
@@ -13,10 +12,7 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 abstract class BaseGenerateCommand extends UmbraCommand {
   /// {@macro base_generate_command}
-  BaseGenerateCommand({
-    Logger? logger,
-    Cmd? cmd,
-  }) : super(logger: logger, cmd: cmd) {
+  BaseGenerateCommand({super.logger, super.cmd, super.platform}) {
     argParser.addOption(
       'output',
       abbr: 'o',

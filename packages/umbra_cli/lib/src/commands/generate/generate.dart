@@ -1,5 +1,3 @@
-import 'package:mason/mason.dart' hide packageVersion;
-import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/commands/generate/commands/commands.dart';
 import 'package:umbra_cli/src/commands/generate/commands/spirv.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
@@ -9,13 +7,10 @@ import 'package:umbra_cli/src/umbra_command.dart';
 /// {@endtemplate}
 class GenerateCommand extends UmbraCommand {
   /// {@macro generate_command}
-  GenerateCommand({
-    Logger? logger,
-    Cmd? cmd,
-  }) : super(logger: logger) {
-    addSubcommand(RawCommand(logger: logger));
-    addSubcommand(DartCommand(logger: logger, cmd: cmd));
-    addSubcommand(SpirvCommand(logger: logger, cmd: cmd));
+  GenerateCommand({super.logger, super.cmd, super.platform}) {
+    addSubcommand(RawCommand(logger: logger, cmd: cmd, platform: platform));
+    addSubcommand(DartCommand(logger: logger, cmd: cmd, platform: platform));
+    addSubcommand(SpirvCommand(logger: logger, cmd: cmd, platform: platform));
   }
 
   @override

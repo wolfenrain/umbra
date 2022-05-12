@@ -10,14 +10,13 @@ import 'package:umbra_core/umbra_core.dart';
 class SpirvGenerator extends Generator {
   /// {@macro spirv_generator}
   SpirvGenerator(
-    ShaderSpecification specification, {
+    super.specification, {
     required Directory dataDirectory,
     required List<int> rawBytes,
     required Cmd cmd,
   })  : _cmd = cmd,
         _rawBytes = rawBytes,
-        _dataDirectory = dataDirectory,
-        super(specification);
+        _dataDirectory = dataDirectory;
 
   final List<int> _rawBytes;
 

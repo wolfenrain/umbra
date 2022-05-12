@@ -1,5 +1,3 @@
-import 'package:mason/mason.dart' hide packageVersion;
-import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/commands/generate/commands/base_generate_command.dart';
 import 'package:umbra_cli/src/generators/spirv_generator.dart';
 import 'package:umbra_core/umbra_core.dart';
@@ -9,7 +7,7 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 class DartCommand extends BaseGenerateCommand {
   /// {@macro dart_command}
-  DartCommand({Logger? logger, Cmd? cmd}) : super(logger: logger, cmd: cmd);
+  DartCommand({super.logger, super.cmd, super.platform});
 
   @override
   String get description => 'Generate a Dart Shader file.';

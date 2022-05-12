@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:mason/mason.dart' hide packageVersion;
-import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/commands/generate/commands/base_generate_command.dart';
 import 'package:umbra_cli/src/exit_with.dart';
 import 'package:umbra_cli/src/generators/generators.dart';
@@ -12,7 +11,7 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 class SpirvCommand extends BaseGenerateCommand {
   /// {@macro spirv_command}
-  SpirvCommand({Logger? logger, Cmd? cmd}) : super(logger: logger, cmd: cmd);
+  SpirvCommand({super.logger, super.cmd, super.platform});
 
   @override
   String get description => 'Generate a SPIR-V binary file.';

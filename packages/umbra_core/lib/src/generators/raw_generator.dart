@@ -8,7 +8,7 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 class RawGenerator extends Generator {
   /// {@macro raw_generator}
-  RawGenerator(ShaderSpecification specification) : super(specification);
+  RawGenerator(super.specification);
 
   /// Generates the raw GLSL shader.
   @override

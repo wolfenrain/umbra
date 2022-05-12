@@ -1,4 +1,3 @@
-import 'package:mason/mason.dart' hide packageVersion;
 import 'package:umbra_cli/src/commands/generate/commands/base_generate_command.dart';
 import 'package:umbra_core/umbra_core.dart';
 
@@ -7,7 +6,7 @@ import 'package:umbra_core/umbra_core.dart';
 /// {@endtemplate}
 class RawCommand extends BaseGenerateCommand {
   /// {@macro raw_command}
-  RawCommand({Logger? logger}) : super(logger: logger);
+  RawCommand({super.logger, super.cmd, super.platform});
 
   @override
   String get description => 'Generate a raw GLSL shader file.';

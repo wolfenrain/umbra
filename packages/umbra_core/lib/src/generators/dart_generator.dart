@@ -9,10 +9,9 @@ import 'package:umbra_core/umbra_core.dart';
 class DartGenerator extends Generator {
   /// {@macro dart_generator}
   DartGenerator(
-    ShaderSpecification specification, {
+    super.specification, {
     required List<int> spirvBytes,
-  })  : _spirvBytes = spirvBytes,
-        super(specification);
+  }) : _spirvBytes = spirvBytes;
 
   final List<int> _spirvBytes;
 
