@@ -2,6 +2,7 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart' hide packageVersion;
 import 'package:pub_updater/pub_updater.dart';
+import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/commands/commands.dart';
 import 'package:umbra_cli/src/version.dart';
 
@@ -16,6 +17,7 @@ class UmbraCommandRunner extends CommandRunner<int> {
   UmbraCommandRunner({
     Logger? logger,
     PubUpdater? pubUpdater,
+    Cmd? cmd,
   })  : _logger = logger ?? Logger(),
         _pubUpdater = pubUpdater ?? PubUpdater(),
         super('umbra', 'Command Line Interface for Umbra') {
@@ -24,7 +26,7 @@ class UmbraCommandRunner extends CommandRunner<int> {
       negatable: false,
       help: 'Print the current version.',
     );
-    addCommand(GenerateCommand(logger: _logger));
+    addCommand(GenerateCommand(logger: _logger, cmd: cmd));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
     addCommand(InstallDepsCommand(logger: logger));
   }

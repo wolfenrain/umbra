@@ -31,14 +31,24 @@ class SpirvGenerator extends Generator {
     final file = File(path.join(tempDir.path, 'raw.glsl'))
       ..writeAsBytesSync(_rawBytes);
 
-    final result = await _cmd.start(
-      path.join(_dataDirectory.path, 'bin', 'glslc'),
-      ['--target-env=opengl', '-fshader-stage=fragment', '-o', '-', file.path],
-    );
+    final List<int> bytes;
+    try {
+      final result = await _cmd.start(
+        path.join(_dataDirectory.path, 'bin', 'glslc'),
+        [
+          '--target-env=opengl',
+          '-fshader-stage=fragment',
+          '-o',
+          '-',
+          file.path
+        ],
+      );
+      final data = await (result.stdout as Stream<List<int>>).toList();
+      bytes = data.fold<List<int>>([], (p, e) => p..addAll(e));
+    } finally {
+      tempDir.deleteSync(recursive: true);
+    }
 
-    tempDir.deleteSync(recursive: true);
-
-    final data = await (result.stdout as Stream<List<int>>).toList();
-    return data.fold<List<int>>([], (p, e) => p..addAll(e));
+    return bytes;
   }
 }
