@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mason/mason.dart';
 import 'package:umbra_core/src/generators/in_memory_generator_target.dart';
 import 'package:umbra_core/src/generators/templates/dart_file_bundle.dart';
@@ -66,7 +68,7 @@ class DartGenerator extends Generator {
       'hasArguments': arguments.isNotEmpty,
       'samplers': samplers,
       'hasSamplers': samplers.isNotEmpty,
-      'spirvBytes': '<int>[\n${_spirvBytes.map((b) => '  $b,').join('\n')}\n]',
+      'spirvBytes': "'${base64Encode(_spirvBytes)}'",
     };
 
     final target = InMemoryGeneratorTarget();

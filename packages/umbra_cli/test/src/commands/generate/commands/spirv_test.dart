@@ -17,6 +17,9 @@ class _MockPubUpdater extends Mock implements PubUpdater {}
 
 class _MockCmd extends Mock implements Cmd {}
 
+// TODO(wolfen): as long as we can't use dart:ffi these tests are not really
+// testing spirv generation.
+
 void main() {
   final cwd = Directory.current;
 
@@ -73,10 +76,14 @@ void main() {
 
       setUp(() {
         when(() => cmd.start(any(), any())).thenAnswer((_) async {
+          final args = _.positionalArguments[1] as List<String>;
+          final outputFile = args[3];
+          File(outputFile).writeAsBytesSync(expected.readAsBytesSync());
+
           return ProcessResult(
             0,
             0,
-            Stream.fromIterable([expected.readAsBytesSync()]),
+            Stream<List<int>>.fromIterable([]),
             Stream<List<int>>.fromIterable([]),
           );
         });

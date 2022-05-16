@@ -31,7 +31,3 @@ class DartCommand extends BaseGenerateCommand {
     ).generate();
   }
 }
-
-// TODO(wolfen): Add SPIRV binary to dart file
-// TODO(wolfen): Add SPIRV command?
-// ~/.umbra/bin/glslc --target-env=opengl -fshader-stage=fragment ./test/fixtures/raw/output.glsl -o -

@@ -12,13 +12,15 @@ layout (location = 4) uniform sampler2D image;
 layout (location = 5) uniform vec2 resolution;
 layout (location = 6) uniform sampler2D TEXTURE;
 
-void fragment(sample2D TEXTURE, vec2 UV) {
+vec2 UV = vec2(0.0);
+
+void fragment() {
     COLOR = texture(TEXTURE, UV);
 }
 
 void main()
 {
-    vec2 UV = gl_FragCoord.xy / resolution.xy;
+    UV = gl_FragCoord.xy / resolution.xy;
 
-    fragment(TEXTURE, UV);
+    fragment();
 }

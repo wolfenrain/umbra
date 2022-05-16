@@ -55,17 +55,17 @@ void main() {
 
       setUp(() {
         when(() => cmd.start(any(), any())).thenAnswer((_) async {
+          final fakeFile = File(
+            path.join(testFixturesPath(cwd, suffix: 'spirv'), 'output.spirv'),
+          );
+          final args = _.positionalArguments[1] as List<String>;
+          final outputFile = args[3];
+          File(outputFile).writeAsBytesSync(fakeFile.readAsBytesSync());
+
           return ProcessResult(
             0,
             0,
-            Stream.fromIterable([
-              File(
-                path.join(
-                  testFixturesPath(cwd, suffix: 'spirv'),
-                  'output.spirv',
-                ),
-              ).readAsBytesSync()
-            ]),
+            Stream<List<int>>.fromIterable([]),
             Stream<List<int>>.fromIterable([]),
           );
         });

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'dart:ui';
@@ -8,39 +9,48 @@ import 'package:umbra_flutter/umbra_flutter.dart';
 /// A Dart Shader class for the `{{name}}` shader.
 /// {@endtemplate}
 class {{name.pascalCase()}} extends UmbraShader {
-  {{name.pascalCase()}}._(
-    Image texture,{{#hasParameters}} { {{#parameters}}
-    required {{type}} {{name.camelCase()}},{{/parameters}}
-  }{{/hasParameters}}{{^hasParameters}}
-  {{/hasParameters}}) : super(
-          _cachedProgram!,
-          floatUniforms: {{#hasArguments}}[{{#arguments}}
-            {{name.camelCase()}}{{extension}},{{/arguments}}
-          ]{{/hasArguments}}{{^hasArguments}}[]{{/hasArguments}},
-          samplers: [
-            texture,{{#samplers}}
-            {{name.camelCase()}}{{extension}},{{/samplers}}
-          ],
-        );
+  {{name.pascalCase()}}._() : super(_cachedProgram!);
 
   /// {@macro {{name.snakeCase()}}}
-  static Future<{{name.pascalCase()}}> compile(
-    Image texture,{{#hasParameters}} { {{#parameters}}
-    required {{type}} {{name.camelCase()}},{{/parameters}}
-  }{{/hasParameters}}{{^hasParameters}}
-  {{/hasParameters}}) async {
+  static Future<{{name.pascalCase()}}> compile() async {
     // Caching the program on the first compile call.
     _cachedProgram ??= await FragmentProgram.compile(
-      spirv: ByteData.sublistView(Uint8List.fromList(_binary)).buffer,
+      spirv: Uint8List.fromList(base64Decode(_binary)).buffer,
     );
 
-    return {{name.pascalCase()}}._(
-      texture,{{#parameters}}
-      {{name.camelCase()}}: {{name.camelCase()}},{{/parameters}}
-    );
+    return {{name.pascalCase()}}._();
   }
 
   static FragmentProgram? _cachedProgram;
+
+  Shader shader(
+    Image texture, {
+    required Size resolution,{{#parameters}}
+    required {{type}} {{name.camelCase()}},{{/parameters}}
+  }) {
+    return program.shader(
+      floatUniforms: Float32List.fromList([{{#arguments}}
+        {{name.camelCase()}}{{extension}},{{/arguments}}
+        resolution.width,
+        resolution.height,
+      ]),
+      samplerUniforms: [
+        ImageShader(
+          texture, 
+          TileMode.clamp,
+          TileMode.clamp,
+          UmbraShader.identity,
+        ),{{#samplers}}
+        ImageShader(
+          {{name.camelCase()}}{{extension}},
+          TileMode.clamp,
+          TileMode.clamp,
+          UmbraShader.identity,
+        ),
+        {{/samplers}}
+      ],
+    );
+  }
 }
 
 const _binary = {{{spirvBytes}}};

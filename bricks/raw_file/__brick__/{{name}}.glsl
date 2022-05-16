@@ -2,7 +2,7 @@
 
 {{precision}};
 
-layout (location = 0) out vec4 COLOR;
+layout (location = 0) out vec4 _COLOR_;
 
 {{{uniforms}}}
 
@@ -10,7 +10,7 @@ layout (location = 0) out vec4 COLOR;
 
 void main()
 {
-    vec2 UV = gl_FragCoord.xy / resolution.xy;
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
 
-    fragment(TEXTURE, UV);
+    _COLOR_ = fragment(uv, gl_FragCoord.xy);
 }
