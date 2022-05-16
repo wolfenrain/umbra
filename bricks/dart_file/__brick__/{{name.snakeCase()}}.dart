@@ -53,4 +53,5 @@ class {{name.pascalCase()}} extends UmbraShader {
   }
 }
 
-const _binary = {{{spirvBytes}}};
+const _binary = 
+    {{{spirvBytes}}};

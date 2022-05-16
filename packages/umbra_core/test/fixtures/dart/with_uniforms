@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'dart:ui';
@@ -8,62 +9,62 @@ import 'package:umbra_flutter/umbra_flutter.dart';
 /// A Dart Shader class for the `with_uniforms` shader.
 /// {@endtemplate}
 class WithUniforms extends UmbraShader {
-  WithUniforms._(
-    Image texture, { 
-    required Vector2 position,
-    required Vector3 coordinates,
-    required Vector4 color,
-    required double mixValue,
-    required Image image,
-  }) : super(
-          _cachedProgram!,
-          floatUniforms: [
-            position.x,
-            position.y,
-            coordinates.x,
-            coordinates.y,
-            coordinates.z,
-            color.x,
-            color.y,
-            color.z,
-            color.w,
-            mixValue,
-          ],
-          samplers: [
-            texture,
-            image,
-          ],
-        );
+  WithUniforms._() : super(_cachedProgram!);
 
   /// {@macro with_uniforms}
-  static Future<WithUniforms> compile(
-    Image texture, { 
-    required Vector2 position,
-    required Vector3 coordinates,
-    required Vector4 color,
-    required double mixValue,
-    required Image image,
-  }) async {
+  static Future<WithUniforms> compile() async {
     // Caching the program on the first compile call.
     _cachedProgram ??= await FragmentProgram.compile(
-      spirv: ByteData.sublistView(Uint8List.fromList(_binary)).buffer,
+      spirv: Uint8List.fromList(base64Decode(_binary)).buffer,
     );
 
-    return WithUniforms._(
-      texture,
-      position: position,
-      coordinates: coordinates,
-      color: color,
-      mixValue: mixValue,
-      image: image,
-    );
+    return WithUniforms._();
   }
 
   static FragmentProgram? _cachedProgram;
+
+  Shader shader(
+    Image texture, {
+    required Size resolution,
+    required Vector2 position,
+    required Vector3 coordinates,
+    required Vector4 color,
+    required double mixValue,
+    required Image image,
+  }) {
+    return program.shader(
+      floatUniforms: Float32List.fromList([
+        position.x,
+        position.y,
+        coordinates.x,
+        coordinates.y,
+        coordinates.z,
+        color.x,
+        color.y,
+        color.z,
+        color.w,
+        mixValue,
+        resolution.width,
+        resolution.height,
+      ]),
+      samplerUniforms: [
+        ImageShader(
+          texture, 
+          TileMode.clamp,
+          TileMode.clamp,
+          UmbraShader.identity,
+        ),
+        ImageShader(
+          image,
+          TileMode.clamp,
+          TileMode.clamp,
+          UmbraShader.identity,
+        ),
+        
+      ],
+    );
+  }
 }
 
-const _binary = <int>[
-  1,
-  2,
-  3,
-];
+const _binary = 
+    'AQID';
