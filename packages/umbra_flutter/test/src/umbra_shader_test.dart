@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -31,6 +32,20 @@ void main() {
 
     test('can be instantiated', () {
       expect(TestShader(program), isNotNull);
+    });
+
+    test('has identity', () {
+      expect(
+        UmbraShader.identity,
+        equals(
+          Float64List.fromList([
+            1.0, 0.0, 0.0, 0.0, //
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0,
+          ]),
+        ),
+      );
     });
   });
 }
