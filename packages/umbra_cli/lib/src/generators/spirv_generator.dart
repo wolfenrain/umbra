@@ -27,23 +27,23 @@ class SpirvGenerator extends Generator {
   @override
   Future<List<int>> generate() async {
     final tempDir = Directory.systemTemp.createTempSync();
-    final file = File(path.join(tempDir.path, 'raw.glsl'))
+    final input = File(path.join(tempDir.path, 'raw.glsl'))
       ..writeAsBytesSync(_rawBytes);
+    final output = File(path.join(tempDir.path, 'spirv'));
 
     final List<int> bytes;
     try {
-      final result = await _cmd.start(
+      await _cmd.start(
         path.join(_dataDirectory.path, 'bin', 'glslc'),
         [
           '--target-env=opengl',
           '-fshader-stage=fragment',
           '-o',
-          '-',
-          file.path
+          output.path,
+          input.path
         ],
       );
-      final data = await (result.stdout as Stream<List<int>>).toList();
-      bytes = data.fold<List<int>>([], (p, e) => p..addAll(e));
+      bytes = output.readAsBytesSync();
     } finally {
       tempDir.deleteSync(recursive: true);
     }

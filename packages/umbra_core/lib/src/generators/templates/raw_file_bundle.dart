@@ -8,7 +8,7 @@ final rawFileBundle = MasonBundle.fromJson(<String, dynamic>{
     {
       "path": "{{name}}.glsl",
       "data":
-          "e3t2ZXJzaW9ufX0KCnt7cHJlY2lzaW9ufX07CgpsYXlvdXQgKGxvY2F0aW9uID0gMCkgb3V0IHZlYzQgQ09MT1I7Cgp7e3t1bmlmb3Jtc319fQoKe3t7dXNlckNvZGV9fX0KCnZvaWQgbWFpbigpCnsKICAgIHZlYzIgVVYgPSBnbF9GcmFnQ29vcmQueHkgLyByZXNvbHV0aW9uLnh5OwoKICAgIGZyYWdtZW50KFRFWFRVUkUsIFVWKTsKfQ==",
+          "e3t2ZXJzaW9ufX0KCnt7cHJlY2lzaW9ufX07CgpsYXlvdXQgKGxvY2F0aW9uID0gMCkgb3V0IHZlYzQgX0NPTE9SXzsKCnt7e3VuaWZvcm1zfX19Cgp7e3t1c2VyQ29kZX19fQoKdm9pZCBtYWluKCkKewogICAgdmVjMiB1diA9IGdsX0ZyYWdDb29yZC54eSAvIHJlc29sdXRpb24ueHk7CgogICAgX0NPTE9SXyA9IGZyYWdtZW50KHV2LCBnbF9GcmFnQ29vcmQueHkpOwp9",
       "type": "text"
     }
   ],

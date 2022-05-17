@@ -1,3 +1,3 @@
-void fragment(sampler2D TEXTURE, vec2 UV) {
-    COLOR = texture(TEXTURE, UV);
+vec4 fragment(vec2 uv, vec2 fragCoord) {
+    return texture(TEXTURE, uv);
 }

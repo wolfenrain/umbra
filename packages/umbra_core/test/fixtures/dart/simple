@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'dart:ui';
@@ -8,35 +9,40 @@ import 'package:umbra_flutter/umbra_flutter.dart';
 /// A Dart Shader class for the `simple` shader.
 /// {@endtemplate}
 class Simple extends UmbraShader {
-  Simple._(
-    Image texture,
-  ) : super(
-          _cachedProgram!,
-          floatUniforms: [],
-          samplers: [
-            texture,
-          ],
-        );
+  Simple._() : super(_cachedProgram!);
 
   /// {@macro simple}
-  static Future<Simple> compile(
-    Image texture,
-  ) async {
+  static Future<Simple> compile() async {
     // Caching the program on the first compile call.
     _cachedProgram ??= await FragmentProgram.compile(
-      spirv: ByteData.sublistView(Uint8List.fromList(_binary)).buffer,
+      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
     );
 
-    return Simple._(
-      texture,
-    );
+    return Simple._();
   }
 
   static FragmentProgram? _cachedProgram;
+
+  Shader shader(
+    Image texture, {
+    required Size resolution,
+  }) {
+    return program.shader(
+      floatUniforms: Float32List.fromList([
+        resolution.width,
+        resolution.height,
+      ]),
+      samplerUniforms: [
+        ImageShader(
+          texture,
+          TileMode.clamp,
+          TileMode.clamp,
+          UmbraShader.identity,
+        ),
+      ],
+    );
+  }
 }
 
-const _binary = <int>[
-  1,
-  2,
-  3,
-];
+const _spirv =
+    'AQID';
