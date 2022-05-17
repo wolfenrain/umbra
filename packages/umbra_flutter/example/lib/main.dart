@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:example/shaders/noise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:umbra_flutter/umbra_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,12 @@ class _NoiseWidgetState extends State<NoiseWidget> {
   }
 
   @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<Noise>(
       future: noise,
@@ -61,6 +68,9 @@ class _NoiseWidgetState extends State<NoiseWidget> {
                   return noise.shader(
                     widget.image,
                     time: delta,
+                    scale: Vector2(0.3, 3.5),
+                    amplifier: 20,
+                    frequency: Vector2.all(30),
                     resolution: Size(bounds.size.width, bounds.size.height),
                   );
                 },
