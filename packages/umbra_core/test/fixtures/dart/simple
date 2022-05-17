@@ -15,7 +15,7 @@ class Simple extends UmbraShader {
   static Future<Simple> compile() async {
     // Caching the program on the first compile call.
     _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_binary)).buffer,
+      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
     );
 
     return Simple._();
@@ -34,7 +34,7 @@ class Simple extends UmbraShader {
       ]),
       samplerUniforms: [
         ImageShader(
-          texture, 
+          texture,
           TileMode.clamp,
           TileMode.clamp,
           UmbraShader.identity,
@@ -44,5 +44,5 @@ class Simple extends UmbraShader {
   }
 }
 
-const _binary = 
+const _spirv =
     'AQID';

@@ -13,5 +13,6 @@ abstract class UmbraShader {
   /// The [FragmentProgram] used by this shader.
   final FragmentProgram program;
 
+  /// The identity used in [ImageShader]s.
   static final Float64List identity = Matrix4.identity().storage;
 }

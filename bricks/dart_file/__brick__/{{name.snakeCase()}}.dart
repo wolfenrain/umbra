@@ -15,7 +15,7 @@ class {{name.pascalCase()}} extends UmbraShader {
   static Future<{{name.pascalCase()}}> compile() async {
     // Caching the program on the first compile call.
     _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_binary)).buffer,
+      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
     );
 
     return {{name.pascalCase()}}._();
@@ -36,7 +36,7 @@ class {{name.pascalCase()}} extends UmbraShader {
       ]),
       samplerUniforms: [
         ImageShader(
-          texture, 
+          texture,
           TileMode.clamp,
           TileMode.clamp,
           UmbraShader.identity,
@@ -53,5 +53,5 @@ class {{name.pascalCase()}} extends UmbraShader {
   }
 }
 
-const _binary = 
+const _spirv =
     {{{spirvBytes}}};
