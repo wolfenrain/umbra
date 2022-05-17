@@ -1,5 +1,5 @@
 name: umbra_flutter
-description: Flutter package for Umbra.
+description: A Flutter library for generated Umbra shaders.
 version: 1.0.0+1
 publish_to: none
 

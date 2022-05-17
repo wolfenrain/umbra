@@ -1,5 +1,5 @@
 name: umbra_cli
-description: Command Line Interface for Umbra.
+description: Umbra CLI allows Flutter developers to create their own shaders and compile them to strongly typed dart files.
 version: 0.1.0
 publish_to: none
 
