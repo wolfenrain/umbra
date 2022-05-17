@@ -5,8 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:umbra/app/app.dart';
-import 'package:umbra/bootstrap.dart';
+import 'package:app/app/app.dart';
+import 'package:app/bootstrap.dart';
 
 void main() {
   bootstrap(() => const App());

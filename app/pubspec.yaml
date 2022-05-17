@@ -1,5 +1,5 @@
-name: umbra
-description: Umbra, visual editor for shaders in Flutter.
+name: app
+description: The vusial editor for Shaders in Flutter.
 version: 1.0.0+1
 publish_to: none
 
@@ -14,15 +14,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-  umbra_core:
-    path: packages/umbra_core
 
 dev_dependencies:
   bloc_test: ^9.0.3
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
-  very_good_analysis: ^2.4.0
+  very_good_analysis: ^3.0.0
 
 flutter:
   uses-material-design: true

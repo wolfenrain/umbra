@@ -5,13 +5,13 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:app/counter/counter.dart';
+import 'package:app/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:umbra/counter/counter.dart';
-import 'package:umbra/l10n/l10n.dart';
 
 class CounterPage extends StatelessWidget {
-  const CounterPage({Key? key}) : super(key: key);
+  const CounterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CounterPage extends StatelessWidget {
 }
 
 class CounterView extends StatelessWidget {
-  const CounterView({Key? key}) : super(key: key);
+  const CounterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class CounterView extends StatelessWidget {
 }
 
 class CounterText extends StatelessWidget {
-  const CounterText({Key? key}) : super(key: key);
+  const CounterText({super.key});
 
   @override
   Widget build(BuildContext context) {
