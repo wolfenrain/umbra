@@ -1,5 +1,5 @@
 <h1 align="center">
-umbra_core
+Umbra Core
 </h1>
 
 <p align="center">
@@ -13,18 +13,19 @@ umbra_core
 
 ---
 
-Core library for Umbra.
+The core functionality for Umbra shaders which that helps Flutter developers to generate the necessary files for Flutter Shaders.
 
-## Updating fixtures
+`package:umbra_core` contains all the core functionality that powers both [package:umbra_cli](https://pub.dev/packages/umbra_cli) and the [Umbra application](https://github.com/wolfenrain/umbra/tree/main/app).
 
-The shader fixtures in `test/fixtures/shaders` are based on the shader files in `example/shaders`, 
-so to update a fixture you can use the following command:
+```dart
+import 'dart:io';
 
-```shell
-umbra generate raw examples/shaders/simple.glsl --type shader --output test/fixtures/shaders/simple.glsl
+import 'package:umbra_core/umbra_core.dart';
+
+Future<void> main() async {
+    final specification = ShaderSpecification.fromFile(File('./hello_world.glsl'));
+    final generator = RawGenerator(specification);
+
+    File('./hello_world_raw.glsl').writeAsBytesSync(await generator.generate());
+}
 ```
-
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis

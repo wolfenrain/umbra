@@ -31,10 +31,15 @@ dart pub global activate umbra_cli
 # 🚀 Install umbra dependencies
 umbra install-deps
 
-# 🕶️ Generate your first shader
-umbra generate dart shaders/hello_world.glsl --output ./assets/
+# 🕶️ Create your first shader
+umbra create hello_world
+
+# 📦 Compile your first shader to a Dart file
+umbra generate dart shaders/hello_world.glsl --output lib/shaders/
 ```
 
 ## Documentation
 
-View the full CLI documentation [here](https://github.com/wolfenrain/umbra/tree/main/packages/umbra_cli).
+View the general documentation for writing shaders that are compatible with Umbra [here](https://github.com/wolfenrain/umbra/tree/main/docs).
+
+The CLI documentation can be viewed [here](https://github.com/wolfenrain/umbra/tree/main/packages/umbra_cli).
