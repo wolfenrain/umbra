@@ -14,6 +14,14 @@ Umbra
 
 The visual editor for shaders in Flutter.
 
+> **umbra** <sub>/ˈʌmbrə/</sub>
+>
+> _noun_:
+> 1. the fully shaded inner region of a shadow cast by an opaque object, especially the area on  the earth or moon experiencing the total phase of an eclipse.
+> 2. `LITERARY`  
+>   shadow or darkness.  
+>  "an impenetrable umbra seemed to fill every inch of the museum"
+
 ## Packages
 
 | Package                                                                               | Pub                                                                                                      |
