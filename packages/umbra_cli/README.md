@@ -37,8 +37,11 @@ umbra generate dart shaders/hello_world.glsl --output lib/shaders/
 
 - [Overview](#overview)
   - [Installation](#installation)
-  - [Commands](#commands)
-
+- [Creating New Shaders](#creating-new-shaders)
+- [Generating Files Based On Shaders](#generating-files-based-on-shaders)
+  - [Raw GLSL files](#raw-glsl-files)
+  - [Dart Files](#dart-files)
+  - [SPIR-V Files](#spir-v-files)
 ## Overview
 
 ### Installation
@@ -51,31 +54,72 @@ dart pub global activate umbra_cli
 umbra install-deps
 ```
 
-## Commands
-
-### `umbra install-deps`
-
 `umbra install-deps` installs all the third party dependencies that the CLI needs to be able to generate the necessary files.
 
 ❗ Note: by default it will store these dependencies in `$HOME/.umbra/bin`.
 
-### `umbra generate`
+## Creating New Shaders
 
-Generate files based on a given shader file:
+Create a new shader using the `umbra create` command.
 
-TODO: gif here
-
-#### Usage
+For documentation about writing shaders that are compatible with Umbra, see the [general documentation](https://github.com/wolfenrain/umbra/tree/main/docs).
 
 ```sh
-# Generate the raw GLSL shader based on the given shader file
-umbra generate raw ./shaders/simple.glsl --output ./shaders/simple_raw.glsl
+# Create a new shader in the current directory.
+umbra create <SHADER_NAME>
 
-# Generate a useable SPIRV file for Flutter based on the given shader file
-umbra generate spirv ./shaders/simple.glsl --output ./assets/shaders
+# Create a new shader in a custom path.
+umbra create <SHADER_NAME> --output ./path/to/shader/files
 
-# Generate a strongly typed Dart file based on the given shader file
-umbra generate dart ./shaders/simple.glsl --output ./lib/shaders
+# Create a new shader in a custom path short-hand syntax.
+umbra create <SHADER_NAME> -o ./path/to/shader/files
 ```
 
-For documentation about  writing shaders that are compatible with Umbra, see the [general documentation](https://github.com/wolfenrain/umbra/tree/main/docs).
+## Generating Files Based On Shaders
+
+Generate files based on a Umbra Shader using the `umbra generate` command.
+
+### Raw GLSL Files
+
+Generate a raw GLSL file that is used internally by Umbra for generating both Dart files and SPIR-V binaries.
+
+```sh
+# Generate a raw GLSL file in a custom path.
+umbra generate raw my_shader.glsl --output ./path/to/dart/files
+
+# Generate a raw GLSL file in a custom path short-hand syntax.
+umbra generate raw my_shader.glsl -o ./path/to/dart/files
+
+# Generate a raw GLSL file and output it to stdout.
+umbra generate raw my_shader.glsl --output -
+```
+
+### Dart Files
+
+Generate a Dart file for Flutter that provides a strongly typed interface for the shader.
+
+```sh
+# Generate a Dart file in a custom path.
+umbra generate dart my_shader.glsl --output ./path/to/dart/files
+
+# Generate a Dart file in a custom path short-hand syntax.
+umbra generate dart my_shader.glsl -o ./path/to/dart/files
+
+# Generate a Dart file and output it to stdout.
+umbra generate raw my_shader.glsl --output -
+```
+
+### SPIR-V Files
+
+Generate a SPIR-V file that can be used as an asset for Flutter.
+
+```sh
+# Generate a Dart file in a custom path.
+umbra generate spirv my_shader.glsl --output ./path/to/dart/files
+
+# Generate a Dart file in a custom path short-hand syntax.
+umbra generate spirv my_shader.glsl -o ./path/to/dart/files
+
+# Generate a Dart file and output it to stdout.
+umbra generate spirv my_shader.glsl --output -
+```
