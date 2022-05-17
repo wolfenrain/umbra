@@ -2,8 +2,8 @@ import 'fixture.dart';
 
 final simpleShader = Fixture(
   '''
-void fragment() {
-    COLOR = texture(TEXTURE, UV);
+vec4 fragment(vec2 uv, vec2 fragCoord) {
+    return texture(TEXTURE, uv);
 }''',
   'simple',
 );
@@ -12,8 +12,8 @@ final withPrecisionShader = Fixture(
   '''
 precision highp float
 
-void fragment() {
-    COLOR = texture(TEXTURE, UV);
+vec4 fragment(vec2 uv, vec2 fragCoord) {
+    return texture(TEXTURE, uv);
 }''',
   'with_precision',
 );
@@ -26,8 +26,8 @@ uniform vec4 color;
 uniform float mix_value;
 uniform sampler2D image;
 
-void fragment() {
-    COLOR = texture(TEXTURE, UV);
+vec4 fragment(vec2 uv, vec2 fragCoord) {
+    return texture(TEXTURE, uv);
 }''',
   'with_uniforms',
 );
@@ -36,8 +36,8 @@ final withVersionShader = Fixture(
   '''
 #version 300 es
 
-void fragment() {
-    COLOR = texture(TEXTURE, UV);
+vec4 fragment(vec2 uv, vec2 fragCoord) {
+    return texture(TEXTURE, uv);
 }''',
   'with_version',
 );

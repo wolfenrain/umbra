@@ -8,7 +8,7 @@ layout (location = 0) uniform vec2 resolution;
 layout (location = 1) uniform sampler2D TEXTURE;
 
 vec4 fragment(vec2 uv, vec2 fragCoord) {
-    return texture(TEXTURE, UV);
+    return texture(TEXTURE, uv);
 }
 
 void main()

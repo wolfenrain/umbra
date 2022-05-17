@@ -1,3 +1,3 @@
 vec4 fragment(vec2 uv, vec2 fragCoord) {
-    return texture(TEXTURE, UV);
+    return texture(TEXTURE, uv);
 }
