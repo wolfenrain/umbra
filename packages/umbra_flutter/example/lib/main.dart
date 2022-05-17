@@ -61,9 +61,10 @@ class _NoiseWidgetState extends State<NoiseWidget> {
 
         return Column(
           children: [
-            Expanded(child: Image.asset('assets/dash.jpeg')),
+            Expanded(child: RawImage(image: widget.image)),
             Expanded(
               child: ShaderMask(
+                blendMode: ui.BlendMode.src,
                 shaderCallback: (bounds) {
                   return noise.shader(
                     widget.image,
@@ -74,7 +75,13 @@ class _NoiseWidgetState extends State<NoiseWidget> {
                     resolution: Size(bounds.size.width, bounds.size.height),
                   );
                 },
-                child: Container(color: Colors.white),
+                child: FittedBox(
+                  child: Container(
+                    color: Colors.transparent,
+                    width: widget.image.width.toDouble(),
+                    height: widget.image.height.toDouble(),
+                  ),
+                ),
               ),
             ),
           ],
