@@ -98,7 +98,7 @@ umbra generate raw my_shader.glsl --output -
 
 Generate a raw GLSL file that is used internally by Umbra for generating both the Dart files and SPIR-V binaries.
 
-❗ Note: the output of this command can't be used for generating Dart files nor SPIR-V binaries through the umbra CLI.
+❗ Note: the output of this command can't be used for generating Dart files or SPIR-V binaries through the Umbra CLI.
 
 ```sh
 # Generate a raw GLSL file in a custom path.
