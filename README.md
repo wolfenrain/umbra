@@ -26,7 +26,7 @@ The visual editor for shaders in Flutter.
 
 | Package                                                                               | Pub                                                                                                      |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [umbra_core](https://github.com/wolfenrain/umbra/tree/main/packages/umbra_core)       | [![pub package](https://img.shields.io/pub/v/umbra_core.svg)](https://pub.dev/packages/umbra_core)       |
+| [umbra](https://github.com/wolfenrain/umbra/tree/main/packages/umbra)       | [![pub package](https://img.shields.io/pub/v/umbra.svg)](https://pub.dev/packages/umbra)       |
 | [umbra_flutter](https://github.com/wolfenrain/umbra/tree/main/packages/umbra_flutter) | [![pub package](https://img.shields.io/pub/v/umbra_flutter.svg)](https://pub.dev/packages/umbra_flutter) |
 | [umbra_cli](https://github.com/wolfenrain/umbra/tree/main/packages/umbra_cli)         | [![pub package](https://img.shields.io/pub/v/umbra_cli.svg)](https://pub.dev/packages/umbra_cli)         |
 

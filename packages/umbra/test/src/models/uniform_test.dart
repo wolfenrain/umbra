@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:test/test.dart';
-import 'package:umbra_core/umbra_core.dart';
+import 'package:umbra/umbra.dart';
 
 void main() {
   group('Uniform', () {

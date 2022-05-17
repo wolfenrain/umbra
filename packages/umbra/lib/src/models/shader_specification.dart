@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:umbra_core/umbra_core.dart';
+import 'package:umbra/umbra.dart';
 
 final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+);');
 

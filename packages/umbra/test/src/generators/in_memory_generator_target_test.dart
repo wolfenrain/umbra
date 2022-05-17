@@ -1,6 +1,6 @@
 import 'package:mason/mason.dart';
 import 'package:test/test.dart';
-import 'package:umbra_core/src/generators/in_memory_generator_target.dart';
+import 'package:umbra/src/generators/in_memory_generator_target.dart';
 
 void main() {
   group('InMemoryGeneratorTarget', () {

@@ -1,4 +1,4 @@
-name: umbra_core
+name: umbra
 description: The core functionality for Umbra shaders which that helps Flutter developers to generate the necessary files for Flutter Shaders.
 version: 1.0.0+1
 publish_to: none

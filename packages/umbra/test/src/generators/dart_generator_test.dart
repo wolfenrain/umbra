@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:test/test.dart';
-import 'package:umbra_core/umbra_core.dart';
+import 'package:umbra/umbra.dart';
 
 import '../../helpers/helpers.dart';
 
