@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as path;
+import 'package:umbra/umbra.dart';
 import 'package:umbra_cli/src/cmd/cmd.dart';
-import 'package:umbra_core/umbra_core.dart';
 
 /// {@template spirv_generator}
 /// A generator for generating SPIR-V binary files.

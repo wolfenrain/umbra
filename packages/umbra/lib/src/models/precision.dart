@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:umbra_core/umbra_core.dart';
+import 'package:umbra/umbra.dart';
 
 /// The supported precision types.
 enum PrecisionType {

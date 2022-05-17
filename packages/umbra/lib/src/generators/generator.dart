@@ -1,4 +1,4 @@
-import 'package:umbra_core/umbra_core.dart';
+import 'package:umbra/umbra.dart';
 
 /// {@template generator}
 /// Abstract generator for generating files based on a [ShaderSpecification].

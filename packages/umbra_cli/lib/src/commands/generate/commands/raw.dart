@@ -1,5 +1,5 @@
+import 'package:umbra/umbra.dart';
 import 'package:umbra_cli/src/commands/generate/commands/base_generate_command.dart';
-import 'package:umbra_core/umbra_core.dart';
 
 /// {@template raw_command}
 /// Generate a raw GLSL shader file based on the given shader file.

@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
+import 'package:umbra/umbra.dart';
 import 'package:umbra_cli/src/exit_with.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
-import 'package:umbra_core/umbra_core.dart';
 
 /// {@template base_generate_command}
 /// Base class for all generate commands.

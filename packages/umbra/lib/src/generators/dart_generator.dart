@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:mason/mason.dart';
-import 'package:umbra_core/src/generators/in_memory_generator_target.dart';
-import 'package:umbra_core/src/generators/templates/dart_file_bundle.dart';
-import 'package:umbra_core/umbra_core.dart';
+import 'package:umbra/src/generators/in_memory_generator_target.dart';
+import 'package:umbra/src/generators/templates/dart_file_bundle.dart';
+import 'package:umbra/umbra.dart';
 
 /// {@template dart_generator}
 /// Generates a Dart Shader file from a [ShaderSpecification].

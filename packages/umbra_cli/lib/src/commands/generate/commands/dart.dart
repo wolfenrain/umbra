@@ -1,6 +1,6 @@
+import 'package:umbra/umbra.dart';
 import 'package:umbra_cli/src/commands/generate/commands/base_generate_command.dart';
 import 'package:umbra_cli/src/generators/spirv_generator.dart';
-import 'package:umbra_core/umbra_core.dart';
 
 /// {@template dart_command}
 /// Generate a Dart Shader file based on the given shader file.
