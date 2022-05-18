@@ -33,9 +33,9 @@ class CreateCommand extends UmbraCommand {
         help: 'The output directory for the created file.',
       )
       ..addOption(
-        'type',
+        'template',
         abbr: 't',
-        help: 'The type used to create this new shader.',
+        help: 'The template used to create this new shader.',
         defaultsTo: _defaultTemplate.name,
         allowed: _templates.map((element) => element.name).toList(),
         allowedHelp: _templates.fold<Map<String, String>>(
@@ -79,7 +79,7 @@ class CreateCommand extends UmbraCommand {
   }
 
   Template get _template {
-    final templateName = results['type'] as String?;
+    final templateName = results['template'] as String?;
 
     return _templates.firstWhere(
       (element) => element.name == templateName,

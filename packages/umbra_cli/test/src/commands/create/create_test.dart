@@ -17,7 +17,7 @@ const expectedUsage = [
       'Usage: umbra create [arguments]\n'
       '-h, --help                      Print this usage information.\n'
       '-o, --output                    The output directory for the created file.\n'
-      '-t, --type                      The type used to create this new shader.\n'
+      '-t, --template                  The template used to create this new shader.\n'
       '\n'
       '          [simple] (default)    Create a simple shader.\n'
       '          [translate]           Create a translating shader.\n'
@@ -137,17 +137,17 @@ void main() {
       ).called(1);
     });
 
-    group('--type', () {
-      group('invalid type name', () {
+    group('--template', () {
+      group('invalid template name', () {
         test(
-          'invalid type name',
+          'invalid template name',
           withRunner((commandRunner, logger, platform, cmd, printLogs) async {
-            const typeName = 'bad-type';
+            const templateName = 'bad-template';
             const expectedErrorMessage =
-                '''"$typeName" is not an allowed value for option "type".''';
+                '''"$templateName" is not an allowed value for option "template".''';
 
             final result = await commandRunner.run(
-              ['create', 'test', '--type', typeName],
+              ['create', 'test', '--template', templateName],
             );
             expect(result, equals(ExitCode.usage.code));
             verify(() => logger.err(expectedErrorMessage)).called(1);
@@ -155,9 +155,9 @@ void main() {
         );
       });
 
-      group('valid type names', () {
-        Future<void> expectValidTypeName({
-          required String typeName,
+      group('valid templates names', () {
+        Future<void> expectValidTemplateName({
+          required String templateName,
           required MasonBundle expectedBundle,
         }) async {
           final argResults = _MockArgResults();
@@ -169,7 +169,8 @@ void main() {
               return generator;
             },
           )..testArgResults = argResults;
-          when(() => argResults['type'] as String?).thenReturn(typeName);
+          when(() => argResults['template'] as String?)
+              .thenReturn(templateName);
           when(() => argResults.rest).thenReturn(['test']);
           when(
             () => generator.generate(
@@ -196,16 +197,16 @@ void main() {
           ).called(1);
         }
 
-        test('simple type', () async {
-          await expectValidTypeName(
-            typeName: 'simple',
+        test('simple template', () async {
+          await expectValidTemplateName(
+            templateName: 'simple',
             expectedBundle: simpleShaderBundle,
           );
         });
 
-        test('translate type', () async {
-          await expectValidTypeName(
-            typeName: 'translate',
+        test('translate template', () async {
+          await expectValidTemplateName(
+            templateName: 'translate',
             expectedBundle: translateShaderBundle,
           );
         });
