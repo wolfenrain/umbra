@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:args/args.dart';
 import 'package:mason/mason.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 import 'package:umbra_cli/src/commands/commands.dart';
 import 'package:umbra_cli/src/commands/create/templates/templates.dart';
@@ -28,8 +27,6 @@ const expectedUsage = [
 class _MockArgResults extends Mock implements ArgResults {}
 
 class _MockLogger extends Mock implements Logger {}
-
-class _MockPubUpdater extends Mock implements PubUpdater {}
 
 class _MockMasonGenerator extends Mock implements MasonGenerator {}
 

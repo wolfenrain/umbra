@@ -10,10 +10,9 @@ layout (location = 2) uniform vec4 color;
 layout (location = 3) uniform float mix_value;
 layout (location = 4) uniform sampler2D image;
 layout (location = 5) uniform vec2 resolution;
-layout (location = 6) uniform sampler2D TEXTURE;
 
 vec4 fragment(vec2 uv, vec2 fragCoord) {
-    return texture(TEXTURE, uv);
+    return vec4(uv.x, uv.y, 0.0, 1.0);
 }
 
 void main()

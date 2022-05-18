@@ -23,8 +23,7 @@ class WithUniforms extends UmbraShader {
 
   static FragmentProgram? _cachedProgram;
 
-  Shader shader(
-    Image texture, {
+  Shader shader({
     required Size resolution,
     required Vector2 position,
     required Vector3 coordinates,
@@ -49,18 +48,11 @@ class WithUniforms extends UmbraShader {
       ]),
       samplerUniforms: [
         ImageShader(
-          texture,
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
-        ImageShader(
           image,
           TileMode.clamp,
           TileMode.clamp,
           UmbraShader.identity,
         ),
-        
       ],
     );
   }

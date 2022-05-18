@@ -23,8 +23,7 @@ class Simple extends UmbraShader {
 
   static FragmentProgram? _cachedProgram;
 
-  Shader shader(
-    Image texture, {
+  Shader shader({
     required Size resolution,
   }) {
     return program.shader(
@@ -32,14 +31,7 @@ class Simple extends UmbraShader {
         resolution.width,
         resolution.height,
       ]),
-      samplerUniforms: [
-        ImageShader(
-          texture,
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
-      ],
+      samplerUniforms: [],
     );
   }
 }

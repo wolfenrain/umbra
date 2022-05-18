@@ -27,7 +27,7 @@ class DartGenerator extends Generator {
     final samplers = <Map<String, String>>[];
 
     for (final uniform in specification.uniforms) {
-      if (['resolution', 'texture'].contains(uniform.name.toLowerCase())) {
+      if (['resolution'].contains(uniform.name.toLowerCase())) {
         continue;
       }
       switch (uniform.type) {

@@ -3,6 +3,7 @@ uniform float time;
 uniform vec2 scale;
 uniform float amplifier; 
 uniform vec2 frequency;
+uniform sampler2D image;
 
 const mat3 m = mat3( 
     0.00,  0.80,  0.60,
@@ -46,6 +47,6 @@ vec4 fragment(vec2 uv, vec2 fragCoord) {
     vec3 value = (0.5 + 0.5 * sin(noise * vec3(frequency.x, frequency.y, 1.0) * scale.x)) / scale.x;
 	value *= amplifier;
 
-	vec3 color = texture(TEXTURE, 0.02 * value.xy + fragCoord.xy / resolution.xy).rgb;
+	vec3 color = texture(image, 0.02 * value.xy + fragCoord.xy / resolution.xy).rgb;
 	return vec4(color, 1.0);
 }

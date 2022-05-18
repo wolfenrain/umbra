@@ -23,8 +23,7 @@ class {{name.pascalCase()}} extends UmbraShader {
 
   static FragmentProgram? _cachedProgram;
 
-  Shader shader(
-    Image texture, {
+  Shader shader({
     required Size resolution,{{#parameters}}
     required {{type}} {{name.camelCase()}},{{/parameters}}
   }) {
@@ -34,21 +33,7 @@ class {{name.pascalCase()}} extends UmbraShader {
         resolution.width,
         resolution.height,
       ]),
-      samplerUniforms: [
-        ImageShader(
-          texture,
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),{{#samplers}}
-        ImageShader(
-          {{name.camelCase()}}{{extension}},
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
-        {{/samplers}}
-      ],
+      {{#hasSamplers}}{{> with_sampler_uniforms.dart}}{{/hasSamplers}}{{^hasSamplers}}{{> without_sampler_uniforms.dart}}{{/hasSamplers}}
     );
   }
 }
