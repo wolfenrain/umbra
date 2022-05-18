@@ -2,18 +2,11 @@
 
 import 'package:mason/mason.dart' hide packageVersion;
 import 'package:mocktail/mocktail.dart';
-import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
-import 'package:umbra_cli/src/umbra_command_runner.dart';
-import 'package:umbra_cli/src/version.dart';
 
 import '../../../helpers/helpers.dart';
 
-class _MockLogger extends Mock implements Logger {}
-
-class _MockPubUpdater extends Mock implements PubUpdater {}
-
-const expectedGenerateUsage = [
+const expectedUsage = [
   'Generate different file types for a shader file.\n'
       '\n'
       'Usage: umbra generate <subcommand> [arguments]\n'
@@ -27,72 +20,32 @@ const expectedGenerateUsage = [
       'Run "umbra help" to see global options.'
 ];
 
-const expectedUsage = 'Command Line Interface for Umbra\n'
-    '\n'
-    'Usage: umbra <command> [arguments]\n'
-    '\n'
-    'Global options:\n'
-    '-h, --help       Print this usage information.\n'
-    '    --version    Print the current version.\n'
-    '\n'
-    'Available commands:\n'
-    '  generate       Generate different file types for a shader file.\n'
-    '  install-deps   Install external dependencies for umbra.\n'
-    '  update         Update umbra.\n'
-    '\n'
-    'Run "umbra help <command>" for more information about a command.';
-
 void main() {
   group('Generate', () {
-    late Logger logger;
-    late PubUpdater pubUpdater;
-    late UmbraCommandRunner commandRunner;
+    test(
+      'throws UsageException when name is missing',
+      withRunner((commandRunner, logger, platform, cmd, printLogs) async {
+        const expectedErrorMessage = 'Missing subcommand for "umbra generate".';
 
-    setUp(() {
-      printLogs = [];
-      logger = _MockLogger();
-      pubUpdater = _MockPubUpdater();
+        final result = await commandRunner.run(['generate']);
+        expect(result, equals(ExitCode.usage.code));
+        verify(() => logger.err(expectedErrorMessage)).called(1);
+      }),
+    );
 
-      when(
-        () => pubUpdater.getLatestVersion(any()),
-      ).thenAnswer((_) async => packageVersion);
+    test(
+      'help',
+      withRunner((commandRunner, logger, platform, cmd, printLogs) async {
+        final result = await commandRunner.run(['generate', '--help']);
+        expect(printLogs, equals(expectedUsage));
+        expect(result, equals(ExitCode.success.code));
 
-      commandRunner = UmbraCommandRunner(
-        logger: logger,
-        pubUpdater: pubUpdater,
-      );
-    });
+        printLogs.clear();
 
-    group('run', () {
-      test(
-        'handles no command',
-        overridePrint(() async {
-          final result = await commandRunner.run(['generate']);
-
-          verify(() => logger.err('Missing subcommand for "umbra generate".'))
-              .called(1);
-          verify(() => logger.info('')).called(1);
-          verify(() => logger.info(expectedUsage)).called(1);
-          expect(result, equals(ExitCode.usage.code));
-        }),
-      );
-
-      group('--help', () {
-        test(
-          'outputs usage',
-          overridePrint(() async {
-            final result = await commandRunner.run(['generate', '--help']);
-            expect(printLogs, equals(expectedGenerateUsage));
-            expect(result, equals(ExitCode.success.code));
-
-            printLogs.clear();
-
-            final resultAbbr = await commandRunner.run(['generate', '-h']);
-            expect(printLogs, equals(expectedGenerateUsage));
-            expect(resultAbbr, equals(ExitCode.success.code));
-          }),
-        );
-      });
-    });
+        final resultAbbr = await commandRunner.run(['generate', '-h']);
+        expect(printLogs, equals(expectedUsage));
+        expect(resultAbbr, equals(ExitCode.success.code));
+      }),
+    );
   });
 }

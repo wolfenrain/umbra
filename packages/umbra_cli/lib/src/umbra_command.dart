@@ -3,6 +3,7 @@ import 'dart:io' hide Platform;
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:umbra_cli/src/cmd/cmd.dart';
 import 'package:umbra_cli/src/platform.dart';
@@ -21,7 +22,7 @@ abstract class UmbraCommand extends Command<int> {
         _cmd = cmd;
 
   /// [ArgResults] used for testing purposes only.
-  // @visibleForTesting
+  @visibleForTesting
   ArgResults? testArgResults;
 
   /// [ArgResults] for the current command.
