@@ -73,6 +73,12 @@ umbra create <SHADER_NAME> --output ./path/to/shader/files
 
 # Create a new shader in a custom path short-hand syntax.
 umbra create <SHADER_NAME> -o ./path/to/shader/files
+
+# Create a new shader using the simple template
+umbra create <SHADER_NAME> --type simple
+
+# Create a new shader using the simple template short-hand syntax.
+umbra create <SHADER_NAME> -t simple
 ```
 
 ## Generating Files Based On Shaders

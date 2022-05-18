@@ -126,9 +126,9 @@ void main() {
         verify(
           () => writer.write('/Users/test/.umbra/bin/glslc', expectedBytes),
         ).called(1);
-
-        verify(() => cmd.run('chmod', ['+x', '/Users/test/.umbra/bin/glslc']))
-            .called(1);
+        verify(
+          () => cmd.run('chmod', ['+x', '/Users/test/.umbra/bin/glslc']),
+        ).called(1);
       });
 
       test('on Linux', () async {
@@ -157,8 +157,9 @@ void main() {
         verify(
           () => writer.write('/home/test/.umbra/bin/glslc', expectedBytes),
         ).called(1);
-        verify(() => cmd.run('chmod', ['+x', '/home/test/.umbra/bin/glslc']))
-            .called(1);
+        verify(
+          () => cmd.run('chmod', ['+x', '/home/test/.umbra/bin/glslc']),
+        ).called(1);
       });
 
       test('on Windows', () async {
