@@ -31,8 +31,7 @@ class Simple extends UmbraShader {
         resolution.width,
         resolution.height,
       ]),
-      samplerUniforms: [
-      ],
+      samplerUniforms: [],
     );
   }
 }

@@ -31,8 +31,7 @@ class Input extends UmbraShader {
         resolution.width,
         resolution.height,
       ]),
-      samplerUniforms: [
-      ],
+      samplerUniforms: [],
     );
   }
 }
