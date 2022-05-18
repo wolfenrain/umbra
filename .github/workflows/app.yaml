@@ -1,6 +1,15 @@
 name: app
 
-on: [pull_request, push]
+on:
+  push:
+    paths:
+      - "app/**"
+      - ".github/workflows/app.yaml"
+
+  pull_request:
+    paths:
+      - "app/**"
+      - ".github/workflows/app.yaml"
 
 jobs:
   build:
