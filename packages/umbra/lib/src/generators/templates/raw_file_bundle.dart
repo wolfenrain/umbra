@@ -17,27 +17,5 @@ final rawFileBundle = MasonBundle.fromJson(<String, dynamic>{
   "description": "Generate a raw GLSL shader for Flutter.",
   "version": "0.1.0+1",
   "environment": {"mason": ">=0.1.0-dev <0.1.0"},
-  "readme": {
-    "path": "README.md",
-    "data":
-        "IyByYXdfZmlsZQoKR2VuZXJhdGUgYSByYXcgR0xTTCBzaGFkZXIgZm9yIEZsdXR0ZXIuCg==",
-    "type": "text"
-  },
-  "changelog": {
-    "path": "CHANGELOG.md",
-    "data": "IyAwLjEuMCsxCgotIFRPRE86IERlc2NyaWJlIGluaXRpYWwgcmVsZWFzZS4K",
-    "type": "text"
-  },
-  "license": {
-    "path": "LICENSE",
-    "data": "VE9ETzogQWRkIHlvdXIgbGljZW5zZSBoZXJlLgo=",
-    "type": "text"
-  },
-  "vars": {
-    "name": {"type": "string", "description": "GLSL shader name."},
-    "version": {"type": "string", "description": "GLSL version."},
-    "precision": {"type": "string", "description": "GLSL precision."},
-    "uniforms": {"type": "string", "description": "GLSL user uniforms."},
-    "userCode": {"type": "string", "description": "GLSL user code."}
-  }
+  "vars": {}
 });

@@ -23,8 +23,7 @@ class Input extends UmbraShader {
 
   static FragmentProgram? _cachedProgram;
 
-  Shader shader(
-    Image texture, {
+  Shader shader({
     required Size resolution,
   }) {
     return program.shader(
@@ -33,12 +32,6 @@ class Input extends UmbraShader {
         resolution.height,
       ]),
       samplerUniforms: [
-        ImageShader(
-          texture,
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
       ],
     );
   }

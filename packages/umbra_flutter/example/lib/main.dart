@@ -67,7 +67,7 @@ class _NoiseWidgetState extends State<NoiseWidget> {
                 blendMode: ui.BlendMode.src,
                 shaderCallback: (bounds) {
                   return noise.shader(
-                    widget.image,
+                    image: widget.image,
                     time: delta,
                     scale: Vector2(0.3, 3.5),
                     amplifier: 20,

@@ -1,9 +1,17 @@
+#version 320 es
+
+precision mediump float;
+
+layout (location = 0) out vec4 _COLOR_;
+
+layout (location = 0) uniform float time;
+layout (location = 1) uniform vec2 scale;
+layout (location = 2) uniform float amplifier;
+layout (location = 3) uniform vec2 frequency;
+layout (location = 4) uniform sampler2D image;
+layout (location = 5) uniform vec2 resolution;
+
 // Based on https://www.shadertoy.com/view/lt33zn
-uniform float time;
-uniform vec2 scale;
-uniform float amplifier; 
-uniform vec2 frequency;
-uniform sampler2D image;
 
 const mat3 m = mat3( 
     0.00,  0.80,  0.60,
@@ -49,4 +57,11 @@ vec4 fragment(vec2 uv, vec2 fragCoord) {
 
 	vec3 color = texture(image, 0.02 * value.xy + fragCoord.xy / resolution.xy).rgb;
 	return vec4(color, 1.0);
+}
+
+void main()
+{
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+    _COLOR_ = fragment(uv, gl_FragCoord.xy);
 }
