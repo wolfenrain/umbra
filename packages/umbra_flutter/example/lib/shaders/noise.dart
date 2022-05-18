@@ -49,7 +49,6 @@ class Noise extends UmbraShader {
           TileMode.clamp,
           UmbraShader.identity,
         ),
-        
       ],
     );
   }

@@ -33,15 +33,7 @@ class {{name.pascalCase()}} extends UmbraShader {
         resolution.width,
         resolution.height,
       ]),
-      samplerUniforms: [{{#samplers}}
-        ImageShader(
-          {{name.camelCase()}}{{extension}},
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
-        {{/samplers}}
-      ],
+      {{#hasSamplers}}{{> with_sampler_uniforms.dart}}{{/hasSamplers}}{{^hasSamplers}}{{> without_sampler_uniforms.dart}}{{/hasSamplers}}
     );
   }
 }
