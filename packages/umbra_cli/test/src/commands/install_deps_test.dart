@@ -9,8 +9,7 @@ import 'package:umbra_cli/src/commands/commands.dart';
 import 'package:umbra_cli/src/platform.dart';
 import 'package:umbra_cli/src/workers/workers.dart';
 
-import '../../helpers/set_up_testing_environment.dart';
-import '../../helpers/test_command_runner.dart';
+import '../../helpers/helpers.dart';
 
 class _MockPlatform extends Mock implements Platform {}
 
@@ -25,6 +24,15 @@ class _MockFileWriter extends Mock implements FileWriter {}
 class _MockCmd extends Mock implements Cmd {}
 
 class _MockProcessResult extends Mock implements ProcessResult {}
+
+const expectedUsage = [
+  'Install external dependencies for umbra.\n'
+      '\n'
+      'Usage: test install-deps\n'
+      '-h, --help    Print this usage information.\n'
+      '\n'
+      'Run "test help" to see global options.'
+];
 
 void main() {
   final cwd = Directory.current;
@@ -62,6 +70,21 @@ void main() {
           platform: platform,
         ),
       ]);
+    });
+
+    group('--help', () {
+      test(
+        'outputs usage',
+        overridePrint((printLogs) async {
+          await commandRunner.run(['install-deps', '--help']);
+          expect(printLogs, equals(expectedUsage));
+
+          printLogs.clear();
+
+          await commandRunner.run(['install-deps', '-h']);
+          expect(printLogs, equals(expectedUsage));
+        }),
+      );
     });
 
     test('skip downloading if already installed', () async {

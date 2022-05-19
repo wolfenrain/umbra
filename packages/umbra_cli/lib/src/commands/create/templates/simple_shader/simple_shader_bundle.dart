@@ -8,7 +8,7 @@ final simpleShaderBundle = MasonBundle.fromJson(<String, dynamic>{
     {
       "path": "{{name}}.glsl",
       "data":
-          "Ly8gQmFzZWQgb24gaHR0cHM6Ly90aGVib29rb2ZzaGFkZXJzLmNvbS8wMy8KCnZlYzQgZnJhZ21lbnQodmVjMiB1diwgdmVjMiBmcmFnQ29vcmQpIHsKICAgIHJldHVybiB2ZWM0KHV2LngsIHV2LnksIDAuMCwgMS4wKTsKfQo=",
+          "Ly8gQmFzZWQgb24gaHR0cHM6Ly90aGVib29rb2ZzaGFkZXJzLmNvbS8wMy8KdmVjNCBmcmFnbWVudCh2ZWMyIHV2LCB2ZWMyIGZyYWdDb29yZCkgewogICAgcmV0dXJuIHZlYzQodXYueCwgdXYueSwgMC4wLCAxLjApOwp9Cg==",
       "type": "text"
     }
   ],

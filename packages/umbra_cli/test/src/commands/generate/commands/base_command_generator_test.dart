@@ -40,9 +40,10 @@ class TestCommand extends BaseGenerateCommand {
 const expectedUsage = [
   'test command\n'
       '\n'
-      'Usage: umbra generate test <input shader file>\n'
-      '-h, --help      Print this usage information.\n'
-      '-o, --output    The output directory for the generated files.\n'
+      'Usage: test test <shader_file>\n'
+      '-h, --help                  Print this usage information.\n'
+      '-o, --output=<directory>    The output directory for the generated files.\n'
+      '                            If "-" is given it will be written to stdout\n'
       '\n'
       'Run "test help" to see global options.'
 ];
@@ -73,7 +74,7 @@ void main() {
     group('--help', () {
       test(
         'outputs usage',
-        overridePrint(() async {
+        overridePrint((printLogs) async {
           await commandRunner.run(['test', '--help']);
           expect(printLogs, equals(expectedUsage));
 

@@ -27,6 +27,12 @@ class InstallDepsCommand extends UmbraCommand {
   @override
   final String name = 'install-deps';
 
+  @override
+  String get invocation {
+    final invocation = super.invocation;
+    return invocation.replaceFirst(' [arguments]', '');
+  }
+
   final Downloader _downloader;
 
   final FileExtractor _extractor;

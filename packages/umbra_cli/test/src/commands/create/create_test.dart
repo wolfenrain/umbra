@@ -13,10 +13,10 @@ const expectedUsage = [
   // ignore: no_adjacent_strings_in_list
   'Create a new Umbra Shader.\n'
       '\n'
-      'Usage: umbra create [arguments]\n'
+      'Usage: umbra create <shader_name>\n'
       '-h, --help                      Print this usage information.\n'
-      '-o, --output                    The output directory for the created file.\n'
-      '-t, --template                  The template used to create this new shader.\n'
+      '-o, --output=<directory>        The output directory for the created file.\n'
+      '-t, --template=<template>       The template used to create this new shader.\n'
       '\n'
       '          [simple] (default)    Create a simple shader.\n'
       '          [translate]           Create a translating shader.\n'

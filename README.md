@@ -32,6 +32,8 @@ The visual editor for shaders in Flutter.
 
 ## Quick start
 
+For a getting started with Umbra check out the [getting started](https://github.com/wolfenrain/umbra/tree/main/docs/getting-started) section in the docs.
+
 ```sh
 # 🎯 Activate from https://pub.dev
 dart pub global activate umbra_cli
@@ -48,6 +50,6 @@ umbra generate dart shaders/hello_world.glsl --output lib/shaders/
 
 ## Documentation
 
-View the general documentation for writing shaders that are compatible with Umbra [here](https://github.com/wolfenrain/umbra/tree/main/docs).
+For the documentation that describes how you should writing shaders that are compatible with Umbra tooling, see the [Shader Specifications](https://github.com/wolfenrain/umbra/tree/main/docs/shader-specifications) documentation.
 
-The CLI documentation can be viewed [here](https://github.com/wolfenrain/umbra/tree/main/packages/umbra_cli).
+Documentation about the CLI can be found [here](https://github.com/wolfenrain/umbra/tree/main/docs/cli-commands.md).

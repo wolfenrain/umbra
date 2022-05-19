@@ -31,12 +31,14 @@ class CreateCommand extends UmbraCommand {
         'output',
         abbr: 'o',
         help: 'The output directory for the created file.',
+        valueHelp: 'directory',
       )
       ..addOption(
         'template',
         abbr: 't',
         help: 'The template used to create this new shader.',
         defaultsTo: _defaultTemplate.name,
+        valueHelp: 'template',
         allowed: _templates.map((element) => element.name).toList(),
         allowedHelp: _templates.fold<Map<String, String>>(
           {},
@@ -55,6 +57,12 @@ class CreateCommand extends UmbraCommand {
   final String name = 'create';
 
   final GeneratorBuilder _generator;
+
+  @override
+  String get invocation {
+    final invocation = super.invocation;
+    return invocation.replaceFirst('[arguments]', '<shader_name>');
+  }
 
   String get _fileName {
     final rest = results.rest;
