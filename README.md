@@ -48,10 +48,8 @@ umbra create hello_world
 umbra generate dart shaders/hello_world.glsl --output lib/shaders/
 ```
 
-
-
 ## Documentation
 
-View the general documentation for writing shaders that are compatible with Umbra [here](https://github.com/wolfenrain/umbra/tree/main/docs).
+For the documentation that describes how you should writing shaders that are compatible with Umbra tooling, see the [Shader Specifications](https://github.com/wolfenrain/umbra/tree/main/docs/shader-specifications) documentation.
 
-The CLI documentation can be viewed [here](docs/cli-commands.md).
+Documentation about the CLI can be found [here](https://github.com/wolfenrain/umbra/tree/main/docs/cli-commands.md).

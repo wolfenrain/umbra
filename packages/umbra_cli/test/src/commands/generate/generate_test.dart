@@ -9,7 +9,7 @@ import '../../../helpers/helpers.dart';
 const expectedUsage = [
   'Generate different file types for a shader file.\n'
       '\n'
-      'Usage: umbra generate <subcommand> [arguments]\n'
+      'Usage: umbra generate <subcommand> <shader_file>\n'
       '-h, --help    Print this usage information.\n'
       '\n'
       'Available subcommands:\n'

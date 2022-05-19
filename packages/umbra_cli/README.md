@@ -32,3 +32,5 @@ umbra generate dart shaders/hello_world.glsl --output lib/shaders/
 ```
 
 For more information related to the CLI commands see the [CLI documentation](https://github.com/wolfenrain/umbra/tree/main/docs/cli-commands.md).
+
+Documentation related to shaders can be found in the [Shader Specifications](https://github.com/wolfenrain/umbra/tree/main/docs/shader-specifications) documentation.

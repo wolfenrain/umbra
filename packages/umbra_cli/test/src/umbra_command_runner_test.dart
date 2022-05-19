@@ -45,7 +45,6 @@ void main() {
     late UmbraCommandRunner commandRunner;
 
     setUp(() {
-      printLogs = [];
       logger = _MockLogger();
       pubUpdater = _MockPubUpdater();
 
@@ -116,7 +115,7 @@ void main() {
 
       test(
         'handles no command',
-        overridePrint(() async {
+        overridePrint((printLogs) async {
           final result = await commandRunner.run([]);
           expect(printLogs, equals(expectedUsage));
           expect(result, equals(ExitCode.success.code));
@@ -126,7 +125,7 @@ void main() {
       group('--help', () {
         test(
           'outputs usage',
-          overridePrint(() async {
+          overridePrint((printLogs) async {
             final result = await commandRunner.run(['--help']);
             expect(printLogs, equals(expectedUsage));
             expect(result, equals(ExitCode.success.code));
