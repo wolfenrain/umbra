@@ -16,7 +16,9 @@ abstract class BaseGenerateCommand extends UmbraCommand {
     argParser.addOption(
       'output',
       abbr: 'o',
-      help: 'The output directory for the generated files.',
+      help: 'The output directory for the generated files.\n'
+          'If "-" is given it will be written to stdout',
+      valueHelp: 'directory',
     );
   }
 
@@ -24,7 +26,10 @@ abstract class BaseGenerateCommand extends UmbraCommand {
   String get extension;
 
   @override
-  String get invocation => 'umbra generate $name <input shader file>';
+  String get invocation {
+    final invocation = super.invocation;
+    return invocation.replaceFirst('[arguments]', '<shader_file>');
+  }
 
   /// Generate file based on the [specification].
   Future<List<int>> generate(ShaderSpecification specification);

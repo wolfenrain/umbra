@@ -18,4 +18,10 @@ class GenerateCommand extends UmbraCommand {
 
   @override
   String get name => 'generate';
+
+  @override
+  String get invocation {
+    final invocation = super.invocation;
+    return invocation.replaceFirst('[arguments]', '<shader_file>');
+  }
 }
