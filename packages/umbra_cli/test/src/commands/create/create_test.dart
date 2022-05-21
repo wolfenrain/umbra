@@ -40,11 +40,6 @@ void main() {
     late List<String> progressLogs;
     late Logger logger;
 
-    final generatedFiles = List.filled(
-      1,
-      const GeneratedFile.created(path: ''),
-    );
-
     setUpAll(() {
       registerFallbackValue(_FakeDirectoryGeneratorTarget());
       registerFallbackValue(_FakeLogger());
@@ -114,24 +109,129 @@ void main() {
           any(),
           vars: any(named: 'vars'),
           logger: any(named: 'logger'),
+          fileConflictResolution: any(named: 'fileConflictResolution'),
         ),
-      ).thenAnswer((_) async {
-        return generatedFiles;
-      });
+      ).thenAnswer((_) async => [const GeneratedFile.created(path: '')]);
 
       final result = await command.run();
       expect(result, equals(ExitCode.success.code));
 
-      verify(() => logger.progress('Creating a Umbra Shader')).called(1);
-      expect(progressLogs, equals(['Created a Umbra Shader!']));
+      verify(() => logger.progress('Creating an Umbra Shader')).called(1);
+      expect(progressLogs, equals(['Created an Umbra Shader!']));
 
       verify(
         () => generator.generate(
           any(that: isA<DirectoryGeneratorTarget>()),
           vars: <String, dynamic>{'name': 'test'},
           logger: logger,
+          fileConflictResolution: FileConflictResolution.skip,
         ),
       ).called(1);
+    });
+
+    group('prompts user when file exists', () {
+      test('on accept it overwrites the file', () async {
+        final argResults = _MockArgResults();
+        final generator = _MockMasonGenerator();
+        final command = CreateCommand(
+          logger: logger,
+          generator: (_) async => generator,
+        )..testArgResults = argResults;
+        when(() => argResults.rest).thenReturn(['test']);
+        when(
+          () => generator.generate(
+            any(),
+            vars: any(named: 'vars'),
+            logger: any(named: 'logger'),
+            fileConflictResolution: any(
+              named: 'fileConflictResolution',
+              that: equals(FileConflictResolution.skip),
+            ),
+          ),
+        ).thenAnswer(
+          (_) async => [const GeneratedFile.skipped(path: 'file/test.glsl')],
+        );
+        when(
+          () => generator.generate(
+            any(),
+            vars: any(named: 'vars'),
+            logger: any(named: 'logger'),
+            fileConflictResolution: any(
+              named: 'fileConflictResolution',
+              that: equals(FileConflictResolution.overwrite),
+            ),
+          ),
+        ).thenAnswer(
+          (_) async => [const GeneratedFile.created(path: 'file/test.glsl')],
+        );
+        when(() => logger.confirm(any())).thenReturn(true);
+
+        final result = await command.run();
+        expect(result, equals(ExitCode.success.code));
+
+        verify(() => logger.progress('Creating an Umbra Shader')).called(1);
+        verify(() => logger.confirm('Overwrite test.glsl?')).called(1);
+        verifyNever(() => logger.err('Aborting.'));
+        expect(progressLogs, equals(['Created an Umbra Shader!']));
+
+        verify(
+          () => generator.generate(
+            any(that: isA<DirectoryGeneratorTarget>()),
+            vars: <String, dynamic>{'name': 'test'},
+            logger: logger,
+            fileConflictResolution: FileConflictResolution.skip,
+          ),
+        ).called(1);
+        verify(
+          () => generator.generate(
+            any(that: isA<DirectoryGeneratorTarget>()),
+            vars: <String, dynamic>{'name': 'test'},
+            logger: logger,
+            fileConflictResolution: FileConflictResolution.overwrite,
+          ),
+        ).called(1);
+      });
+
+      test('on deny it aborts', () async {
+        final argResults = _MockArgResults();
+        final generator = _MockMasonGenerator();
+        final command = CreateCommand(
+          logger: logger,
+          generator: (_) async => generator,
+        )..testArgResults = argResults;
+        when(() => argResults.rest).thenReturn(['test']);
+        when(
+          () => generator.generate(
+            any(),
+            vars: any(named: 'vars'),
+            logger: any(named: 'logger'),
+            fileConflictResolution: any(
+              named: 'fileConflictResolution',
+              that: equals(FileConflictResolution.skip),
+            ),
+          ),
+        ).thenAnswer(
+          (_) async => [const GeneratedFile.skipped(path: 'file/test.glsl')],
+        );
+        when(() => logger.confirm(any())).thenReturn(false);
+
+        final result = await command.run();
+        expect(result, equals(ExitCode.cantCreate.code));
+
+        verify(() => logger.progress('Creating an Umbra Shader')).called(1);
+        verify(() => logger.confirm('Overwrite test.glsl?')).called(1);
+        verify(() => logger.err('Aborting.')).called(1);
+        expect(progressLogs, equals(<String>[]));
+
+        verify(
+          () => generator.generate(
+            any(that: isA<DirectoryGeneratorTarget>()),
+            vars: <String, dynamic>{'name': 'test'},
+            logger: logger,
+            fileConflictResolution: FileConflictResolution.skip,
+          ),
+        ).called(1);
+      });
     });
 
     group('--template', () {
@@ -166,30 +266,31 @@ void main() {
               return generator;
             },
           )..testArgResults = argResults;
-          when(() => argResults['template'] as String?)
-              .thenReturn(templateName);
+          when(() => argResults['template'] as String?).thenReturn(
+            templateName,
+          );
           when(() => argResults.rest).thenReturn(['test']);
           when(
             () => generator.generate(
               any(that: isA<DirectoryGeneratorTarget>()),
               vars: any(named: 'vars'),
               logger: any(named: 'logger'),
+              fileConflictResolution: any(named: 'fileConflictResolution'),
             ),
-          ).thenAnswer((_) async {
-            return generatedFiles;
-          });
+          ).thenAnswer((_) async => [const GeneratedFile.created(path: '')]);
 
           final result = await command.run();
           expect(result, equals(ExitCode.success.code));
 
-          verify(() => logger.progress('Creating a Umbra Shader')).called(1);
-          expect(progressLogs, equals(['Created a Umbra Shader!']));
+          verify(() => logger.progress('Creating an Umbra Shader')).called(1);
+          expect(progressLogs, equals(['Created an Umbra Shader!']));
 
           verify(
             () => generator.generate(
               any(),
               vars: <String, dynamic>{'name': 'test'},
               logger: logger,
+              fileConflictResolution: FileConflictResolution.skip,
             ),
           ).called(1);
         }

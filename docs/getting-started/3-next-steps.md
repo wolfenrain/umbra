@@ -12,7 +12,7 @@ umbra create hello_world
 This will generate the following GLSL file with the name `hello_world.glsl` in the current directory.
 
 ```glsl
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return vec4(uv.x, uv.y, 0.0, 1.0);
 }
 ```

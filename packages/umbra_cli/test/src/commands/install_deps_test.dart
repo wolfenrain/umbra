@@ -28,7 +28,7 @@ class _MockProcessResult extends Mock implements ProcessResult {}
 const expectedUsage = [
   'Install external dependencies for umbra.\n'
       '\n'
-      'Usage: test install-deps\n'
+      'Usage: umbra install-deps\n'
       '-h, --help    Print this usage information.\n'
       '\n'
       'Run "test help" to see global options.'

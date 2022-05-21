@@ -1,6 +1,7 @@
 name: umbra_cli
 description: Umbra CLI allows Flutter developers to create their own shaders and compile them to strongly typed dart files.
-version: 0.1.0
+version: 0.1.0-dev.1
+homepage: https://github.com/wolfenrain/umbra
 publish_to: none
 
 environment:
@@ -13,14 +14,17 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.1
   pub_updater: ^0.2.2
-  umbra:
-    path: ../umbra
+  umbra: ^0.1.0-dev.1
 
 dev_dependencies:
   coverage: ^1.1.0
   mocktail: ^0.2.0
   test: ^1.19.2
   very_good_analysis: ^2.4.0
+
+dependency_overrides:
+  umbra:
+    path: ../umbra
 
 executables:
   umbra: umbra

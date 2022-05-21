@@ -20,7 +20,7 @@ An example of writing a shader with uniforms looks like this:
 ```glsl
 uniform float time;
 
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return vec4(abs(sin(time)), 0.0, 0.0, 1.0);
 }
 ```
@@ -41,7 +41,7 @@ from an image.
 ```glsl
 uniform sampler2D image;
 
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return texture(image, uv);
 }
 ```

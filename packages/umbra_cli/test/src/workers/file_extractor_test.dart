@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:umbra_cli/src/platform.dart';
 import 'package:umbra_cli/src/workers/workers.dart';
 
-import '../../helpers/set_up_testing_environment.dart';
+import '../../helpers/helpers.dart';
 
 class _MockPlatform extends Mock implements Platform {}
 
