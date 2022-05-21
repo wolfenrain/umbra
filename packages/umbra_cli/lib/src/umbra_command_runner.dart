@@ -30,18 +30,20 @@ class UmbraCommandRunner extends CommandRunner<int> {
       negatable: false,
       help: 'Print the current version.',
     );
-    addCommand(CreateCommand(logger: logger, cmd: cmd, platform: platform));
-    addCommand(GenerateCommand(logger: logger, cmd: cmd, platform: platform));
+    addCommand(CreateCommand(logger: _logger, cmd: _cmd, platform: _platform));
+    addCommand(
+      GenerateCommand(logger: _logger, cmd: _cmd, platform: _platform),
+    );
     addCommand(
       UpdateCommand(
-        logger: logger,
-        cmd: cmd,
-        platform: platform,
+        logger: _logger,
+        cmd: _cmd,
+        platform: _platform,
         pubUpdater: _pubUpdater,
       ),
     );
     addCommand(
-      InstallDepsCommand(logger: logger, cmd: cmd, platform: platform),
+      InstallDepsCommand(logger: _logger, cmd: _cmd, platform: _platform),
     );
   }
 
