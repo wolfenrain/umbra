@@ -36,54 +36,16 @@ Usage: umbra create <shader_name>
 Generate files based on a Umbra Shader using the `umbra generate` command.
 
 ```bash
-Generate different file types for a shader file.
+Generate files based on an Umbra Shader.
 
-Usage: umbra generate <subcommand> <shader_file>
--h, --help    Print this usage information.
+Usage: umbra generate <shader_file>
+-h, --help                           Print this usage information.
+-o, --output=<directory>             The output directory for the created file(s).
+-t, --target=<target>                The target used for generation.
 
-Available subcommands:
-  dart    Generate a Dart Shader file.
-  raw     Generate a raw GLSL shader file.
-  spirv   Generate a SPIR-V binary file.
+          [dart-shader] (default)    Generate a Dart Shader.
+          [raw-shader]               Generate a raw GLSL shader.
+          [spirv]                    Generate a Dart Shader.
 ```
 
-### Dart Files
-
-Generate a Dart file for Flutter that provides a strongly typed interface for the shader.
-
-```bash
-Generate a Dart Shader file.
-
-Usage: umbra generate dart <shader_file>
--h, --help                  Print this usage information.
--o, --output=<directory>    The output directory for the generated files.
-                            If "-" is given it will be written to stdout
-```
-
-### Raw GLSL Files
-
-Generate a raw GLSL file that is used internally by Umbra for generating both the Dart files and SPIR-V binaries.
-
-❗ Note: the output of this command can't be used for generating Dart files or SPIR-V binaries through the Umbra CLI.
-
-```bash
-Generate a raw GLSL shader file.
-
-Usage: umbra generate raw <shader_file>
--h, --help                  Print this usage information.
--o, --output=<directory>    The output directory for the generated files.
-                            If "-" is given it will be written to stdout
-```
-
-### SPIR-V Binaries
-
-Generate a SPIR-V file that can be used as an asset for Flutter.
-
-```bash
-Generate a SPIR-V binary file.
-
-Usage: umbra generate spirv <shader_file>
--h, --help                  Print this usage information.
--o, --output=<directory>    The output directory for the generated files.
-                            If "-" is given it will be written to stdout
-```
+❗ Note: the output of the `raw-shader` target can't be used for generating Dart files or SPIR-V binaries through the Umbra CLI.

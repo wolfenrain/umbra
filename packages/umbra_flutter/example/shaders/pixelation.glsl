@@ -9,6 +9,6 @@ vec4 pixel(vec2 pos, vec2 res) {
     return texture(image, pos.xy).rgba;
 }
 
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return pixel(uv, resolution.xy / pixelSize);
 }

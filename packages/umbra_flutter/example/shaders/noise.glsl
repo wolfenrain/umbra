@@ -40,7 +40,7 @@ float fbm(vec3 p) {
     return f;
 }
 
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     vec3 position = scale.y * vec3(uv, 0.0) - time * (1.0, 1.0, 1.0) * 0.1;
     float noise = fbm(position);
 	

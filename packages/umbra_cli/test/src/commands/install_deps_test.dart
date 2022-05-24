@@ -26,9 +26,10 @@ class _MockCmd extends Mock implements Cmd {}
 class _MockProcessResult extends Mock implements ProcessResult {}
 
 const expectedUsage = [
+  // ignore: no_adjacent_strings_in_list
   'Install external dependencies for umbra.\n'
       '\n'
-      'Usage: test install-deps\n'
+      'Usage: umbra install-deps\n'
       '-h, --help    Print this usage information.\n'
       '\n'
       'Run "test help" to see global options.'

@@ -27,12 +27,12 @@ used as the color for the current pixel.
 So a simple shader that follows this abstraction looks like this:
 
 ```glsl
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return vec4(uv.x, uv.y, 0.0, 1.0);
 }
 ```
 
-As you can see it has a single function called `fragment`. Which receives a `uv` value and a `fragCoord` value.
+As you can see it has a single function called `fragment`. Which receives an input `uv` value and an input `fragCoord` value.
 
 It uses the `uv` value to return a color that will map the pixel to a redish/greenish color depending on the position.
 

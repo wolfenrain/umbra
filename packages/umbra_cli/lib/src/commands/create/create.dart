@@ -59,10 +59,7 @@ class CreateCommand extends UmbraCommand {
   final GeneratorBuilder _generator;
 
   @override
-  String get invocation {
-    final invocation = super.invocation;
-    return invocation.replaceFirst('[arguments]', '<shader_name>');
-  }
+  String get invocation => 'umbra create <shader_name>';
 
   String get _fileName {
     final rest = results.rest;
@@ -101,14 +98,35 @@ class CreateCommand extends UmbraCommand {
     final outputDirectory = _outputDirectory;
     final template = _template;
 
-    final createDone = logger.progress('Creating a Umbra Shader');
+    final createDone = logger.progress('Creating an Umbra Shader');
     final generator = await _generator(template.bundle);
-    await generator.generate(
-      DirectoryGeneratorTarget(outputDirectory),
-      vars: <String, String>{'name': fileName},
-      logger: logger,
-    );
-    createDone('Created a Umbra Shader!');
+
+    Future<GeneratedFile> generate({
+      FileConflictResolution resolution = FileConflictResolution.skip,
+    }) async {
+      final files = await generator.generate(
+        DirectoryGeneratorTarget(outputDirectory),
+        vars: <String, String>{'name': fileName},
+        logger: logger,
+        fileConflictResolution: resolution,
+      );
+      return files.first;
+    }
+
+    final file = await generate();
+
+    if (file.status == GeneratedFileStatus.skipped) {
+      final fileName = file.path.split(RegExp(r'[/\\]')).last;
+      final answer = logger.confirm('${yellow.wrap('Overwrite $fileName?')}');
+      if (!answer) {
+        createDone();
+        logger.err('Aborting.');
+        return ExitCode.cantCreate.code;
+      }
+      // TODO(wolfen): use new progress system
+      await generate(resolution: FileConflictResolution.overwrite);
+    }
+    createDone('Created an Umbra Shader!');
 
     return ExitCode.success.code;
   }

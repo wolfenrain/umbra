@@ -45,7 +45,7 @@ umbra install-deps
 umbra create hello_world
 
 # 📦 Compile your first shader to a Dart file
-umbra generate dart shaders/hello_world.glsl --output lib/shaders/
+umbra generate shaders/hello_world.glsl --output lib/shaders/
 ```
 
 ## Documentation

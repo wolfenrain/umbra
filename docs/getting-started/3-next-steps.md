@@ -12,7 +12,7 @@ umbra create hello_world
 This will generate the following GLSL file with the name `hello_world.glsl` in the current directory.
 
 ```glsl
-vec4 fragment(vec2 uv, vec2 fragCoord) {
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return vec4(uv.x, uv.y, 0.0, 1.0);
 }
 ```
@@ -28,17 +28,24 @@ Now that we have a shader we can compile it to a Dart file.
 
 ```bash
 # 📦 Compile your first shader to a Dart file
-umbra generate dart shaders/hello_world.glsl --output lib/shaders/
+umbra generate shaders/hello_world.glsl --output lib/shaders/
 ```
 
 You can then use this Dart file directly inside your Flutter app.
 
 ```dart
-// ...
+...
+
+// Compile the instance.
 final helloWorld = await HelloWorld.compile();
 
+// Retrieve a shader instance.
 final helloWorldShader = helloWorld.shader();
-// ...
+
+// You can then use the shader instance with something like a `ShaderMask` or `Paint` object.
+final myPaint = Paint()..shader = helloWorldShader;
+
+...
 ```
 
 ## What Next?
