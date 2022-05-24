@@ -1,8 +1,7 @@
 name: umbra_flutter
 description: A Flutter library for generated Umbra shaders.
 version: 0.1.0-dev.1
-homepage: https://github.com/wolfenrain/umbra
-publish_to: none
+repository: https://github.com/wolfenrain/umbra/tree/main/packages/umbra_flutter
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -13,7 +12,10 @@ dependencies:
   vector_math: ^2.1.1
 
 dev_dependencies:
+  build_runner: ^2.1.11
+  build_verify: ^3.0.0
+  build_version: ^2.1.1
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
-  very_good_analysis: ^2.4.0
+  very_good_analysis: ^3.0.0
