@@ -5,6 +5,6 @@ import 'package:test/test.dart';
 void main() {
   test(
     'ensure_build',
-    () => expectBuildClean(packageRelativeDirectory: 'packages/umbra_cli'),
+    () => expectBuildClean(packageRelativeDirectory: 'packages/umbra_flutter'),
   );
 }
