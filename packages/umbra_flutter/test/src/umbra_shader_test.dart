@@ -10,7 +10,7 @@ class _MockFragmentProgram extends Mock implements FragmentProgram {}
 class _MockShader extends Mock implements Shader {}
 
 class TestShader extends UmbraShader {
-  TestShader(FragmentProgram program) : super(program);
+  TestShader(super.program);
 }
 
 void main() {

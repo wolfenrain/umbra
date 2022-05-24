@@ -38,7 +38,7 @@ echo -e "#$(cat CHANGELOG.md)" > CHANGELOG.md
 conventional-changelog -p angular -i CHANGELOG.md -s
 rm package.json
 
-echo "CHANGELOG for $version generated, verify it here: $(pwd)/CHANGELOG.md"
+echo "CHANGELOG for $package_name v$package_version generated, verify it here: $(pwd)/CHANGELOG.md"
 
 if [ "$1" != "" ]; then
     cd - > /dev/null
