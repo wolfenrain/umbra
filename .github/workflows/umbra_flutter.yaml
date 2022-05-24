@@ -6,14 +6,18 @@ concurrency:
 
 on:
   push:
+    branches:
+      - main
     paths:
-      - "packages/umbra_flutter/**"
-      - ".github/workflows/umbra_flutter.yaml"
+      - .github/workflows/umbra_flutter.yaml
+      - packages/umbra_flutter/**
 
   pull_request:
+    branches:
+      - main
     paths:
-      - "packages/umbra_flutter/**"
-      - ".github/workflows/umbra_flutter.yaml"
+      - .github/workflows/umbra_flutter.yaml
+      - packages/umbra_flutter/**
 
 jobs:
   build:

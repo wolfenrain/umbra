@@ -3,14 +3,14 @@ name: umbra
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/umbra.yaml
       - packages/umbra/**
 
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/umbra.yaml
       - packages/umbra/**

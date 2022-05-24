@@ -10,7 +10,7 @@ on:
 
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/umbra_cli.yaml
       - packages/umbra_cli/**
