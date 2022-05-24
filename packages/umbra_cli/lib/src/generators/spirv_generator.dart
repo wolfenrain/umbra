@@ -4,9 +4,6 @@ import 'package:path/path.dart' as path;
 import 'package:umbra/umbra.dart';
 import 'package:umbra_cli/src/cmd/cmd.dart';
 
-/// File opener method.
-typedef FileOpener = File Function(String path);
-
 /// {@template spirv_generator}
 /// A generator for generating SPIR-V binary files.
 /// {@endtemplate}

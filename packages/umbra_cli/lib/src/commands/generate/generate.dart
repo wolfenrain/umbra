@@ -16,22 +16,6 @@ final _targets = [
 
 final _defaultTarget = _targets.first;
 
-/// Get the generator of a specific target.
-typedef TargetGenerator = FutureOr<Generator> Function(
-  ShaderSpecification,
-  Target,
-);
-
-/// Open a file.
-///
-/// Used for testing.
-typedef FileOpener = File Function(String);
-
-/// Open a directory.
-///
-/// Used for testing.
-typedef DirectoryOpener = Directory Function(String);
-
 /// {@template generate_command}
 /// `umbra generate` command which generates files based on Umbra shaders.
 /// {@endtemplate}
