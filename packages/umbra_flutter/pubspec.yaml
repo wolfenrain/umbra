@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  umbra: ^0.1.0-dev.1
   vector_math: ^2.1.1
 
 dev_dependencies:
@@ -18,7 +17,3 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^0.3.0
   very_good_analysis: ^2.4.0
-
-dependency_overrides:
-  umbra:
-    path: ../umbra

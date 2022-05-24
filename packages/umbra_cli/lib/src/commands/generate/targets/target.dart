@@ -17,7 +17,7 @@ typedef GeneratorBuilder = FutureOr<Generator> Function(
 /// Each target consists of a [Generator], name, extension, and help text
 /// describing the target.
 /// {@endtemplate}
-abstract class Target {
+abstract class Target<T extends Generator> {
   /// {@macro target}
   const Target({
     required this.name,

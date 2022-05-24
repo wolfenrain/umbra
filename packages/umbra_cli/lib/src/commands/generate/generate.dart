@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart' hide packageVersion;
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:umbra/umbra.dart';
 import 'package:umbra_cli/src/commands/generate/targets/targets.dart';
@@ -16,13 +16,11 @@ final _targets = [
 
 final _defaultTarget = _targets.first;
 
-/// Proxies given generator and returns it.
-Generator proxies(Generator generator) => generator;
-
-/// Pass a Generator and it returns itself or another one.
-///
-/// Used for testing.
-typedef GeneratorPasser = Generator Function(Generator);
+/// Get the generator of a specific target.
+typedef TargetGenerator = FutureOr<Generator> Function(
+  ShaderSpecification,
+  Target,
+);
 
 /// Open a file.
 ///
@@ -43,12 +41,7 @@ class GenerateCommand extends UmbraCommand {
     super.logger,
     super.cmd,
     super.platform,
-    @visibleForTesting GeneratorPasser? generatorPasser,
-    @visibleForTesting FileOpener? fileOpener,
-    @visibleForTesting DirectoryOpener? directoryOpener,
-  })  : _generatorPasser = generatorPasser ?? proxies,
-        _fileOpener = fileOpener ?? File.new,
-        _directoryOpener = directoryOpener ?? Directory.new {
+  }) {
     argParser
       ..addOption(
         'output',
@@ -73,12 +66,6 @@ class GenerateCommand extends UmbraCommand {
       );
   }
 
-  final GeneratorPasser _generatorPasser;
-
-  final FileOpener _fileOpener;
-
-  final DirectoryOpener _directoryOpener;
-
   @override
   final String description = 'Generate files based on an Umbra Shader.';
 
@@ -93,7 +80,7 @@ class GenerateCommand extends UmbraCommand {
     if (rest.isEmpty || rest.first.isEmpty) {
       throw UsageException('No file specified.', usage);
     }
-    final shaderFile = _fileOpener(rest.first);
+    final shaderFile = File(rest.first);
     if (!shaderFile.existsSync()) {
       throw UsageException('File "${shaderFile.path}" does not exist.', usage);
     }
@@ -101,7 +88,7 @@ class GenerateCommand extends UmbraCommand {
   }
 
   Directory get _outputDirectory {
-    final directory = _directoryOpener(
+    final directory = Directory(
       results['output'] == null
           ? Directory.current.path
           : results['output'] as String,
@@ -136,14 +123,12 @@ class GenerateCommand extends UmbraCommand {
     parsingShader('Shader file parsed');
 
     final generateDone = logger.progress('Generating');
-    final generator = _generatorPasser(
-      await target.generator(specification, cmd, dataDirectory),
-    );
+    final generator = await target.generator(specification, cmd, dataDirectory);
     final bytes = await generator.generate();
     generateDone('Generated');
 
     final outputName = '${specification.name}.${target.extension}';
-    final outputFile = _fileOpener(path.join(outputDirectory.path, outputName));
+    final outputFile = File(path.join(outputDirectory.path, outputName));
     if (outputFile.existsSync()) {
       final answer = logger.confirm('${yellow.wrap('Overwrite $outputName?')}');
       if (!answer) {

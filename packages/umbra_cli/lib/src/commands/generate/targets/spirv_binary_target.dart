@@ -17,6 +17,6 @@ class SpirvBinaryTarget extends Target {
             dataDirectory: dir,
             rawBytes: await RawGenerator(specification).generate(),
           ),
-          help: 'Generate a Dart Shader.',
+          help: 'Generate a SPIR-R binary.',
         );
 }
