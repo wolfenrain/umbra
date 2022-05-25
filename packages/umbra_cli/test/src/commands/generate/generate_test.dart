@@ -47,7 +47,6 @@ void main() {
   group('create', () {
     late List<String> progressLogs;
     late Logger logger;
-    late File shaderFile;
     late Cmd cmd;
 
     setUpAll(() {
