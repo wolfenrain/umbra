@@ -1,7 +1,7 @@
 name: umbra
 description: The core functionality for Umbra shaders which that helps Flutter developers to generate the necessary files for Flutter Shaders.
 version: 0.0.1-dev.1
-repository: https://github.com/wolfenrain/umbra/tree/main/packages/umbra
+repository: https://github.com/wolfenrain/umbra
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
