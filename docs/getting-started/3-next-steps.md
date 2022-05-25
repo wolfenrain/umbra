@@ -48,6 +48,8 @@ final myPaint = Paint()..shader = helloWorldShader;
 ...
 ```
 
+❗ Note: the generated Dart file requires you to add the `umbra_flutter` dependency.
+
 ## What Next?
 
 Great! You now know how to create and compile shaders using Umbra!
