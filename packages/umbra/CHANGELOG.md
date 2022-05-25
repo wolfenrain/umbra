@@ -1,6 +1,5 @@
-# 0.0.1-dev.1 (2022-05-20)
+# 0.0.1-dev.1
 
+**Dev Release**
 
-## Dev Release
-
-* chore: initial package (🚧 under construction 🚧)
+- chore: initial package (🚧 under construction 🚧)
