@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:mason/mason.dart';
 import 'package:umbra/src/generators/in_memory_generator_target.dart';
-import 'package:umbra/src/generators/templates/dart_file_bundle.dart';
+import 'package:umbra/src/generators/templates/dart_shader_file_bundle.dart';
 import 'package:umbra/umbra.dart';
 
-/// {@template dart_generator}
+/// {@template dart_shader_generator}
 /// Generates a Dart Shader file from a [ShaderSpecification].
 /// {@endtemplate}
-class DartGenerator extends Generator {
-  /// {@macro dart_generator}
-  DartGenerator(
+class DartShaderGenerator extends Generator {
+  /// {@macro dart_shader_generator}
+  DartShaderGenerator(
     super.specification, {
     required List<int> spirvBytes,
   }) : _spirvBytes = spirvBytes;
@@ -20,7 +20,7 @@ class DartGenerator extends Generator {
   /// Generates the Dart Shader file.
   @override
   Future<List<int>> generate() async {
-    final generator = await MasonGenerator.fromBundle(dartFileBundle);
+    final generator = await MasonGenerator.fromBundle(dartShaderFileBundle);
 
     final parameters = <Map<String, String>>[];
     final arguments = <Map<String, String>>[];

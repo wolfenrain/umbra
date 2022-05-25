@@ -1,19 +1,19 @@
 import 'package:mason/mason.dart';
 import 'package:umbra/src/generators/in_memory_generator_target.dart';
-import 'package:umbra/src/generators/templates/raw_file_bundle.dart';
+import 'package:umbra/src/generators/templates/raw_shader_file_bundle.dart';
 import 'package:umbra/umbra.dart';
 
-/// {@template raw_generator}
+/// {@template raw_shader_generator}
 /// Generates a raw GLSL shader from a [ShaderSpecification].
 /// {@endtemplate}
-class RawGenerator extends Generator {
-  /// {@macro raw_generator}
-  RawGenerator(super.specification);
+class RawShaderGenerator extends Generator {
+  /// {@macro raw_shader_generator}
+  RawShaderGenerator(super.specification);
 
   /// Generates the raw GLSL shader.
   @override
   Future<List<int>> generate() async {
-    final generator = await MasonGenerator.fromBundle(rawFileBundle);
+    final generator = await MasonGenerator.fromBundle(rawShaderFileBundle);
 
     final vars = <String, dynamic>{
       'name': specification.name,

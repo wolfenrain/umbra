@@ -15,7 +15,7 @@ class SpirvBinaryTarget extends Target {
             specification,
             cmd: cmd,
             dataDirectory: dir,
-            rawBytes: await RawGenerator(specification).generate(),
+            rawBytes: await RawShaderGenerator(specification).generate(),
           ),
           help: 'Generate a SPIR-R binary.',
         );

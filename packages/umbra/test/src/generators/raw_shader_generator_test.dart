@@ -10,13 +10,13 @@ import '../../helpers/helpers.dart';
 void main() {
   final cwd = Directory.current;
 
-  group('RawGenerator', () {
+  group('RawShaderGenerator', () {
     test('generate a raw GLSL shader', () async {
       final specification = ShaderSpecification.parse(
         'simple',
         simpleShader.input,
       );
-      final generator = RawGenerator(specification);
+      final generator = RawShaderGenerator(specification);
 
       expect(
         await generator.generate(),
@@ -29,7 +29,7 @@ void main() {
         'with_precision',
         withPrecisionShader.input,
       );
-      final generator = RawGenerator(specification);
+      final generator = RawShaderGenerator(specification);
 
       expect(
         await generator.generate(),
@@ -42,7 +42,7 @@ void main() {
         'with_uniforms',
         withUniformsShader.input,
       );
-      final generator = RawGenerator(specification);
+      final generator = RawShaderGenerator(specification);
 
       expect(
         await generator.generate(),
@@ -55,7 +55,7 @@ void main() {
         'with_version',
         withVersionShader.input,
       );
-      final generator = RawGenerator(specification);
+      final generator = RawShaderGenerator(specification);
 
       expect(
         await generator.generate(),

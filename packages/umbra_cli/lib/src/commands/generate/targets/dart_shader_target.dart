@@ -11,13 +11,13 @@ class DartShaderTarget extends Target {
       : super(
           name: 'dart-shader',
           extension: 'dart',
-          generator: (specification, cmd, dir) async => DartGenerator(
+          generator: (specification, cmd, dir) async => DartShaderGenerator(
             specification,
             spirvBytes: await SpirvGenerator(
               specification,
               cmd: cmd,
               dataDirectory: dir,
-              rawBytes: await RawGenerator(specification).generate(),
+              rawBytes: await RawShaderGenerator(specification).generate(),
             ).generate(),
           ),
           help: 'Generate a Dart Shader.',
