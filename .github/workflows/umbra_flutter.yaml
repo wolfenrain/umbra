@@ -52,7 +52,7 @@ jobs:
       - name: Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1
         with:
-          path: packages/umbra/coverage/lcov.info
+          path: packages/umbra_flutter/coverage/lcov.info
 
   pana:
     defaults:
