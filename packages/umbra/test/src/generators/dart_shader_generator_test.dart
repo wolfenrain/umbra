@@ -10,13 +10,16 @@ import '../../helpers/helpers.dart';
 void main() {
   final cwd = Directory.current;
 
-  group('DartGenerator', () {
+  group('DartShaderGenerator', () {
     test('generate a Dart Shader file', () async {
       final specification = ShaderSpecification.parse(
         'simple',
         simpleShader.input,
       );
-      final generator = DartGenerator(specification, spirvBytes: [1, 2, 3]);
+      final generator = DartShaderGenerator(
+        specification,
+        spirvBytes: [1, 2, 3],
+      );
 
       expect(
         await generator.generate(),
@@ -29,7 +32,10 @@ void main() {
         'with_uniforms',
         withUniformsShader.input,
       );
-      final generator = DartGenerator(specification, spirvBytes: [1, 2, 3]);
+      final generator = DartShaderGenerator(
+        specification,
+        spirvBytes: [1, 2, 3],
+      );
 
       expect(
         await generator.generate(),

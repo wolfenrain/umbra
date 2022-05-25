@@ -3,7 +3,7 @@
 
 import 'package:mason/mason.dart';
 
-final dartFileBundle = MasonBundle.fromJson(<String, dynamic>{
+final dartShaderFileBundle = MasonBundle.fromJson(<String, dynamic>{
   "files": [
     {
       "path": "{{name.snakeCase()}}.dart",
@@ -24,7 +24,7 @@ final dartFileBundle = MasonBundle.fromJson(<String, dynamic>{
     }
   ],
   "hooks": [],
-  "name": "dart_file",
+  "name": "dart_shader_file",
   "description": "Generate a Dart Shader file for a Flutter GLSL shader.",
   "version": "0.1.0+1",
   "environment": {"mason": ">=0.1.0-dev <0.1.0"},
