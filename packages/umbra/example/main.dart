@@ -11,7 +11,7 @@ Future<void> main() async {
   ]) {
     final specification = ShaderSpecification.fromFile(file);
 
-    final generator = RawGenerator(specification);
+    final generator = RawShaderGenerator(specification);
     final rawBytes = await generator.generate();
 
     File(file.path.replaceAll('/shaders/', '/')).writeAsBytesSync(rawBytes);

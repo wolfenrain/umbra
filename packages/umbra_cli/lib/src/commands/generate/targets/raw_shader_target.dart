@@ -10,7 +10,8 @@ class RawShaderTarget extends Target {
       : super(
           name: 'raw-shader',
           extension: 'glsl',
-          generator: (specification, cmd, dir) => RawGenerator(specification),
+          generator: (specification, cmd, dir) =>
+              RawShaderGenerator(specification),
           help: 'Generate a raw GLSL shader.',
         );
 }

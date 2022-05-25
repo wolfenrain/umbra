@@ -3,7 +3,7 @@
 
 import 'package:mason/mason.dart';
 
-final rawFileBundle = MasonBundle.fromJson(<String, dynamic>{
+final rawShaderFileBundle = MasonBundle.fromJson(<String, dynamic>{
   "files": [
     {
       "path": "{{name}}.glsl",
@@ -13,7 +13,7 @@ final rawFileBundle = MasonBundle.fromJson(<String, dynamic>{
     }
   ],
   "hooks": [],
-  "name": "raw_file",
+  "name": "raw_shader_file",
   "description": "Generate a raw GLSL shader for Flutter.",
   "version": "0.1.0+1",
   "environment": {"mason": ">=0.1.0-dev <0.1.0"},
