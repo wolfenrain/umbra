@@ -53,3 +53,10 @@ umbra generate shaders/hello_world.glsl --output lib/shaders/
 For the documentation that describes how you should writing shaders that are compatible with Umbra tooling, see the [Shader Specifications](https://github.com/wolfenrain/umbra/tree/main/docs/shader-specifications) documentation.
 
 Documentation about the CLI can be found [here](https://github.com/wolfenrain/umbra/tree/main/docs/cli-commands.md).
+
+## Articles
+
+If you are looking for more general information about shaders in Flutter, here is a list of articles:
+
+- [Shaders with Flutter and Flame](https://blog.devowl.de/shaders-with-flutter-and-flame-faf5fda42100) by [DevOwl](https://twitter.com/RealDevOwl)
+- [Flutter & Shaders - An initial look](https://wolfenrain.medium.com/flutter-shaders-an-initial-look-d9eb98d3fd7a) by [wolfenrain](https://twitter.com/wolfenrain)
