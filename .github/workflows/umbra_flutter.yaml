@@ -47,7 +47,7 @@ jobs:
         run: flutter analyze lib test
 
       - name: Run Tests
-        run: flutter test --test-randomize-ordering-seed random
+        run: flutter test --coverage --test-randomize-ordering-seed random
 
       - name: Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1
