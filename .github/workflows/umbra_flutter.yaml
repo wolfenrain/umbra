@@ -6,14 +6,18 @@ concurrency:
 
 on:
   push:
+    branches:
+      - main
     paths:
-      - "packages/umbra_flutter/**"
-      - ".github/workflows/umbra_flutter.yaml"
+      - .github/workflows/umbra_flutter.yaml
+      - packages/umbra_flutter/**
 
   pull_request:
+    branches:
+      - main
     paths:
-      - "packages/umbra_flutter/**"
-      - ".github/workflows/umbra_flutter.yaml"
+      - .github/workflows/umbra_flutter.yaml
+      - packages/umbra_flutter/**
 
 jobs:
   build:
@@ -22,3 +26,22 @@ jobs:
       working_directory: packages/umbra_flutter
       flutter_channel: stable
       flutter_version: 3.0.0
+
+  pana:
+    defaults:
+      run:
+        working-directory: packages/umbra_flutter
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install Dependencies
+        run: |
+          dart pub get
+          dart pub global activate pana
+
+      - name: Verify Pub Score
+        run: ../../tools/verify_pub_score.sh

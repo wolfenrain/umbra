@@ -18,7 +18,8 @@ const expectedUsage = [
       '\n'
       'Usage: umbra generate <shader_name>\n'
       '-h, --help                           Print this usage information.\n'
-      '-o, --output=<directory>             The output directory for the created file(s).\n'
+      '-o, --output=<directory>             The output directory for the '
+      'created file(s).\n'
       '-t, --target=<target>                The target used for generation.\n'
       '\n'
       '          [dart-shader] (default)    Generate a Dart Shader.\n'
@@ -46,7 +47,6 @@ void main() {
   group('create', () {
     late List<String> progressLogs;
     late Logger logger;
-    late File shaderFile;
     late Cmd cmd;
 
     setUpAll(() {
