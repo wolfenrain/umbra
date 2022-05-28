@@ -98,7 +98,7 @@ class CreateCommand extends UmbraCommand {
     final outputDirectory = _outputDirectory;
     final template = _template;
 
-    final createDone = logger.progress('Creating an Umbra Shader');
+    final createProcess = logger.progress('Creating an Umbra Shader');
     final generator = await _generator(template.bundle);
 
     Future<GeneratedFile> generate({
@@ -119,14 +119,13 @@ class CreateCommand extends UmbraCommand {
       final fileName = file.path.split(RegExp(r'[/\\]')).last;
       final answer = logger.confirm('${yellow.wrap('Overwrite $fileName?')}');
       if (!answer) {
-        createDone();
+        createProcess.fail();
         logger.err('Aborting.');
         return ExitCode.cantCreate.code;
       }
-      // TODO(wolfen): use new progress system
       await generate(resolution: FileConflictResolution.overwrite);
     }
-    createDone('Created an Umbra Shader!');
+    createProcess.complete('Created an Umbra Shader!');
 
     return ExitCode.success.code;
   }

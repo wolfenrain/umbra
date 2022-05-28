@@ -37,6 +37,8 @@ class _FakeDirectoryGeneratorTarget extends Fake
 
 class _FakeLogger extends Fake implements Logger {}
 
+class _MockProgress extends Mock implements Progress {}
+
 void main() {
   group('create', () {
     late List<String> progressLogs;
@@ -51,11 +53,16 @@ void main() {
       progressLogs = <String>[];
 
       logger = _MockLogger();
-      when(() => logger.progress(any())).thenReturn(
-        ([_]) {
-          if (_ != null) progressLogs.add(_);
-        },
-      );
+      final progress = _MockProgress();
+      when(() => progress.complete(any())).thenAnswer((_) {
+        if (_.positionalArguments.isEmpty) {
+          return;
+        }
+        if (_.positionalArguments[0] != null) {
+          progressLogs.add(_.positionalArguments[0] as String);
+        }
+      });
+      when(() => logger.progress(any())).thenReturn(progress);
     });
 
     test(

@@ -104,12 +104,12 @@ class GenerateCommand extends UmbraCommand {
 
     final parsingShader = logger.progress('Parsing shader file');
     final specification = _parseShaderSpecification(shaderFile);
-    parsingShader('Shader file parsed');
+    parsingShader.complete('Shader file parsed');
 
     final generateDone = logger.progress('Generating');
     final generator = await target.generator(specification, cmd, dataDirectory);
     final bytes = await generator.generate();
-    generateDone('Generated');
+    generateDone.complete('Generated');
 
     final outputName = '${specification.name}.${target.extension}';
     final outputFile = File(path.join(outputDirectory.path, outputName));

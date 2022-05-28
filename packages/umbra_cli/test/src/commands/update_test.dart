@@ -11,6 +11,8 @@ class _MockLogger extends Mock implements Logger {}
 
 class _MockPubUpdater extends Mock implements PubUpdater {}
 
+class _MockProgress extends Mock implements Progress {}
+
 class FakeProcessResult extends Fake implements ProcessResult {}
 
 void main() {
@@ -25,7 +27,7 @@ void main() {
       logger = _MockLogger();
       pubUpdater = _MockPubUpdater();
 
-      when(() => logger.progress(any())).thenReturn(([String? _]) {});
+      when(() => logger.progress(any())).thenReturn(_MockProgress());
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
@@ -72,7 +74,7 @@ void main() {
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => latestVersion);
-      when(() => logger.progress(any())).thenReturn(([String? message]) {});
+      when(() => logger.progress(any())).thenReturn(_MockProgress());
       final result = await commandRunner.run(['update']);
       expect(result, equals(ExitCode.success.code));
       verify(() => logger.progress('Checking for updates')).called(1);
@@ -84,7 +86,7 @@ void main() {
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
-      when(() => logger.progress(any())).thenReturn(([String? message]) {});
+      when(() => logger.progress(any())).thenReturn(_MockProgress());
       final result = await commandRunner.run(['update']);
       expect(result, equals(ExitCode.success.code));
       verify(

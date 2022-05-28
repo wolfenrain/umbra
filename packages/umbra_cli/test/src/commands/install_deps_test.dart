@@ -25,6 +25,8 @@ class _MockCmd extends Mock implements Cmd {}
 
 class _MockProcessResult extends Mock implements ProcessResult {}
 
+class _MockProgress extends Mock implements Progress {}
+
 const expectedUsage = [
   // ignore: no_adjacent_strings_in_list
   'Install external dependencies for umbra.\n'
@@ -55,7 +57,7 @@ void main() {
       when(() => platform.environment).thenReturn({});
 
       logger = _MockLogger();
-      when(() => logger.progress(any())).thenReturn(([String? _]) {});
+      when(() => logger.progress(any())).thenReturn(_MockProgress());
       downloader = _MockDownloader();
       extractor = _MockFileExtractor();
       writer = _MockFileWriter();

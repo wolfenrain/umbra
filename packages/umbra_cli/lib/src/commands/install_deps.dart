@@ -41,24 +41,25 @@ class InstallDepsCommand extends UmbraCommand {
     final checkingDependencies = logger.progress('Checking dependencies');
     final glslc = File.fromUri(dataDirectory.uri.resolve('bin/glslc'));
     if (glslc.existsSync()) {
-      checkingDependencies('Dependencies are already installed');
+      checkingDependencies.fail();
+      logger.err('Dependencies are already installed');
       return ExitCode.success.code;
     }
 
-    final downloadingDone = logger.progress('Downloading dependencies');
+    final downloadingDeps = logger.progress('Downloading dependencies');
     final archive = await _downloadingShaderC();
-    downloadingDone('Dependencies downloaded');
+    downloadingDeps.complete('Dependencies downloaded');
 
-    final extractingDone = logger.progress('Extracting dependencies');
+    final extractingDeps = logger.progress('Extracting dependencies');
     final fileBytes = await _extractor.extract('install/bin/glslc', archive);
-    extractingDone('Dependencies extracted');
+    extractingDeps.complete('Dependencies extracted');
 
-    final installingDone = logger.progress('Installing dependencies');
+    final installingDeps = logger.progress('Installing dependencies');
     await _writer.write(glslc.path, fileBytes);
     if (platform.isMacOS || platform.isLinux) {
       await cmd.run('chmod', ['+x', glslc.path]);
     }
-    installingDone('Dependencies installed');
+    installingDeps.complete('Dependencies installed');
 
     return ExitCode.success.code;
   }

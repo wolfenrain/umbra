@@ -15,6 +15,8 @@ class _MockCmd extends Mock implements Cmd {}
 
 class _MockPlatform extends Mock implements Platform {}
 
+class _MockProgress extends Mock implements Progress {}
+
 void Function() _overridePrint(void Function(List<String>) fn) {
   return () {
     final printLogs = <String>[];
@@ -53,11 +55,16 @@ void Function() withRunner(
       platform: platform,
     );
 
-    when(() => logger.progress(any())).thenReturn(
-      ([_]) {
-        if (_ != null) progressLogs.add(_);
-      },
-    );
+    final progress = _MockProgress();
+    when(() => progress.complete(any())).thenAnswer((_) {
+      if (_.positionalArguments.isEmpty) {
+        return;
+      }
+      if (_.positionalArguments[0] != null) {
+        progressLogs.add(_.positionalArguments[0] as String);
+      }
+    });
+    when(() => logger.progress(any())).thenReturn(progress);
     when(
       () => pubUpdater.isUpToDate(
         packageName: any(named: 'packageName'),
