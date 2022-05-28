@@ -26,16 +26,16 @@ class UpdateCommand extends UmbraCommand {
 
   @override
   Future<int> run() async {
-    final updateCheckDone = logger.progress('Checking for updates');
+    final updateCheck = logger.progress('Checking for updates');
     late final String latestVersion;
     try {
       latestVersion = await _pubUpdater.getLatestVersion(packageName);
     } catch (error) {
-      updateCheckDone();
+      updateCheck.fail();
       logger.err('$error');
       return ExitCode.software.code;
     }
-    updateCheckDone('Checked for updates');
+    updateCheck.complete('Checked for updates');
 
     final isUpToDate = packageVersion == latestVersion;
     if (isUpToDate) {
@@ -43,15 +43,15 @@ class UpdateCommand extends UmbraCommand {
       return ExitCode.success.code;
     }
 
-    final updateDone = logger.progress('Updating to $latestVersion');
+    final updating = logger.progress('Updating to $latestVersion');
     try {
       await _pubUpdater.update(packageName: packageName);
     } catch (error) {
-      updateDone();
+      updating.fail();
       logger.err('$error');
       return ExitCode.software.code;
     }
-    updateDone('Updated to $latestVersion');
+    updating.complete('Updated to $latestVersion');
 
     return ExitCode.success.code;
   }

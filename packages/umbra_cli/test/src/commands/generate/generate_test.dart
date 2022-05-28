@@ -41,6 +41,8 @@ class _MockDirectory extends Mock implements Directory {}
 
 class _MockCmd extends Mock implements Cmd {}
 
+class _MockProgress extends Mock implements Progress {}
+
 void main() {
   final cwd = Directory.current;
 
@@ -57,11 +59,16 @@ void main() {
       progressLogs = <String>[];
 
       logger = _MockLogger();
-      when(() => logger.progress(any())).thenReturn(
-        ([_]) {
-          if (_ != null) progressLogs.add(_);
-        },
-      );
+      final progress = _MockProgress();
+      when(() => progress.complete(any())).thenAnswer((_) {
+        if (_.positionalArguments.isEmpty) {
+          return;
+        }
+        if (_.positionalArguments[0] != null) {
+          progressLogs.add(_.positionalArguments[0] as String);
+        }
+      });
+      when(() => logger.progress(any())).thenReturn(progress);
 
       cmd = _MockCmd();
     });
