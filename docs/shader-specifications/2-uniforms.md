@@ -31,6 +31,9 @@ type `double`.
 You can also use `vec2`, `vec3` and `vec4` types for your uniforms. Each will be represented in Dart by either `Vector2`, `Vector3` 
 or a `Vector4`.
 
+Umbra also adds a `uniform` automatically for you called `resolution` of the type `vec2`. This is the current size of the rectangle 
+that it renders on. The `uv` value that you receive as an `in` argument is based on this. 
+
 For a more information on uniforms check out [The Book Of Shaders, Uniforms section](https://thebookofshaders.com/03/).
 
 ## Sampling textures
