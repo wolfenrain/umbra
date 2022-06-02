@@ -14,8 +14,7 @@ parameters the shader need, in which order the data of those parameters should b
 to do anything related to assets. This makes it easier for users of the shader as they now have a strongly typed API that has parameters with 
 which they are more familiar and it can be used immediately without any other configuration.
 
-> **Note**
-> **Adhere to the rules** mentioned in the [SPIR-V library](https://github.com/flutter/engine/blob/master/lib/spirv/README.md) while writing your GLSL code. Some of these rules are handled by Umbra while generating the raw GLSL code but for some, you need to be on the lookout.
+❗ Note: As mentioned above there are certain constraints from the [SPIR-V library](https://github.com/flutter/engine/blob/master/lib/spirv/README.md) that you have to adhere to while writing your GLSL code. Some of these rules are handled by Umbra while generating the raw GLSL code but it is still recommended to read up on the rules because Umbra is not able to cover them all.
 
 ## Umbra Shader Abstraction
 
