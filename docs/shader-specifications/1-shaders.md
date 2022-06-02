@@ -40,6 +40,9 @@ The result of this shader is this:
 
 ![simple_uv_map](https://raw.githubusercontent.com/wolfenrain/umbra/main/assets/simple_uv_map.png)
 
+> **Note**
+> **Adhere to the rules** mentioned [here](https://github.com/flutter/engine/blob/master/lib/spirv/README.md) while writing your GLSL code. Some of these rules are handled by Umbra while generating the raw GLSL code but for some, you need to be on the lookout.
+
 ## Further Reading
 
 For a nice introduction on shaders check out [The Book Of Shaders](https://thebookofshaders.com/).
