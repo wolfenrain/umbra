@@ -29,16 +29,16 @@ class WithUniforms extends StatelessWidget {
   static Future<FragmentProgram>? _cachedProgram;
 
   final BlendMode _blendMode;
+
   final Vector2 _position;
-  
+
   final Vector3 _coordinates;
-  
+
   final Vector4 _color;
-  
+
   final double _mixValue;
-  
+
   final Image _image;
-  
 
   @override
   Widget build(BuildContext context) {

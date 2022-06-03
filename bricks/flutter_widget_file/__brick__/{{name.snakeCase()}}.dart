@@ -21,10 +21,9 @@ class {{name.pascalCase()}} extends StatelessWidget {
   static Future<FragmentProgram>? _cachedProgram;
 
   final BlendMode _blendMode;
-  {{#parameters}}
+{{#parameters}}
   final {{type}} _{{name.camelCase()}};
-  {{/parameters}}
-
+{{/parameters}}
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<FragmentProgram>(

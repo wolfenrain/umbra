@@ -23,10 +23,10 @@ class Pixelation extends StatelessWidget {
   static Future<FragmentProgram>? _cachedProgram;
 
   final BlendMode _blendMode;
+  
   final double _pixelSize;
-  
+
   final Image _image;
-  
 
   @override
   Widget build(BuildContext context) {
