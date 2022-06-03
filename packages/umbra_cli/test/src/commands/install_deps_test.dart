@@ -211,10 +211,11 @@ void main() {
 
         verify(() => logger.progress('Extracting dependencies')).called(1);
         verify(
-          () => extractor.extract('install/bin/glslc', archiveBytes),
+          () => extractor.extract('install/bin/glslc.exe', archiveBytes),
         ).called(1);
         verify(
-          () => writer.write('/C/Users/test/.umbra/bin/glslc', expectedBytes),
+          () =>
+              writer.write('/C/Users/test/.umbra/bin/glslc.exe', expectedBytes),
         ).called(1);
         verifyNever(() => cmd.run('chmod', any()));
       });
