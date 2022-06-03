@@ -10,6 +10,7 @@ import 'package:umbra_cli/src/umbra_command.dart';
 
 final _targets = [
   DartShaderTarget(),
+  FlutterWidgetTarget(),
   RawShaderTarget(),
   SpirvBinaryTarget(),
 ];

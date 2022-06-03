@@ -1,0 +1,6 @@
+name: flutter_widget_file
+description: Generate a Flutter Widget file for a Flutter GLSL shader.
+version: 0.1.0+1
+
+environment:
+  mason: ">=0.1.0-dev <0.1.0"

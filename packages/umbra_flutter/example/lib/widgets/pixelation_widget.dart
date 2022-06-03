@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:example/shaders/pixelation.dart';
+import 'package:example/widgets/pixelation.dart';
 import 'package:flutter/material.dart';
 
 class PixelationWidget extends StatefulWidget {
@@ -14,8 +14,6 @@ class PixelationWidget extends StatefulWidget {
 }
 
 class _PixelationWidgetState extends State<PixelationWidget> {
-  late Future<Pixelation> pixelation;
-
   late Timer timer;
 
   double pixelSize = 0;
@@ -35,8 +33,6 @@ class _PixelationWidgetState extends State<PixelationWidget> {
         }
       });
     });
-
-    pixelation = Pixelation.compile();
   }
 
   @override
@@ -47,32 +43,9 @@ class _PixelationWidgetState extends State<PixelationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Pixelation>(
-      future: pixelation,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const Text('Loading');
-        }
-        final pixelation = snapshot.data!;
-
-        return ShaderMask(
-          blendMode: ui.BlendMode.src,
-          shaderCallback: (bounds) {
-            return pixelation.shader(
-              image: widget.image,
-              pixelSize: pixelSize,
-              resolution: Size(bounds.size.width, bounds.size.height),
-            );
-          },
-          child: FittedBox(
-            child: Container(
-              color: Colors.transparent,
-              width: widget.image.width.toDouble(),
-              height: widget.image.height.toDouble(),
-            ),
-          ),
-        );
-      },
+    return Pixelation(
+      pixelSize: pixelSize,
+      image: widget.image,
     );
   }
 }

@@ -1,0 +1,8 @@
+samplerUniforms: [{{#samplers}}
+                ImageShader(
+                  _{{name.camelCase()}}{{extension}},
+                  TileMode.clamp,
+                  TileMode.clamp,
+                  UmbraShader.identity,
+                ),{{/samplers}}
+              ],
