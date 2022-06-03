@@ -23,6 +23,7 @@ const expectedUsage = [
       '-t, --target=<target>                The target used for generation.\n'
       '\n'
       '          [dart-shader] (default)    Generate a Dart Shader.\n'
+      '          [flutter-widget]           Generate a Flutter Widget.\n'
       '          [raw-shader]               Generate a raw GLSL shader.\n'
       '          [spirv]                    Generate a SPIR-R binary.\n'
       '\n'
