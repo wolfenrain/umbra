@@ -13,12 +13,16 @@ class Simple extends StatelessWidget {
   const Simple({
     Key? key,
     BlendMode blendMode = BlendMode.src,
+    Widget? child,
   })  : _blendMode = blendMode,
+        _child = child,
         super(key: key);
 
   static Future<FragmentProgram>? _cachedProgram;
 
   final BlendMode _blendMode;
+
+  final Widget? _child;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +55,11 @@ class Simple extends StatelessWidget {
                   samplerUniforms: [],
                 );
               },
-              child: FittedBox(
-                child: Container(
-                  color: Colors.transparent,
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                ),
+              child: Container(
+                color: Colors.transparent,
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                child: _child,
               ),
             );
           },

@@ -12,15 +12,19 @@ class {{name.pascalCase()}} extends StatelessWidget {
   /// {@macro {{name.snakeCase()}}}
   const {{name.pascalCase()}}({
     Key? key,
-    BlendMode blendMode = BlendMode.src,{{#parameters}}
+    BlendMode blendMode = BlendMode.src,
+    Widget? child,{{#parameters}}
     required {{type}} {{name.camelCase()}},{{/parameters}}
-  })  : _blendMode = blendMode,{{#parameters}}
+  })  : _blendMode = blendMode,
+        _child = child,{{#parameters}}
         _{{name.camelCase()}} = {{name.camelCase()}},{{/parameters}}
         super(key: key);
 
   static Future<FragmentProgram>? _cachedProgram;
 
   final BlendMode _blendMode;
+
+  final Widget? _child;
 {{#parameters}}
   final {{type}} _{{name.camelCase()}};
 {{/parameters}}
@@ -56,12 +60,11 @@ class {{name.pascalCase()}} extends StatelessWidget {
                   {{#hasSamplers}}{{> with_sampler_uniforms.dart}}{{/hasSamplers}}{{^hasSamplers}}{{> without_sampler_uniforms.dart}}{{/hasSamplers}}
                 );
               },
-              child: FittedBox(
-                child: Container(
-                  color: Colors.transparent,
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                ),
+              child: Container(
+                color: Colors.transparent,
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                child: _child,
               ),
             );
           },

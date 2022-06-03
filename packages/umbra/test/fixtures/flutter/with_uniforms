@@ -13,12 +13,14 @@ class WithUniforms extends StatelessWidget {
   const WithUniforms({
     Key? key,
     BlendMode blendMode = BlendMode.src,
+    Widget? child,
     required Vector2 position,
     required Vector3 coordinates,
     required Vector4 color,
     required double mixValue,
     required Image image,
   })  : _blendMode = blendMode,
+        _child = child,
         _position = position,
         _coordinates = coordinates,
         _color = color,
@@ -29,6 +31,8 @@ class WithUniforms extends StatelessWidget {
   static Future<FragmentProgram>? _cachedProgram;
 
   final BlendMode _blendMode;
+
+  final Widget? _child;
 
   final Vector2 _position;
 
@@ -79,21 +83,20 @@ class WithUniforms extends StatelessWidget {
                     bounds.size.height,
                   ]),
                   samplerUniforms: [
-                ImageShader(
-                  _image,
-                  TileMode.clamp,
-                  TileMode.clamp,
-                  UmbraShader.identity,
-                ),
-              ],
+                    ImageShader(
+                      _image,
+                      TileMode.clamp,
+                      TileMode.clamp,
+                      UmbraShader.identity,
+                    ),
+                  ],
                 );
               },
-              child: FittedBox(
-                child: Container(
-                  color: Colors.transparent,
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                ),
+              child: Container(
+                color: Colors.transparent,
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                child: _child,
               ),
             );
           },
