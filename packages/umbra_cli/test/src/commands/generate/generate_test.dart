@@ -348,6 +348,26 @@ void main() {
         );
 
         test(
+          'flutter-widget target',
+          withIOOverride((File output) async {
+            await expectValidTargetName<FlutterWidgetTarget>(
+              targetName: 'flutter-widget',
+              output: output,
+            );
+
+            verify(
+              () => cmd.start('bin/glslc', [
+                '--target-env=opengl',
+                '-fshader-stage=fragment',
+                '-o',
+                'temp/created/spirv',
+                'temp/created/raw.glsl',
+              ]),
+            ).called(1);
+          }),
+        );
+
+        test(
           'raw-shader target',
           withIOOverride((File output) async {
             await expectValidTargetName<RawShaderTarget>(
