@@ -1,0 +1,107 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:flutter/material.dart' hide Image;
+import 'package:umbra_flutter/umbra_flutter.dart';
+
+/// {@template with_uniforms}
+/// A Flutter Widget for the `with_uniforms` shader.
+/// {@endtemplate}
+class WithUniforms extends StatelessWidget {
+  /// {@macro with_uniforms}
+  const WithUniforms({
+    Key? key,
+    BlendMode blendMode = BlendMode.src,
+    required Vector2 position,
+    required Vector3 coordinates,
+    required Vector4 color,
+    required double mixValue,
+    required Image image,
+  })  : _blendMode = blendMode,
+        _position = position,
+        _coordinates = coordinates,
+        _color = color,
+        _mixValue = mixValue,
+        _image = image,
+        super(key: key);
+
+  static Future<FragmentProgram>? _cachedProgram;
+
+  final BlendMode _blendMode;
+  final Vector2 _position;
+  
+  final Vector3 _coordinates;
+  
+  final Vector4 _color;
+  
+  final double _mixValue;
+  
+  final Image _image;
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<FragmentProgram>(
+      future: _cachedProgram ??
+          FragmentProgram.compile(
+            spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+          ),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          // TODO: Add a error builder?
+          return Text('${snapshot.error}');
+        }
+        if (!snapshot.hasData) {
+          // TODO: Add a loading builder?
+          return const CircularProgressIndicator();
+        }
+        final program = snapshot.data!;
+
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return ShaderMask(
+              blendMode: _blendMode,
+              shaderCallback: (bounds) {
+                return program.shader(
+                  floatUniforms: Float32List.fromList([
+                    _position.x,
+                    _position.y,
+                    _coordinates.x,
+                    _coordinates.y,
+                    _coordinates.z,
+                    _color.x,
+                    _color.y,
+                    _color.z,
+                    _color.w,
+                    _mixValue,
+                    bounds.size.width, 
+                    bounds.size.height,
+                  ]),
+                  samplerUniforms: [
+                ImageShader(
+                  _image,
+                  TileMode.clamp,
+                  TileMode.clamp,
+                  UmbraShader.identity,
+                ),
+              ],
+                );
+              },
+              child: FittedBox(
+                child: Container(
+                  color: Colors.transparent,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+const _spirv =
+    'AQID';

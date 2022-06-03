@@ -1,0 +1,70 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:flutter/material.dart' hide Image;
+import 'package:umbra_flutter/umbra_flutter.dart';
+
+/// {@template simple}
+/// A Flutter Widget for the `simple` shader.
+/// {@endtemplate}
+class Simple extends StatelessWidget {
+  /// {@macro simple}
+  const Simple({
+    Key? key,
+    BlendMode blendMode = BlendMode.src,
+  })  : _blendMode = blendMode,
+        super(key: key);
+
+  static Future<FragmentProgram>? _cachedProgram;
+
+  final BlendMode _blendMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<FragmentProgram>(
+      future: _cachedProgram ??
+          FragmentProgram.compile(
+            spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+          ),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          // TODO: Add a error builder?
+          return Text('${snapshot.error}');
+        }
+        if (!snapshot.hasData) {
+          // TODO: Add a loading builder?
+          return const CircularProgressIndicator();
+        }
+        final program = snapshot.data!;
+
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return ShaderMask(
+              blendMode: _blendMode,
+              shaderCallback: (bounds) {
+                return program.shader(
+                  floatUniforms: Float32List.fromList([
+                    bounds.size.width, 
+                    bounds.size.height,
+                  ]),
+                  samplerUniforms: [],
+                );
+              },
+              child: FittedBox(
+                child: Container(
+                  color: Colors.transparent,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+const _spirv =
+    'AQID';
