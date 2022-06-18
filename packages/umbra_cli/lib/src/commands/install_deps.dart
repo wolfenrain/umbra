@@ -39,7 +39,12 @@ class InstallDepsCommand extends UmbraCommand {
   @override
   Future<int> run() async {
     final checkingDependencies = logger.progress('Checking dependencies');
-    final glslc = File.fromUri(dataDirectory.uri.resolve('bin/glslc'));
+    var programExtension = '';
+    if (platform.isWindows) {
+      programExtension = '.exe';
+    }
+    final glslc =
+        File.fromUri(dataDirectory.uri.resolve('bin/glslc$programExtension'));
     if (glslc.existsSync()) {
       checkingDependencies.fail();
       logger.err('Dependencies are already installed');
@@ -51,7 +56,8 @@ class InstallDepsCommand extends UmbraCommand {
     downloadingDeps.complete('Dependencies downloaded');
 
     final extractingDeps = logger.progress('Extracting dependencies');
-    final fileBytes = await _extractor.extract('install/bin/glslc', archive);
+    final fileBytes =
+        await _extractor.extract('install/bin/glslc$programExtension', archive);
     extractingDeps.complete('Dependencies extracted');
 
     final installingDeps = logger.progress('Installing dependencies');

@@ -1,3 +1,9 @@
+# 0.1.0-dev.3
+
+- fix: installation of dependencies on Windows
+- docs: linked the rules to follow while writing GLSL code
+- docs: add resolution information
+
 # 0.1.0-dev.2
 
 - chore: upgrade mason
