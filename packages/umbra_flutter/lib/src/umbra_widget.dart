@@ -47,6 +47,7 @@ abstract class UmbraWidget extends StatelessWidget {
   /// shader is still compiling.
   final ShaderCompilingBuilder? compilingBuilder;
 
+  /// The Fragment Shader program to use.
   Future<FragmentProgram> program();
 
   /// Returns the float uniforms to pass to the shader.
