@@ -2,37 +2,32 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:flutter/material.dart' hide Image;
 import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// {@template with_uniforms}
 /// A Flutter Widget for the `with_uniforms` shader.
 /// {@endtemplate}
-class WithUniforms extends StatelessWidget {
+class WithUniforms extends UmbraWidget {
   /// {@macro with_uniforms}
   const WithUniforms({
-    Key? key,
-    BlendMode blendMode = BlendMode.src,
-    Widget? child,
+    super.key,
+    super.blendMode = BlendMode.src,
+    super.child,
+    super.errorBuilder,
+    super.compilingBuilder,
     required Vector2 position,
     required Vector3 coordinates,
     required Vector4 color,
     required double mixValue,
     required Image image,
-  })  : _blendMode = blendMode,
-        _child = child,
-        _position = position,
+  })  : _position = position,
         _coordinates = coordinates,
         _color = color,
         _mixValue = mixValue,
         _image = image,
-        super(key: key);
+        super();
 
   static Future<FragmentProgram>? _cachedProgram;
-
-  final BlendMode _blendMode;
-
-  final Widget? _child;
 
   final Vector2 _position;
 
@@ -45,64 +40,39 @@ class WithUniforms extends StatelessWidget {
   final Image _image;
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<FragmentProgram>(
-      future: _cachedProgram ??
-          FragmentProgram.compile(
-            spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-          ),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          // TODO: Add a error builder?
-          return Text('${snapshot.error}');
-        }
-        if (!snapshot.hasData) {
-          // TODO: Add a loading builder?
-          return const CircularProgressIndicator();
-        }
-        final program = snapshot.data!;
+  List<double> getFloatUniforms() {
+    return [
+      _position.x,
+      _position.y,
+      _coordinates.x,
+      _coordinates.y,
+      _coordinates.z,
+      _color.x,
+      _color.y,
+      _color.z,
+      _color.w,
+      _mixValue,
+    ];
+  }
 
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return ShaderMask(
-              blendMode: _blendMode,
-              shaderCallback: (bounds) {
-                return program.shader(
-                  floatUniforms: Float32List.fromList([
-                    _position.x,
-                    _position.y,
-                    _coordinates.x,
-                    _coordinates.y,
-                    _coordinates.z,
-                    _color.x,
-                    _color.y,
-                    _color.z,
-                    _color.w,
-                    _mixValue,
-                    bounds.size.width, 
-                    bounds.size.height,
-                  ]),
-                  samplerUniforms: [
-                    ImageShader(
-                      _image,
-                      TileMode.clamp,
-                      TileMode.clamp,
-                      UmbraShader.identity,
-                    ),
-                  ],
-                );
-              },
-              child: Container(
-                color: Colors.transparent,
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                child: _child,
-              ),
-            );
-          },
+  @override
+  List<ImageShader> getSamplerUniforms() {
+    return [
+      ImageShader(
+        _image,
+        TileMode.clamp,
+        TileMode.clamp,
+        UmbraShader.identity,
+      ),
+    ];
+  }
+
+  @override
+  Future<FragmentProgram> program() {
+    return _cachedProgram ??
+        FragmentProgram.compile(
+          spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
         );
-      },
-    );
   }
 }
 

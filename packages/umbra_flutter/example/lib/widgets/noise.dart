@@ -2,33 +2,32 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:flutter/material.dart' hide Image;
 import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// {@template noise}
 /// A Flutter Widget for the `noise` shader.
 /// {@endtemplate}
-class Noise extends StatelessWidget {
+class Noise extends UmbraWidget {
   /// {@macro noise}
   const Noise({
-    Key? key,
-    BlendMode blendMode = BlendMode.src,
+    super.key,
+    super.blendMode = BlendMode.src,
+    super.child,
+    super.errorBuilder,
+    super.compilingBuilder,
     required double time,
     required Vector2 scale,
     required double amplifier,
     required Vector2 frequency,
     required Image image,
-  })  : _blendMode = blendMode,
-        _time = time,
+  })  : _time = time,
         _scale = scale,
         _amplifier = amplifier,
         _frequency = frequency,
         _image = image,
-        super(key: key);
+        super();
 
   static Future<FragmentProgram>? _cachedProgram;
-
-  final BlendMode _blendMode;
 
   final double _time;
 
@@ -41,61 +40,35 @@ class Noise extends StatelessWidget {
   final Image _image;
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<FragmentProgram>(
-      future: _cachedProgram ??
-          FragmentProgram.compile(
-            spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-          ),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          // TODO: Add a error builder?
-          return Text('${snapshot.error}');
-        }
-        if (!snapshot.hasData) {
-          // TODO: Add a loading builder?
-          return const CircularProgressIndicator();
-        }
-        final program = snapshot.data!;
+  List<double> getFloatUniforms() {
+    return [
+      _time,
+      _scale.x,
+      _scale.y,
+      _amplifier,
+      _frequency.x,
+      _frequency.y,
+    ];
+  }
+  
+  @override
+  List<ImageShader> getSamplerUniforms() {
+    return [
+      ImageShader(
+        _image,
+        TileMode.clamp,
+        TileMode.clamp,
+        UmbraShader.identity,
+      ),
+    ];
+  }
 
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return ShaderMask(
-              blendMode: _blendMode,
-              shaderCallback: (bounds) {
-                return program.shader(
-                  floatUniforms: Float32List.fromList([
-                    _time,
-                    _scale.x,
-                    _scale.y,
-                    _amplifier,
-                    _frequency.x,
-                    _frequency.y,
-                    bounds.size.width,
-                    bounds.size.height,
-                  ]),
-                  samplerUniforms: [
-                    ImageShader(
-                      _image,
-                      TileMode.clamp,
-                      TileMode.clamp,
-                      UmbraShader.identity,
-                    ),
-                  ],
-                );
-              },
-              child: FittedBox(
-                child: Container(
-                  color: Colors.transparent,
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                ),
-              ),
-            );
-          },
+  @override
+  Future<FragmentProgram> program() {
+    return _cachedProgram ??
+        FragmentProgram.compile(
+          spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
         );
-      },
-    );
   }
 }
 

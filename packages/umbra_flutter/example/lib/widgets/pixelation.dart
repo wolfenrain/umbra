@@ -2,83 +2,56 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:flutter/material.dart' hide Image;
 import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// {@template pixelation}
 /// A Flutter Widget for the `pixelation` shader.
 /// {@endtemplate}
-class Pixelation extends StatelessWidget {
+class Pixelation extends UmbraWidget {
   /// {@macro pixelation}
   const Pixelation({
-    Key? key,
-    BlendMode blendMode = BlendMode.src,
+    super.key,
+    super.blendMode = BlendMode.src,
+    super.child,
+    super.errorBuilder,
+    super.compilingBuilder,
     required double pixelSize,
     required Image image,
-  })  : _blendMode = blendMode,
-        _pixelSize = pixelSize,
+  })  : _pixelSize = pixelSize,
         _image = image,
-        super(key: key);
+        super();
 
   static Future<FragmentProgram>? _cachedProgram;
 
-  final BlendMode _blendMode;
-  
   final double _pixelSize;
 
   final Image _image;
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<FragmentProgram>(
-      future: _cachedProgram ??
-          FragmentProgram.compile(
-            spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-          ),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          // TODO: Add a error builder?
-          return Text('${snapshot.error}');
-        }
-        if (!snapshot.hasData) {
-          // TODO: Add a loading builder?
-          return const CircularProgressIndicator();
-        }
-        final program = snapshot.data!;
+  List<double> getFloatUniforms() {
+    return [
+      _pixelSize,
+    ];
+  }
+  
+  @override
+  List<ImageShader> getSamplerUniforms() {
+    return [
+      ImageShader(
+        _image,
+        TileMode.clamp,
+        TileMode.clamp,
+        UmbraShader.identity,
+      ),
+    ];
+  }
 
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return ShaderMask(
-              blendMode: _blendMode,
-              shaderCallback: (bounds) {
-                return program.shader(
-                  floatUniforms: Float32List.fromList([
-                    _pixelSize,
-                    bounds.size.width, 
-                    bounds.size.height,
-                  ]),
-                  samplerUniforms: [
-                ImageShader(
-                  _image,
-                  TileMode.clamp,
-                  TileMode.clamp,
-                  UmbraShader.identity,
-                ),
-              ],
-                );
-              },
-              child: FittedBox(
-                child: Container(
-                  color: Colors.transparent,
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                ),
-              ),
-            );
-          },
+  @override
+  Future<FragmentProgram> program() {
+    return _cachedProgram ??
+        FragmentProgram.compile(
+          spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
         );
-      },
-    );
   }
 }
 
