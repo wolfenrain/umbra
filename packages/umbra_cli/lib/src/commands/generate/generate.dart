@@ -48,6 +48,10 @@ class GenerateCommand extends UmbraCommand {
             element.name: element.help,
           },
         ),
+      )
+      ..addFlag(
+        'overwrite',
+        help: 'Overwrite existing files without prompting.',
       );
   }
 
@@ -97,6 +101,10 @@ class GenerateCommand extends UmbraCommand {
     );
   }
 
+  bool get _overwrite {
+    return results['overwrite'] as bool? ?? false;
+  }
+
   @override
   Future<int> run() async {
     final shaderFile = _shaderFile;
@@ -114,7 +122,7 @@ class GenerateCommand extends UmbraCommand {
 
     final outputName = '${specification.name}.${target.extension}';
     final outputFile = File(path.join(outputDirectory.path, outputName));
-    if (outputFile.existsSync()) {
+    if (outputFile.existsSync() && !_overwrite) {
       final answer = logger.confirm('${yellow.wrap('Overwrite $outputName?')}');
       if (!answer) {
         logger.err('Aborting.');

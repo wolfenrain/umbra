@@ -281,6 +281,44 @@ void main() {
       }),
     );
 
+    test(
+      '''do not prompts user when output file already exists but --overwrite is specified''',
+      withIOOverride((output) async {
+        final argResults = _MockArgResults();
+        final command = GenerateCommand(
+          logger: logger,
+          cmd: cmd,
+        )..testArgResults = argResults;
+
+        when(output.existsSync).thenReturn(true);
+        when(() => argResults.rest).thenReturn(['test.raw']);
+        when(() => argResults['overwrite'] as bool?).thenReturn(true);
+        when(() => logger.confirm(any())).thenReturn(false);
+
+        final result = await command.run();
+        expect(result, equals(ExitCode.success.code));
+
+        verify(() => logger.progress('Parsing shader file')).called(1);
+        expect(progressLogs, contains('Shader file parsed'));
+        verify(() => logger.progress('Generating')).called(1);
+        expect(progressLogs, contains('Generated'));
+        verifyNever(() => logger.confirm('Overwrite test.dart?'));
+        verifyNever(() => logger.err('Aborting.'));
+
+        verify(() => output.writeAsBytesSync(any())).called(1);
+
+        verify(
+          () => cmd.start('bin/glslc', [
+            '--target-env=opengl',
+            '-fshader-stage=fragment',
+            '-o',
+            'temp/created/spirv',
+            'temp/created/raw.glsl',
+          ]),
+        ).called(1);
+      }),
+    );
+
     group('--target', () {
       group('invalid target name', () {
         test(
