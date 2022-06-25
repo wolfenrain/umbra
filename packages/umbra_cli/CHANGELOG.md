@@ -1,3 +1,7 @@
+# 0.1.0-dev.4
+
+- feat: generate Flutter widgets
+
 # 0.1.0-dev.3
 
 - fix: installation of dependencies on Windows
