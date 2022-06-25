@@ -44,6 +44,7 @@ Usage: umbra generate <shader_file>
 -t, --target=<target>                The target used for generation.
 
           [dart-shader] (default)    Generate a Dart Shader.
+          [flutter-widget]           Generate a Flutter Widget.
           [raw-shader]               Generate a raw GLSL shader.
           [spirv]                    Generate a Dart Shader.
 ```
