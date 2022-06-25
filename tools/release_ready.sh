@@ -14,6 +14,12 @@ if [ ! -f "pubspec.yaml" ]; then
     exit 1
 fi
 
+currentBranch=$(git symbolic-ref --short -q HEAD)
+if [[ ! $currentBranch -eq "main" ]]; then
+    echo "Releasing is only supported on the main branch."
+    exit 1
+fi
+
 # Get package information
 package_version=$(dart pub deps --json | pcregrep -o1 -i '"version": "(.*?)"' | head -1)
 package_name=$(dart pub deps --json | pcregrep -o1 -i '"name": "(.*?)"' | head -1)
@@ -43,3 +49,7 @@ fi
 echo "# ${new_version}\n\nTODO: entries\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
 
 echo "CHANGELOG for $package_name generated, add entries here: $(pwd)/CHANGELOG.md"
+
+echo "Creating git branch for $package_name@$new_version"
+git checkout -b "chore/$package_name-$new_version" > /dev/null
+
