@@ -1,3 +1,7 @@
+# 0.1.0-dev.2
+
+- feat: generate Flutter widgets
+
 # 0.1.0-dev.1
 
 - chore: release `umbra`
