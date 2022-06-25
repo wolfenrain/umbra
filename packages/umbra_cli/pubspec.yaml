@@ -14,7 +14,7 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.1
   pub_updater: ^0.2.2
-  umbra: ^0.1.0-dev.1
+  umbra: ^0.1.0-dev.2
 
 dev_dependencies:
   build_runner: ^2.1.11
