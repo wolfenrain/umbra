@@ -1,48 +1,57 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'dart:ui';
 
 import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// {@template pixelation}
-/// A Dart Shader class for the `pixelation` shader.
+/// A Flutter Widget for the `pixelation` shader.
 /// {@endtemplate}
-class Pixelation extends UmbraShader {
-  Pixelation._() : super(_cachedProgram!);
-
+class Pixelation extends UmbraWidget {
   /// {@macro pixelation}
-  static Future<Pixelation> compile() async {
-    // Caching the program on the first compile call.
-    _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-    );
-
-    return Pixelation._();
-  }
-
-  static FragmentProgram? _cachedProgram;
-
-  Shader shader({
-    required Size resolution,
+  const Pixelation({
+    super.key,
+    super.blendMode = BlendMode.src,
+    super.child,
+    super.errorBuilder,
+    super.compilingBuilder,
     required double pixelSize,
     required Image image,
-  }) {
-    return program.shader(
-      floatUniforms: Float32List.fromList([
-        pixelSize,
-        resolution.width,
-        resolution.height,
-      ]),
-      samplerUniforms: [
-        ImageShader(
-          image,
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
-      ],
-    );
+  })  : _pixelSize = pixelSize,
+        _image = image,
+        super();
+
+  static Future<FragmentProgram>? _cachedProgram;
+
+  final double _pixelSize;
+
+  final Image _image;
+
+  @override
+  List<double> getFloatUniforms() {
+    return [
+      _pixelSize,
+    ];
+  }
+  
+  @override
+  List<ImageShader> getSamplerUniforms() {
+    return [
+      ImageShader(
+        _image,
+        TileMode.clamp,
+        TileMode.clamp,
+        UmbraShader.identity,
+      ),
+    ];
+  }
+
+  @override
+  Future<FragmentProgram> program() {
+    return _cachedProgram ??
+        FragmentProgram.compile(
+          spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+        );
   }
 }
 

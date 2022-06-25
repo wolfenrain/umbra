@@ -23,6 +23,7 @@ const expectedUsage = [
       '-t, --target=<target>                The target used for generation.\n'
       '\n'
       '          [dart-shader] (default)    Generate a Dart Shader.\n'
+      '          [flutter-widget]           Generate a Flutter Widget.\n'
       '          [raw-shader]               Generate a raw GLSL shader.\n'
       '          [spirv]                    Generate a SPIR-R binary.\n'
       '\n'
@@ -332,6 +333,26 @@ void main() {
           withIOOverride((File output) async {
             await expectValidTargetName<DartShaderTarget>(
               targetName: 'dart-shader',
+              output: output,
+            );
+
+            verify(
+              () => cmd.start('bin/glslc', [
+                '--target-env=opengl',
+                '-fshader-stage=fragment',
+                '-o',
+                'temp/created/spirv',
+                'temp/created/raw.glsl',
+              ]),
+            ).called(1);
+          }),
+        );
+
+        test(
+          'flutter-widget target',
+          withIOOverride((File output) async {
+            await expectValidTargetName<FlutterWidgetTarget>(
+              targetName: 'flutter-widget',
               output: output,
             );
 

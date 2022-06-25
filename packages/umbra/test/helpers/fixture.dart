@@ -27,4 +27,13 @@ class Fixture {
       ),
     );
   }
+
+  /// Returns the file to the dart fixture.
+  File toFlutter(Directory cwd) {
+    return File.fromUri(
+      Uri.parse(
+        path.join(cwd.path, 'test', 'fixtures', 'flutter', fileName),
+      ),
+    );
+  }
 }

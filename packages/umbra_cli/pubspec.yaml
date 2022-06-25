@@ -25,9 +25,5 @@ dev_dependencies:
   test: ^1.19.2
   very_good_analysis: ^3.0.0
 
-dependency_overrides:
-  umbra:
-    path: ../umbra
-
 executables:
   umbra: umbra

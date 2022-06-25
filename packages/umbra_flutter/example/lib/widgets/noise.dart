@@ -1,56 +1,74 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'dart:ui';
 
 import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// {@template noise}
-/// A Dart Shader class for the `noise` shader.
+/// A Flutter Widget for the `noise` shader.
 /// {@endtemplate}
-class Noise extends UmbraShader {
-  Noise._() : super(_cachedProgram!);
-
+class Noise extends UmbraWidget {
   /// {@macro noise}
-  static Future<Noise> compile() async {
-    // Caching the program on the first compile call.
-    _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-    );
-
-    return Noise._();
-  }
-
-  static FragmentProgram? _cachedProgram;
-
-  Shader shader({
-    required Size resolution,
+  const Noise({
+    super.key,
+    super.blendMode = BlendMode.src,
+    super.child,
+    super.errorBuilder,
+    super.compilingBuilder,
     required double time,
     required Vector2 scale,
     required double amplifier,
     required Vector2 frequency,
     required Image image,
-  }) {
-    return program.shader(
-      floatUniforms: Float32List.fromList([
-        time,
-        scale.x,
-        scale.y,
-        amplifier,
-        frequency.x,
-        frequency.y,
-        resolution.width,
-        resolution.height,
-      ]),
-      samplerUniforms: [
-        ImageShader(
-          image,
-          TileMode.clamp,
-          TileMode.clamp,
-          UmbraShader.identity,
-        ),
-      ],
-    );
+  })  : _time = time,
+        _scale = scale,
+        _amplifier = amplifier,
+        _frequency = frequency,
+        _image = image,
+        super();
+
+  static Future<FragmentProgram>? _cachedProgram;
+
+  final double _time;
+
+  final Vector2 _scale;
+
+  final double _amplifier;
+
+  final Vector2 _frequency;
+
+  final Image _image;
+
+  @override
+  List<double> getFloatUniforms() {
+    return [
+      _time,
+      _scale.x,
+      _scale.y,
+      _amplifier,
+      _frequency.x,
+      _frequency.y,
+    ];
+  }
+  
+  @override
+  List<ImageShader> getSamplerUniforms() {
+    return [
+      ImageShader(
+        _image,
+        TileMode.clamp,
+        TileMode.clamp,
+        UmbraShader.identity,
+      ),
+    ];
+  }
+
+  @override
+  Future<FragmentProgram> program() {
+    return _cachedProgram ??
+        FragmentProgram.compile(
+          spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+        );
   }
 }
 

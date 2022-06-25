@@ -1,0 +1,42 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:umbra_flutter/umbra_flutter.dart';
+
+/// {@template simple}
+/// A Flutter Widget for the `simple` shader.
+/// {@endtemplate}
+class Simple extends UmbraWidget {
+  /// {@macro simple}
+  const Simple({
+    super.key,
+    super.blendMode = BlendMode.src,
+    super.child,
+    super.errorBuilder,
+    super.compilingBuilder,
+  })  : super();
+
+  static Future<FragmentProgram>? _cachedProgram;
+
+  @override
+  List<double> getFloatUniforms() {
+    return [];
+  }
+
+  @override
+  List<ImageShader> getSamplerUniforms() {
+    return [];
+  }
+
+  @override
+  Future<FragmentProgram> program() {
+    return _cachedProgram ??
+        FragmentProgram.compile(
+          spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+        );
+  }
+}
+
+const _spirv =
+    'AQID';
