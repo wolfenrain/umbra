@@ -1,3 +1,7 @@
+# 0.1.0-dev.5
+
+- feat: override an existing output file
+
 # 0.1.0-dev.4
 
 - feat: generate Flutter widgets
