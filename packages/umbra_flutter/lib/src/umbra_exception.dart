@@ -38,10 +38,14 @@ class UnsupportedOperator extends UmbraException {
 
   @override
   String toString() {
-    return 'Unsupported operator($op): $description';
+    return '''
+Unsupported operator($op): $description
+
+For more information, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#$description''';
   }
 }
 
+/// Values from https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#_instructions_3
 const _opCodeMap = {
   0: 'OpNop',
   1: 'OpUndef',

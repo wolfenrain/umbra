@@ -11,7 +11,7 @@ void main() {
       'throw an exception when the initial message is unknown',
       () {
         final exception = _MockTranspileException();
-        when(() => exception.message).thenReturn('will fail');
+        when(() => exception.message).thenReturn('unexpected');
 
         expect(
           () => UmbraException(exception),
@@ -20,7 +20,7 @@ void main() {
               (e) => e.toString(),
               'toString',
               equals(
-                'Exception: Unknown transpiler exception message: will fail',
+                'Exception: Unknown transpiler exception message: unexpected',
               ),
             ),
           ),
@@ -54,7 +54,12 @@ void main() {
         final umbraException = UmbraException(exception);
         expect(
           umbraException.toString(),
-          equals('Unsupported operator(128): OpIAdd'),
+          equals(
+            '''
+Unsupported operator(128): OpIAdd
+
+For more information, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#OpIAdd''',
+          ),
         );
       },
     );
