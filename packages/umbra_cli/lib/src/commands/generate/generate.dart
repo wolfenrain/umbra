@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart' hide packageVersion;
 import 'package:path/path.dart' as path;
 import 'package:umbra/umbra.dart';
@@ -67,11 +66,11 @@ class GenerateCommand extends UmbraCommand {
   File get _shaderFile {
     final rest = results.rest;
     if (rest.isEmpty || rest.first.isEmpty) {
-      throw UsageException('No file specified.', usage);
+      usageException('No file specified.');
     }
     final shaderFile = File(rest.first);
     if (!shaderFile.existsSync()) {
-      throw UsageException('File "${shaderFile.path}" does not exist.', usage);
+      usageException('File "${shaderFile.path}" does not exist.');
     }
     return shaderFile;
   }
@@ -84,10 +83,7 @@ class GenerateCommand extends UmbraCommand {
     );
 
     if (!directory.existsSync()) {
-      throw UsageException(
-        'Directory "${directory.path}" does not exist.',
-        usage,
-      );
+      usageException('Directory "${directory.path}" does not exist.');
     }
     return directory;
   }
