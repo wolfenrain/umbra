@@ -25,6 +25,7 @@ uniform vec3 coordinates;
 uniform vec4 color;
 uniform float mix_value;
 uniform sampler2D image;
+uniform mat4 matrix;
 
 vec4 fragment(in vec2 uv, in vec2 fragCoord) {
     return vec4(uv.x, uv.y, 0.0, 1.0);

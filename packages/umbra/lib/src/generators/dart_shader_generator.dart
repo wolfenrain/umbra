@@ -57,6 +57,25 @@ class DartShaderGenerator extends Generator {
           parameters.add({'type': 'Image', 'name': uniform.name});
           samplers.add({'name': uniform.name});
           break;
+        case UniformType.mat4:
+          parameters.add({'type': 'Matrix4', 'name': uniform.name});
+          arguments.add({'name': uniform.name, 'extension': '.storage[0]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[1]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[2]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[3]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[4]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[5]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[6]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[7]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[8]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[9]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[10]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[11]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[12]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[13]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[14]'});
+          arguments.add({'name': uniform.name, 'extension': '.storage[15]'});
+          break;
       }
     }
 

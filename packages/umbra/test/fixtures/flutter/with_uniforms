@@ -20,11 +20,13 @@ class WithUniforms extends UmbraWidget {
     required Vector4 color,
     required double mixValue,
     required Image image,
+    required Matrix4 matrix,
   })  : _position = position,
         _coordinates = coordinates,
         _color = color,
         _mixValue = mixValue,
         _image = image,
+        _matrix = matrix,
         super();
 
   static Future<FragmentProgram>? _cachedProgram;
@@ -39,6 +41,8 @@ class WithUniforms extends UmbraWidget {
 
   final Image _image;
 
+  final Matrix4 _matrix;
+
   @override
   List<double> getFloatUniforms() {
     return [
@@ -52,6 +56,22 @@ class WithUniforms extends UmbraWidget {
       _color.z,
       _color.w,
       _mixValue,
+      _matrix.storage[0],
+      _matrix.storage[1],
+      _matrix.storage[2],
+      _matrix.storage[3],
+      _matrix.storage[4],
+      _matrix.storage[5],
+      _matrix.storage[6],
+      _matrix.storage[7],
+      _matrix.storage[8],
+      _matrix.storage[9],
+      _matrix.storage[10],
+      _matrix.storage[11],
+      _matrix.storage[12],
+      _matrix.storage[13],
+      _matrix.storage[14],
+      _matrix.storage[15],
     ];
   }
 
