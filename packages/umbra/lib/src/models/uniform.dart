@@ -16,6 +16,9 @@ enum UniformType {
 
   /// A sampler2D uniform.
   sampler2D,
+
+  /// A square float-matrix uniform.
+  mat4,
 }
 
 /// {@template uniform}
@@ -40,6 +43,8 @@ class Uniform extends Equatable {
         return Uniform(name, UniformType.vec4);
       case 'sampler2D':
         return Uniform(name, UniformType.sampler2D);
+      case 'mat4':
+        return Uniform(name, UniformType.mat4);
     }
     throw Exception('Unsupported uniform type');
   }
