@@ -9,6 +9,11 @@ class _MockFragmentProgram extends Mock implements FragmentProgram {}
 
 class _MockShader extends Mock implements Shader {}
 
+class TranspileException implements Exception {
+  @override
+  String toString() => '128: Not a supported op.';
+}
+
 class TestWidget extends UmbraWidget {
   const TestWidget(
     this._program, {
@@ -100,7 +105,7 @@ void main() {
 
     group('on error', () {
       testWidgets(
-        'shows error widget if error builder is not given',
+        'show the error widget if no error builder is given',
         (tester) async {
           await tester.pumpWidget(const TestWidget(null));
           await tester.pumpAndSettle();
@@ -110,7 +115,25 @@ void main() {
       );
 
       testWidgets(
-        'calls error builder',
+        'convert TranspileException to UmbraException',
+        (tester) async {
+          await tester.pumpWidget(
+            TestWidget(
+              Future.error(TranspileException()),
+              errorBuilder: (context, error, stackTrace) {
+                expect(error, isA<UmbraException>());
+                return Container(key: const Key('Error'));
+              },
+            ),
+          );
+          await tester.pumpAndSettle();
+
+          expect(find.byKey(const Key('Error')), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'call the error builder',
         (tester) async {
           await tester.pumpWidget(
             TestWidget(

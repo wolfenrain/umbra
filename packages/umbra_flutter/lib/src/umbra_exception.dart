@@ -1,21 +1,23 @@
-import 'package:sky_engine/spirv/spirv.dart';
-
 /// {@template umbra_exception}
 /// Exception thrown when an error occurs during shader compilation.
 /// {@endtemplate}
 abstract class UmbraException extends Error {
   /// {@macro umbra_exception}
-  factory UmbraException(TranspileException exception) {
-    if (exception.message == 'Not a supported op.') {
-      return UnsupportedOperator._(exception);
+  factory UmbraException(Exception exception) {
+    final stringifiedException = exception.toString();
+    final opCode = int.tryParse(stringifiedException.split(':')[0].trim());
+    if (opCode != null) {
+      final message = stringifiedException.split(':')[1].trim();
+      if (message == 'Not a supported op.') {
+        return UnsupportedOperator._(opCode);
+      }
+      throw Exception('Unknown transpiler exception message: $message');
     }
-    throw Exception(
-      'Unknown transpiler exception message: ${exception.message}',
-    );
+    throw Exception('Unsupported exception type: $stringifiedException');
   }
 
   /// {@macro umbra_exception}
-  UmbraException._(TranspileException exception) : op = exception.op;
+  UmbraException._(this.op);
 
   /// The opcode of the operator.
   final int op;
@@ -30,7 +32,8 @@ abstract class UmbraException extends Error {
 /// Thrown when the shader contains an unsupported operator.
 /// {@endtemplate}
 class UnsupportedOperator extends UmbraException {
-  UnsupportedOperator._(super.exception) : super._();
+  /// {@macro unsupported_operator}
+  UnsupportedOperator._(super.op) : super._();
 
   /// The description of the unsupported operator.
   @override

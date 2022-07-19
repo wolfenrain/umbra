@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart' hide Image;
-import 'package:sky_engine/spirv/spirv.dart';
 import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// Signature used by [UmbraWidget.errorBuilder] to create a
@@ -65,8 +64,8 @@ abstract class UmbraWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           var error = snapshot.error!;
-          if (error is TranspileException) {
-            error = UmbraException(error);
+          if (error.runtimeType.toString() == 'TranspileException') {
+            error = UmbraException(error as Exception);
           }
           if (errorBuilder != null) {
             return errorBuilder!(context, error, snapshot.stackTrace);
