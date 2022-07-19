@@ -23,7 +23,7 @@ class TestWidget extends UmbraWidget {
     super.child,
   });
 
-  final Future<FragmentProgram>? _program;
+  final Future<FragmentProgram?> Function() _program;
 
   @override
   List<double> getFloatUniforms() {
@@ -37,10 +37,11 @@ class TestWidget extends UmbraWidget {
 
   @override
   Future<FragmentProgram> program() async {
-    if (_program == null) {
+    final program = await _program();
+    if (program == null) {
       throw Exception('TestWidget._program is null');
     }
-    return _program!;
+    return program;
   }
 }
 
@@ -62,7 +63,7 @@ void main() {
     });
 
     test('can be instantiated', () {
-      expect(TestWidget(Future.value(program)), isNotNull);
+      expect(TestWidget(() async => program), isNotNull);
     });
 
     testWidgets('render shader correctly inside a widget', (tester) async {
@@ -87,7 +88,7 @@ void main() {
         );
       });
 
-      await tester.pumpWidget(TestWidget(Future.value(program)));
+      await tester.pumpWidget(TestWidget(() async => program));
       await tester.pumpAndSettle();
 
       await expectLater(
@@ -107,7 +108,7 @@ void main() {
       testWidgets(
         'show the error widget if no error builder is given',
         (tester) async {
-          await tester.pumpWidget(const TestWidget(null));
+          await tester.pumpWidget(TestWidget(() async => null));
           await tester.pumpAndSettle();
 
           expect(find.byType(ErrorWidget), findsOneWidget);
@@ -119,7 +120,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             TestWidget(
-              Future.error(TranspileException()),
+              () async => throw TranspileException(),
               errorBuilder: (context, error, stackTrace) {
                 expect(error, isA<UmbraException>());
                 return Container(key: const Key('Error'));
@@ -127,27 +128,22 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
-
-          expect(find.byKey(const Key('Error')), findsOneWidget);
         },
       );
 
-      testWidgets(
-        'call the error builder',
-        (tester) async {
-          await tester.pumpWidget(
-            TestWidget(
-              null,
-              errorBuilder: (context, error, stackTrace) => Container(
-                key: const Key('Error'),
-              ),
+      testWidgets('call the error builder', (tester) async {
+        await tester.pumpWidget(
+          TestWidget(
+            () async => null,
+            errorBuilder: (context, error, stackTrace) => Container(
+              key: const Key('Error'),
             ),
-          );
-          await tester.pumpAndSettle();
+          ),
+        );
+        await tester.pumpAndSettle();
 
-          expect(find.byKey(const Key('Error')), findsOneWidget);
-        },
-      );
+        expect(find.byKey(const Key('Error')), findsOneWidget);
+      });
     });
 
     group('on no data', () {
@@ -155,7 +151,7 @@ void main() {
         'shows nothing if child is not given',
         (tester) async {
           await tester.pumpWidget(
-            TestWidget(Future<FragmentProgram>.value(program)),
+            TestWidget(() async => program),
           );
 
           expect(find.byType(SizedBox), findsOneWidget);
@@ -167,7 +163,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             TestWidget(
-              Future<FragmentProgram>.value(program),
+              () async => program,
               child: Container(key: const Key('Child')),
             ),
           );
@@ -181,7 +177,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             TestWidget(
-              Future<FragmentProgram>.value(program),
+              () async => program,
               compilingBuilder: (context, child) {
                 return Container(key: const Key('Compiling'));
               },
