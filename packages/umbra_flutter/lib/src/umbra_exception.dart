@@ -3,7 +3,7 @@
 /// {@endtemplate}
 abstract class UmbraException implements Exception {
   /// {@macro umbra_exception}
-  factory UmbraException(Exception exception) {
+  factory UmbraException(Exception exception, StackTrace stackTrace) {
     final stringifiedException = exception.toString();
     final opCode = int.tryParse(stringifiedException.split(':')[0].trim());
     if (opCode != null) {
@@ -12,7 +12,7 @@ abstract class UmbraException implements Exception {
         return UnsupportedOperator._(opCode);
       }
     }
-    throw exception;
+    Error.throwWithStackTrace(exception, stackTrace);
   }
 
   /// {@macro umbra_exception}

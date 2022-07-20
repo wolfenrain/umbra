@@ -18,7 +18,7 @@ void main() {
       final exception = Exception('not a transpile one');
 
       expect(
-        () => UmbraException(exception),
+        () => UmbraException(exception, StackTrace.empty),
         throwsA(
           isA<Exception>()
               .having(
@@ -38,7 +38,7 @@ void main() {
       () {
         const exception = _MockTranspileException(128, 'Not a supported op.');
 
-        final umbraException = UmbraException(exception);
+        final umbraException = UmbraException(exception, StackTrace.empty);
         expect(umbraException, isA<UnsupportedOperator>());
         expect(umbraException.op, equals(128));
         expect(umbraException.description, equals('OpIAdd'));
@@ -48,7 +48,7 @@ void main() {
     test('toString', () {
       const exception = _MockTranspileException(128, 'Not a supported op.');
 
-      final umbraException = UmbraException(exception);
+      final umbraException = UmbraException(exception, StackTrace.empty);
       expect(
         umbraException.toString(),
         equals(

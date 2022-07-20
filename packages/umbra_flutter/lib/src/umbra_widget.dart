@@ -65,7 +65,7 @@ abstract class UmbraWidget extends StatelessWidget {
         if (snapshot.hasError) {
           var error = snapshot.error!;
           if (error.runtimeType.toString() == 'TranspileException') {
-            error = UmbraException(error as Exception);
+            error = UmbraException(error as Exception, snapshot.stackTrace!);
           }
           if (errorBuilder != null) {
             return errorBuilder!(context, error, snapshot.stackTrace);

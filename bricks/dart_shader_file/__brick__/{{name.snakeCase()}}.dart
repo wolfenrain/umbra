@@ -20,8 +20,8 @@ class {{name.pascalCase()}} extends UmbraShader {
       );
 
       return {{name.pascalCase()}}._();
-    } on Exception catch (err) {
-      throw UmbraException(err);
+    } on Exception catch (err, stackTrace) {
+      throw UmbraException(err, stackTrace);
     }
   }
 
