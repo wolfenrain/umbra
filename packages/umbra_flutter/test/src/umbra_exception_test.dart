@@ -72,7 +72,9 @@ void main() {
           '''
 Unsupported operator(128): OpIAdd
 
-For more information, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#OpIAdd''',
+That means that there is an unsupported operator in the shader code.
+
+For more information about this operator, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#OpIAdd''',
         ),
       );
     });

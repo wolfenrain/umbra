@@ -44,7 +44,9 @@ class UnsupportedOperator extends UmbraException {
     return '''
 Unsupported operator($op): $description
 
-For more information, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#$description''';
+That means that there is an unsupported operator in the shader code.
+
+For more information about this operator, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#$description''';
   }
 }
 
