@@ -96,6 +96,7 @@ void main() {
           Uniform('color', UniformType.vec4),
           Uniform('mix_value', UniformType.float),
           Uniform('image', UniformType.sampler2D),
+          Uniform('matrix', UniformType.mat4),
           Uniform('resolution', UniformType.vec2),
         ]),
       );

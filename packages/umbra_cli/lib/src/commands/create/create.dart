@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart' hide packageVersion;
 import 'package:umbra_cli/src/commands/create/templates/templates.dart';
 import 'package:umbra_cli/src/umbra_command.dart';
@@ -64,7 +63,7 @@ class CreateCommand extends UmbraCommand {
   String get _fileName {
     final rest = results.rest;
     if (rest.isEmpty || rest.first.isEmpty) {
-      throw UsageException('No name specified.', usage);
+      usageException('No name specified.');
     }
     return rest.first;
   }
@@ -75,9 +74,8 @@ class CreateCommand extends UmbraCommand {
         : Directory(results['output'] as String);
 
     if (!directory.existsSync()) {
-      throw UsageException(
+      usageException(
         'Directory "${directory.path}" does not exist.',
-        usage,
       );
     }
     return directory;
