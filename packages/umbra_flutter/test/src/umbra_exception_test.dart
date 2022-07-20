@@ -74,7 +74,7 @@ Unsupported operator(128): OpIAdd
 
 That means that there is an unsupported operator in the shader code.
 
-For more information about this operator, see: https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#OpIAdd''',
+For more information about this operator see https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#OpIAdd''',
         ),
       );
     });
