@@ -50,7 +50,7 @@ For more information about this operator see https://www.khronos.org/registry/SP
   }
 }
 
-/// Values from https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#_instructions_3
+// Derived from https://www.khronos.org/registry/SPIR-V/specs/unified1/SPIRV.html#_instructions_3
 const _opCodeMap = {
   0: 'OpNop',
   1: 'OpUndef',
