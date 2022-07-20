@@ -20,11 +20,8 @@ class Simple extends UmbraShader {
       );
 
       return Simple._();
-    } catch (err) {
-      if (err is Exception) {
-        throw UmbraException(err);
-      }
-      rethrow;
+    } on Exception catch (err) {
+      throw UmbraException(err);
     }
   }
 

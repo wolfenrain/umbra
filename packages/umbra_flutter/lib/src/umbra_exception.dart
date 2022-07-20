@@ -1,7 +1,7 @@
 /// {@template umbra_exception}
 /// Exception thrown when an error occurs during shader compilation.
 /// {@endtemplate}
-abstract class UmbraException extends Error {
+abstract class UmbraException implements Exception {
   /// {@macro umbra_exception}
   factory UmbraException(Exception exception) {
     final stringifiedException = exception.toString();
@@ -17,7 +17,7 @@ abstract class UmbraException extends Error {
   }
 
   /// {@macro umbra_exception}
-  UmbraException._(this.op);
+  const UmbraException._(this.op);
 
   /// The opcode of the operator.
   final int op;
@@ -33,7 +33,7 @@ abstract class UmbraException extends Error {
 /// {@endtemplate}
 class UnsupportedOperator extends UmbraException {
   /// {@macro unsupported_operator}
-  UnsupportedOperator._(super.op) : super._();
+  const UnsupportedOperator._(super.op) : super._();
 
   /// The description of the unsupported operator.
   @override
