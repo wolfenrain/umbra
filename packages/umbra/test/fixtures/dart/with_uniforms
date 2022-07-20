@@ -13,12 +13,19 @@ class WithUniforms extends UmbraShader {
 
   /// {@macro with_uniforms}
   static Future<WithUniforms> compile() async {
-    // Caching the program on the first compile call.
-    _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-    );
+    try {
+      // Caching the program on the first compile call.
+      _cachedProgram ??= await FragmentProgram.compile(
+        spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+      );
 
-    return WithUniforms._();
+      return WithUniforms._();
+    } catch (err) {
+      if (err is Exception) {
+        throw UmbraException(err);
+      }
+      rethrow;
+    }
   }
 
   static FragmentProgram? _cachedProgram;

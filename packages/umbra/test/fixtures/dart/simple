@@ -13,12 +13,19 @@ class Simple extends UmbraShader {
 
   /// {@macro simple}
   static Future<Simple> compile() async {
-    // Caching the program on the first compile call.
-    _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-    );
+    try {
+      // Caching the program on the first compile call.
+      _cachedProgram ??= await FragmentProgram.compile(
+        spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+      );
 
-    return Simple._();
+      return Simple._();
+    } catch (err) {
+      if (err is Exception) {
+        throw UmbraException(err);
+      }
+      rethrow;
+    }
   }
 
   static FragmentProgram? _cachedProgram;
