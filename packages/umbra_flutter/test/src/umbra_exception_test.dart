@@ -14,36 +14,19 @@ class _MockTranspileException implements Exception {
 
 void main() {
   group('UmbraException', () {
-    test('throw an exception when the initial message is unknown', () {
-      const exception = _MockTranspileException(0, 'unexpected');
-
-      expect(
-        () => UmbraException(exception),
-        throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'toString',
-            equals(
-              'Exception: Unknown transpiler exception message: unexpected',
-            ),
-          ),
-        ),
-      );
-    });
-
-    test('throw an exception when the error is not a TranspileException', () {
+    test('rethrow the exception when the error is not convert-able', () {
       final exception = Exception('not a transpile one');
 
       expect(
         () => UmbraException(exception),
         throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'toString',
-            equals(
-              '''Exception: Unsupported exception type: Exception: not a transpile one''',
-            ),
-          ),
+          isA<Exception>()
+              .having(
+                (e) => e.toString(),
+                'toString',
+                equals('Exception: not a transpile one'),
+              )
+              .having((p0) => p0, 'equals', equals(exception)),
         ),
       );
     });

@@ -11,9 +11,8 @@ abstract class UmbraException implements Exception {
       if (message == 'Not a supported op.') {
         return UnsupportedOperator._(opCode);
       }
-      throw Exception('Unknown transpiler exception message: $message');
     }
-    throw Exception('Unsupported exception type: $stringifiedException');
+    throw exception;
   }
 
   /// {@macro umbra_exception}
