@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart' hide Image;
+import 'package:umbra_flutter/umbra_flutter.dart';
 
 /// Signature used by [UmbraWidget.errorBuilder] to create a
 /// replacement widget to render instead of the shader.
@@ -62,10 +63,14 @@ abstract class UmbraWidget extends StatelessWidget {
       future: program(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          if (errorBuilder != null) {
-            return errorBuilder!(context, snapshot.error!, snapshot.stackTrace);
+          var error = snapshot.error!;
+          if (error.runtimeType.toString() == 'TranspileException') {
+            error = UmbraException(error as Exception, snapshot.stackTrace!);
           }
-          return ErrorWidget(snapshot.error!);
+          if (errorBuilder != null) {
+            return errorBuilder!(context, error, snapshot.stackTrace);
+          }
+          return ErrorWidget(error);
         }
         if (!snapshot.hasData) {
           if (compilingBuilder != null) {

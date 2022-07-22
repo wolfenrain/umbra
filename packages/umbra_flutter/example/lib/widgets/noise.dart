@@ -50,7 +50,7 @@ class Noise extends UmbraWidget {
       _frequency.y,
     ];
   }
-  
+
   @override
   List<ImageShader> getSamplerUniforms() {
     return [

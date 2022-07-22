@@ -1,0 +1,5 @@
+dependency_overrides:
+  umbra:
+    path: ../../umbra
+  umbra_flutter:
+    path: ../

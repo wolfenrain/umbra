@@ -33,7 +33,7 @@ class Pixelation extends UmbraWidget {
       _pixelSize,
     ];
   }
-  
+
   @override
   List<ImageShader> getSamplerUniforms() {
     return [

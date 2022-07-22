@@ -13,12 +13,16 @@ class {{name.pascalCase()}} extends UmbraShader {
 
   /// {@macro {{name.snakeCase()}}}
   static Future<{{name.pascalCase()}}> compile() async {
-    // Caching the program on the first compile call.
-    _cachedProgram ??= await FragmentProgram.compile(
-      spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
-    );
+    try {
+      // Caching the program on the first compile call.
+      _cachedProgram ??= await FragmentProgram.compile(
+        spirv: Uint8List.fromList(base64Decode(_spirv)).buffer,
+      );
 
-    return {{name.pascalCase()}}._();
+      return {{name.pascalCase()}}._();
+    } on Exception catch (err, stackTrace) {
+      throw UmbraException(err, stackTrace);
+    }
   }
 
   static FragmentProgram? _cachedProgram;
