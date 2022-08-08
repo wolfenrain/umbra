@@ -9,18 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  umbra_flutter: ^0.1.0-dev
+  umbra_flutter: ^0.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^3.0.0
-
-dependency_overrides:
-  umbra:
-    path: ../../umbra
-  umbra_flutter:
-    path: ../
 
 flutter:
   uses-material-design: true

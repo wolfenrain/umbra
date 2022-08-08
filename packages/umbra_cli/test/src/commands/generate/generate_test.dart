@@ -139,7 +139,7 @@ void main() {
         when(inputFile.existsSync).thenReturn(true);
         when(() => inputFile.path).thenReturn('test.raw');
         when(inputFile.readAsLinesSync).thenReturn([
-          'vec4 fragment(vec2 uv, vec2 fragColor) {',
+          'vec4 fragment(in vec2 uv, in vec2 fragCoord) {',
           '  return vec4(uv.x, uv.y, 1.0, 1.0);',
           '}',
         ]);
