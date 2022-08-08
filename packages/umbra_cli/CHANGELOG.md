@@ -1,3 +1,7 @@
+# 0.1.0-dev.8
+
+- feat: clearer shader error handling
+
 # 0.1.0-dev.7
 
 - feat: add support for mat4 uniforms
