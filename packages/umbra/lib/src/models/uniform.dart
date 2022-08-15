@@ -33,10 +33,5 @@ class Uniform extends Equatable {
   final UniformHint? hint;
 
   @override
-  String toString() {
-    return 'uniform ${type.name} $name${hint != null ? ' : $hint' : ''}';
-  }
-
-  @override
   List<Object> get props => [name, type];
 }

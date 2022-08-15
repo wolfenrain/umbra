@@ -73,47 +73,5 @@ void main() {
         expect(uniform.type, equals(UniformType.sampler2D));
       });
     });
-
-    group('toString', () {
-      test('without hints', () {
-        final uniform = Uniform('name', UniformType.float);
-
-        expect(uniform.toString(), equals('uniform float name'));
-      });
-
-      test('with hints', () {
-        final uniform = Uniform(
-          'name',
-          UniformType.float,
-          UniformHint.parse('color'),
-        );
-
-        expect(uniform.toString(), equals('uniform float name : hint_color'));
-      });
-    });
-  });
-
-  group('UniformType', () {
-    group('has correct name', () {
-      test('float', () {
-        expect(UniformType.float.name, equals('float'));
-      });
-
-      test('vec2', () {
-        expect(UniformType.vec2.name, equals('vec2'));
-      });
-
-      test('vec3', () {
-        expect(UniformType.vec3.name, equals('vec3'));
-      });
-
-      test('vec4', () {
-        expect(UniformType.vec4.name, equals('vec4'));
-      });
-
-      test('sampler2D', () {
-        expect(UniformType.sampler2D.name, equals('sampler2D'));
-      });
-    });
   });
 }

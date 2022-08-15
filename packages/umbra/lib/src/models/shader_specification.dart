@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:umbra/umbra.dart';
 
-final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+)\s?(?:hint_(\w+))?;');
+final _uniformRegexp =
+    RegExp(r'uniform\s+(\w+)\s+(\w+)\s?(?:\s?:\s?hint_(\w+))?;');
 
 /// {@template shader}
 /// Represents a shader.

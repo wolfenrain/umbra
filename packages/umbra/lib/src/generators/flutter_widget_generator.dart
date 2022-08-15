@@ -23,6 +23,7 @@ class FlutterWidgetGenerator extends Generator {
     final generator = await MasonGenerator.fromBundle(flutterWidgetFileBundle);
 
     final parameters = <Map<String, String>>[];
+    final convertedParameters = <_ConvertedParameter>[];
     final arguments = <Map<String, String>>[];
     final samplers = <Map<String, String>>[];
 
@@ -47,7 +48,26 @@ class FlutterWidgetGenerator extends Generator {
           arguments.add({'name': uniform.name, 'extension': '.z'});
           break;
         case UniformType.vec4:
-          parameters.add({'type': 'Vector4', 'name': uniform.name});
+          if (uniform.hint != null) {
+            final hint = uniform.hint!;
+            switch (hint.key) {
+              case 'color':
+                convertedParameters.add(
+                  _ConvertedParameter(
+                    name: uniform.name,
+                    type: 'Vector4',
+                    arguments: const [
+                      _Argument('red / 255'),
+                      _Argument('green / 255'),
+                      _Argument('blue / 255'),
+                      _Argument('alpha / 255'),
+                    ],
+                  ),
+                );
+                break;
+            }
+          }
+          parameters.add({'type': 'Color', 'name': uniform.name});
           arguments.add({'name': uniform.name, 'extension': '.x'});
           arguments.add({'name': uniform.name, 'extension': '.y'});
           arguments.add({'name': uniform.name, 'extension': '.z'});
@@ -82,6 +102,7 @@ class FlutterWidgetGenerator extends Generator {
     final vars = <String, dynamic>{
       'name': specification.name,
       'parameters': parameters,
+      'convertedParameters': convertedParameters.map((e) => e.toMap()).toList(),
       'hasParameters': parameters.isNotEmpty,
       'arguments': arguments,
       'hasArguments': arguments.isNotEmpty,
@@ -97,5 +118,50 @@ class FlutterWidgetGenerator extends Generator {
     );
 
     return target.generatedFiles[files.first.path]!;
+  }
+}
+
+class _ConvertedParameter {
+  const _ConvertedParameter({
+    required this.name,
+    required this.type,
+    String? constructor,
+    required this.arguments,
+  }) : constructor = constructor ?? type;
+
+  final String name;
+
+  final String type;
+
+  final String constructor;
+
+  final List<_Argument> arguments;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+      'type': type,
+      'constructor': constructor,
+      'arguments': arguments.map((a) => a.toMap()).toList(),
+    };
+  }
+}
+
+class _Argument {
+  const _Argument(
+    this.value, {
+    this.namedArgument,
+  });
+
+  final String value;
+
+  final String? namedArgument;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'value': value,
+      'namedArgument': namedArgument,
+      'hasNamedArgument': namedArgument != null,
+    };
   }
 }
