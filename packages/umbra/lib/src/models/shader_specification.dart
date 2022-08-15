@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:umbra/umbra.dart';
 
-final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+);');
+final _uniformRegexp = RegExp(r'uniform\s+(\w+)\s+(\w+)\s?(?:hint_(\w+))?;');
 
 /// {@template shader}
 /// Represents a shader.
@@ -45,7 +45,9 @@ class ShaderSpecification {
         precision = Precision.parse(line);
       } else if (_uniformRegexp.hasMatch(line)) {
         final match = _uniformRegexp.firstMatch(line)!;
-        uniforms.add(Uniform.parse(match.group(2)!, match.group(1)!));
+        uniforms.add(
+          Uniform.parse(match.group(2)!, match.group(1)!, match.group(3)),
+        );
       } else {
         remainders.add(line);
       }
