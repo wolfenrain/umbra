@@ -16,13 +16,15 @@ class {{name.pascalCase()}} extends UmbraWidget {
     super.errorBuilder,
     super.compilingBuilder,{{#parameters}}
     required {{type}} {{name.camelCase()}},{{/parameters}}
-  })  : {{#parameters}}_{{name.camelCase()}} = {{name.camelCase()}},
-        {{/parameters}}super();
+  })  : {{#convertedParameters}}_{{name.camelCase()}} = {{constructor}}(
+          {{#arguments}}{{#hasNamedArgument}}{{namedArgument}}: {{/hasNamedArgument}}{{name.camelCase()}}.{{{value}}},
+        {{/arguments}}),
+        {{/convertedParameters}}super();
 
   static Future<FragmentProgram>? _cachedProgram;
-{{#parameters}}
+{{#convertedParameters}}
   final {{type}} _{{name.camelCase()}};
-{{/parameters}}
+{{/convertedParameters}}
   @override
   List<double> getFloatUniforms() {
     return {{#hasArguments}}{{> with_float_uniforms.dart}}{{/hasArguments}}{{^hasArguments}}{{> without_float_uniforms.dart}}{{/hasArguments}}

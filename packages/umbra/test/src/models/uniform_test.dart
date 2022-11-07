@@ -19,6 +19,29 @@ void main() {
       expect(uniform.type, equals(UniformType.float));
     });
 
+    group('parses hints', () {
+      test('correctly', () {
+        final uniform = Uniform.parse('name', 'vec4', 'color');
+
+        expect(uniform.hint, equals(UniformHint.parse('color')));
+      });
+
+      test('throws an exception if the type is not correct for the hint', () {
+        expect(
+          () => Uniform.parse('name', 'float', 'color'),
+          throwsA(
+            isA<Exception>().having(
+              (e) => e.toString(),
+              'message',
+              equals(
+                'Exception: Given type float is not valid for given color',
+              ),
+            ),
+          ),
+        );
+      });
+    });
+
     group('supports uniforms', () {
       test('float', () {
         final uniform = Uniform.parse('name', 'float');
@@ -48,43 +71,6 @@ void main() {
         final uniform = Uniform.parse('name', 'sampler2D');
 
         expect(uniform.type, equals(UniformType.sampler2D));
-      });
-    });
-
-    test('throws an exception when the uniform type is not supported', () {
-      expect(
-        () => Uniform.parse('name', 'fake'),
-        throwsA(isA<Exception>()),
-      );
-    });
-
-    test('toString', () {
-      final uniform = Uniform('name', UniformType.float);
-
-      expect(uniform.toString(), equals('uniform float name'));
-    });
-  });
-
-  group('UniformType', () {
-    group('has correct name', () {
-      test('float', () {
-        expect(UniformType.float.name, equals('float'));
-      });
-
-      test('vec2', () {
-        expect(UniformType.vec2.name, equals('vec2'));
-      });
-
-      test('vec3', () {
-        expect(UniformType.vec3.name, equals('vec3'));
-      });
-
-      test('vec4', () {
-        expect(UniformType.vec4.name, equals('vec4'));
-      });
-
-      test('sampler2D', () {
-        expect(UniformType.sampler2D.name, equals('sampler2D'));
       });
     });
   });

@@ -22,7 +22,7 @@ class RawShaderGenerator extends Generator {
       'uniforms': specification.uniforms
           .map(
             (e) =>
-                'layout (location = ${specification.uniforms.indexOf(e)}) $e;',
+                '''layout (location = ${specification.uniforms.indexOf(e)}) ${e.toRaw};''',
           )
           .join('\n'),
       'userCode': specification.userCode.join('\n'),
@@ -35,5 +35,12 @@ class RawShaderGenerator extends Generator {
     );
 
     return target.generatedFiles[files.first.path]!;
+  }
+}
+
+extension on Uniform {
+  String get toRaw {
+    print('calling to raw: ${type.name}, $name');
+    return 'uniform ${type.name} $name';
   }
 }

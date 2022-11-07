@@ -1,52 +1,26 @@
 import 'package:equatable/equatable.dart';
-
-/// The type of uniforms supported.
-enum UniformType {
-  /// A float uniform.
-  float,
-
-  /// A vec2 uniform.
-  vec2,
-
-  /// A vec3 uniform.
-  vec3,
-
-  /// A vec4 uniform.
-  vec4,
-
-  /// A sampler2D uniform.
-  sampler2D,
-
-  /// A square float-matrix uniform.
-  mat4,
-}
+import 'package:umbra/umbra.dart';
 
 /// {@template uniform}
 /// Describes a uniform of a shader.
 /// {@endtemplate}
 class Uniform extends Equatable {
   /// {@macro uniform}
-  const Uniform(this.name, this.type);
+  const Uniform(this.name, this.type, [this.hint]);
 
   /// {@macro uniform}
   ///
   /// Parse a uniform from string values.
-  factory Uniform.parse(String name, String type) {
-    switch (type) {
-      case 'float':
-        return Uniform(name, UniformType.float);
-      case 'vec2':
-        return Uniform(name, UniformType.vec2);
-      case 'vec3':
-        return Uniform(name, UniformType.vec3);
-      case 'vec4':
-        return Uniform(name, UniformType.vec4);
-      case 'sampler2D':
-        return Uniform(name, UniformType.sampler2D);
-      case 'mat4':
-        return Uniform(name, UniformType.mat4);
+  factory Uniform.parse(String name, String type, [String? hint]) {
+    final uniformType = UniformType.parse(type);
+    final uniformHint = UniformHint.parse(hint);
+
+    if (!(uniformHint?.isValidType(uniformType) ?? true)) {
+      // TODO(wolfen): proper exceptions.
+      throw Exception('Given type $type is not valid for given $hint');
     }
-    throw Exception('Unsupported uniform type');
+
+    return Uniform(name, uniformType, uniformHint);
   }
 
   /// The type of the uniform.
@@ -55,10 +29,8 @@ class Uniform extends Equatable {
   /// The name of the uniform.
   final String name;
 
-  @override
-  String toString() {
-    return 'uniform ${type.name} $name';
-  }
+  /// The hint of the uniform.
+  final UniformHint? hint;
 
   @override
   List<Object> get props => [name, type];

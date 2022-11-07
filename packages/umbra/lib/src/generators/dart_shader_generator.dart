@@ -52,6 +52,7 @@ class DartShaderGenerator extends Generator {
           arguments.add({'name': uniform.name, 'extension': '.y'});
           arguments.add({'name': uniform.name, 'extension': '.z'});
           arguments.add({'name': uniform.name, 'extension': '.w'});
+
           break;
         case UniformType.sampler2D:
           parameters.add({'type': 'Image', 'name': uniform.name});

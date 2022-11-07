@@ -42,3 +42,13 @@ vec4 fragment(in vec2 uv, in vec2 fragCoord) {
 }''',
   'with_version',
 );
+
+final withShaderHints = Fixture(
+  '''
+uniform vec4 color : hint_color;
+
+vec4 fragment(in vec2 uv, in vec2 fragCoord) {
+    return vec4(uv.x, uv.y, 0.0, 1.0);
+}''',
+  'with_shader_hints',
+);
